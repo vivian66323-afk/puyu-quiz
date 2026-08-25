@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>菩語生活測驗 v2｜你的居家 Lifestyle DNA</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1A1A;--cream:#F5F2EC;--gold:#B08D57;--gold-soft:#D9C4A3;--paper:#FBFAF6;--line:#E3DDD1;--muted:#7A756B}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-weight:300}
+#app{max-width:480px;margin:0 auto;min-height:100vh;position:relative}
+.screen{display:none;padding:0 22px 40px}
+.screen.on{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* intro */
+.intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:40px 30px}
+.frame{width:120px;height:120px;margin:0 auto 28px;border-radius:2px;background:var(--ink);position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(26,26,26,.2)}
+.frame::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 35% 32%,var(--gold-soft) 0 10%,transparent 11%),radial-gradient(circle at 68% 64%,var(--gold) 0 8%,transparent 9%),linear-gradient(135deg,#2a2723,#141210)}
+.eyebrow{font-size:12px;letter-spacing:.4em;color:var(--gold);font-weight:500;margin-bottom:16px}
+.intro h1{font-family:"Noto Serif TC";font-weight:600;font-size:30px;letter-spacing:.03em;line-height:1.4}
+.intro p{color:var(--muted);font-size:14.5px;margin:18px auto 0;max-width:340px;line-height:1.9}
+.layers{margin:26px 0 34px;font-family:"Noto Serif TC";font-size:15px;letter-spacing:.3em;color:var(--gold)}
+.btn{display:inline-block;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer;padding:15px 44px;border-radius:100px;border:1px solid var(--ink);background:var(--ink);color:var(--cream);letter-spacing:.08em;transition:all .2s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.note{font-size:11.5px;color:var(--muted);margin-top:18px;letter-spacing:.03em}
+
+/* progress */
+.topbar{position:sticky;top:0;z-index:10;background:var(--cream);padding:20px 0 14px}
+.track{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--gold);transition:width .45s ease;width:0}
+.qnum{font-size:12px;color:var(--muted);letter-spacing:.1em;margin-top:10px;text-align:center}
+
+/* question */
+.qtitle{font-family:"Noto Serif TC";font-size:21px;font-weight:600;text-align:center;margin:8px 0 4px;line-height:1.5}
+.qsub{text-align:center;font-size:12.5px;color:var(--gold);letter-spacing:.05em;margin-bottom:20px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--paper);cursor:pointer;transition:all .15s}
+.opt:active{transform:scale(.97)}
+.opt img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.opt .lbl{font-size:12.5px;text-align:center;padding:8px 4px;color:var(--muted)}
+.opt.sw .sws{display:flex;height:96px}
+.opt.sw .sws i{flex:1}
+
+/* result */
+.result{padding-top:30px;text-align:center}
+.card{background:#fff;border:1px solid var(--gold-soft);border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(26,26,26,.1);margin-bottom:22px}
+.card .top{background:var(--ink);color:var(--cream);padding:30px 26px 26px}
+.card .top .k{font-size:11px;letter-spacing:.3em;color:var(--gold);margin-bottom:10px}
+.card .top h2{font-family:"Noto Serif TC";font-size:32px;font-weight:600;letter-spacing:.04em}
+.card .top .en{font-size:11px;letter-spacing:.2em;color:#9a9488;margin-top:4px;text-transform:uppercase}
+.card .top .tag{display:inline-block;margin-top:16px;border:1px solid var(--gold);color:var(--gold-soft);border-radius:100px;font-size:12.5px;padding:5px 16px;letter-spacing:.04em}
+.card .body{padding:26px 26px 28px}
+.card .body .quote{font-family:"Noto Serif TC";font-size:19px;font-weight:500;color:var(--gold);margin-bottom:14px}
+.card .body .desc{font-size:14.5px;line-height:1.95;color:#3d3a35;text-align:left}
+.card .foot{border-top:1px solid var(--line);padding:14px;font-size:11px;letter-spacing:.14em;color:var(--muted)}
+.card .foot .g{color:var(--gold)}
+.share{background:var(--gold);color:#fff;border:none;width:100%;font-family:inherit;font-size:16px;font-weight:500;padding:16px;border-radius:100px;cursor:pointer;letter-spacing:.08em;margin-bottom:12px;transition:all .2s}
+.share:active{transform:scale(.98)}
+.cta{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:18px 0 12px;text-align:center}
+.cta p{font-size:14px;margin-bottom:14px}
+.cta .lk{display:inline-block;font-size:14px;font-weight:500;color:var(--ink);border-bottom:2px solid var(--gold);padding-bottom:2px;text-decoration:none;cursor:pointer}
+.retry{font-family:inherit;font-size:14px;color:var(--muted);background:none;border:none;cursor:pointer;margin-top:10px;text-decoration:underline;letter-spacing:.05em}
+
+.sec{text-align:left;margin-top:20px}
+.sec .h{font-size:11px;letter-spacing:.18em;color:var(--gold);font-weight:500;margin-bottom:8px}
+.sec ul{list-style:none}
+.sec li{font-size:14px;padding:7px 0 7px 20px;position:relative;border-bottom:1px solid var(--line);color:#3d3a35}
+.sec li:last-child{border-bottom:none}
+.sec li::before{content:"";position:absolute;left:2px;top:15px;width:6px;height:6px;border-radius:50%;background:var(--gold-soft)}
+.kwrow{display:flex;flex-wrap:wrap;gap:8px}
+.kwrow span{background:var(--paper);border:1px solid var(--gold-soft);color:var(--gold);border-radius:100px;font-size:12.5px;padding:5px 14px;letter-spacing:.04em}
+.sec p.t{font-size:14px;line-height:1.9;color:#3d3a35}
+.dir{background:linear-gradient(180deg,#1E1B17,#141210);color:var(--cream);border-radius:10px;padding:18px 20px;margin-top:20px;text-align:left}
+.dir .h{font-size:11px;letter-spacing:.18em;color:var(--gold-soft);margin-bottom:6px}
+.dir p{font-family:"Noto Serif TC";font-size:16px;font-weight:500;line-height:1.6}
+.alt{margin-top:18px;text-align:left;background:var(--paper);border-radius:10px;padding:16px 18px}
+.alt .h{font-size:11px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px}
+.alt b{font-family:"Noto Serif TC";font-size:15px}
+.alt span{font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:12px 22px;border-radius:100px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50}
+.toast.on{opacity:1}
+
+/* ===== v2 追加：情境 / 狀態 / 燈號 / 行動卡 ===== */
+.backrow{height:20px;margin-bottom:8px}
+.back{font-size:12.5px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:inherit;padding:0;letter-spacing:.04em}
+.back:active{color:var(--gold)}
+.ctxwrap{padding-top:34px}
+.ctxlist{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.ctxrow{border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:16px 18px;cursor:pointer;text-align:left;transition:all .15s}
+.ctxrow:active{transform:scale(.98)}
+.ctxrow b{font-family:"Noto Serif TC";font-size:16px;font-weight:600;display:block;letter-spacing:.02em}
+.ctxrow span{font-size:12.5px;color:var(--muted);display:block;margin-top:3px}
+.stq{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 16px 15px;margin-bottom:12px;text-align:left}
+.stq .t{font-size:14.5px;line-height:1.7;margin-bottom:13px;color:#3d3a35}
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.sc{border:1px solid var(--line);border-radius:6px;padding:10px 2px;text-align:center;font-size:11.5px;color:var(--muted);background:var(--paper);cursor:pointer;transition:all .15s}
+.sc b{display:block;font-family:"Noto Serif TC";font-size:15px;margin-bottom:2px;font-weight:500}
+.sc.sel{background:var(--gold);border-color:var(--gold);color:#fff}
+.sc.sel b{color:#fff}
+.done{width:100%;font-family:inherit;font-size:16px;font-weight:500;padding:16px;border-radius:100px;border:none;background:var(--ink);color:var(--cream);cursor:pointer;letter-spacing:.08em;margin-top:10px}
+.done:disabled{background:var(--line);color:#a9a396;cursor:default}
+.lamp{width:54px;height:54px;border-radius:50%;margin:0 auto 16px;box-shadow:0 0 0 7px rgba(255,255,255,.07)}
+.card .top .band{font-size:12px;letter-spacing:.08em;color:#9a9488;margin-top:14px;line-height:1.6}
+.ctxline{background:var(--paper);border:1px solid var(--gold-soft);border-radius:10px;padding:15px 17px;margin-top:18px;font-family:"Noto Serif TC";font-size:14.5px;line-height:1.85;text-align:left;color:#3d3a35}
+.state{background:var(--paper);border-left:3px solid var(--gold);border-radius:6px;padding:14px 16px;margin-top:18px;text-align:left}
+.state .h{font-size:11px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px;font-weight:500}
+.state p{font-size:14px;line-height:1.85;color:#3d3a35}
+.act{margin-top:20px;text-align:left;border:1px solid var(--gold-soft);border-radius:10px;overflow:hidden}
+.act .hd{background:var(--gold-soft);color:var(--ink);font-family:"Noto Serif TC";font-size:14px;font-weight:600;padding:11px 16px;letter-spacing:.06em}
+.act .r{display:flex;gap:12px;padding:13px 16px;border-bottom:1px dashed var(--line);background:#fff}
+.act .r:last-child{border-bottom:none}
+.act .r b{font-family:"Noto Serif TC";color:var(--gold);min-width:50px;font-size:14.5px;flex-shrink:0}
+.act .r span{font-size:13.5px;line-height:1.78;color:#3d3a35}
+.cta2{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 20px;margin:18px 0 12px;text-align:center}
+.cta2 h4{font-family:"Noto Serif TC";font-size:16.5px;font-weight:600;margin-bottom:7px}
+.cta2 p{font-size:13px;color:var(--muted);margin-bottom:17px;line-height:1.75}
+.btn-main{display:block;width:100%;background:var(--ink);color:var(--cream);border:none;font-family:inherit;font-size:15px;font-weight:500;padding:15px;border-radius:100px;cursor:pointer;letter-spacing:.05em;margin-bottom:10px}
+.btn-sub{display:block;width:100%;background:none;color:var(--ink);border:1px solid var(--ink);font-family:inherit;font-size:14px;padding:13px;border-radius:100px;cursor:pointer;letter-spacing:.03em}
+.btn-main:active,.btn-sub:active{transform:scale(.98)}
+</style>
+</head>
+<body>
+<div id="app">
+  <section class="screen on" id="s-intro">
+    <div class="intro">
+      <div class="frame"></div>
+      <div class="eyebrow">PURELY · LIFESTYLE DNA</div>
+      <h1>你的居家<br>生活方式測驗</h1>
+      <p>一個情境、八張畫面、四句真心話。<br>你選的每一個畫面，都在說出你沒說的——你理想中的家，到底長什麼樣子。</p>
+      <div class="layers">聽 · 譯 · 顯 · 留 · 陪</div>
+      <div><button class="btn" onclick="start()">開始測驗</button></div>
+      <div class="note">約 2 分鐘 · 憑直覺，別想太久</div>
+    </div>
+  </section>
+
+  <section class="screen" id="s-ctx">
+    <div class="ctxwrap">
+      <div class="qtitle">先說，你現在面對的是哪一種？</div>
+      <div class="qsub">同一種原型，在不同階段該做的事完全不同</div>
+      <div class="ctxlist" id="ctxList"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="s-quiz">
+    <div class="topbar">
+      <div class="backrow"><button class="back" onclick="goBack()">← 上一題</button></div>
+      <div class="track"><i id="bar"></i></div>
+      <div class="qnum" id="qnum"></div>
+    </div>
+    <div id="qbody"></div>
+  </section>
+
+  <section class="screen" id="s-state">
+    <div class="topbar">
+      <div class="backrow"><button class="back" onclick="backToPhotos()">← 上一題</button></div>
+      <div class="track"><i id="bar2"></i></div>
+      <div class="qnum">最後一步 · 10 / 10</div>
+    </div>
+    <div class="qtitle">再四句真心話</div>
+    <div class="qsub">這四題請看著你「現在」住的地方，不是理想中的</div>
+    <div id="stBody"></div>
+    <button class="done" id="doneBtn" onclick="finish()" disabled>看我的結果</button>
+  </section>
+
+  <section class="screen" id="s-result">
+    <div class="result">
+      <div class="card" id="card"></div>
+      <button class="share" onclick="doShare()">分享我的結果</button>
+      <canvas id="cardCanvas" style="display:none"></canvas>
+      <div id="ctaBox"></div>
+      <button class="retry" onclick="reset()">重新測一次</button>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const QUIZ=[{"id": "art", "title": "哪一幅畫,你會掛在自己家?", "w": 1.3, "type": "photo", "options": [{"k": "A", "label": "暖調色塊", "img": "assets/img/art-A.jpg", "v": ["安定", "私密"]}, {"k": "B", "label": "古典風景", "img": "assets/img/art-B.jpg", "v": ["傳承", "地位"]}, {"k": "C", "label": "水墨遠山", "img": "assets/img/art-C.jpg", "v": ["安定", "本真"]}, {"k": "D", "label": "大膽當代", "img": "assets/img/art-D.jpg", "v": ["表達", "自由"]}, {"k": "E", "label": "黑白建築", "img": "assets/img/art-E.jpg", "v": ["秩序", "工藝"]}, {"k": "F", "label": "植物圖鑑", "img": "assets/img/art-F.jpg", "v": ["自然", "安定"]}, {"k": "G", "label": "幾何線條", "img": "assets/img/art-G.jpg", "v": ["秩序", "本真"]}, {"k": "H", "label": "抽象人物", "img": "assets/img/art-H.jpg", "v": ["私密", "表達"]}]}, {"id": "chair", "title": "下班回到家,你最想坐哪一張?", "w": 1.3, "type": "photo", "options": [{"k": "A", "label": "經典躺椅", "img": "assets/img/chair-A.jpg", "v": ["地位", "秩序"]}, {"k": "B", "label": "古典扶手椅", "img": "assets/img/chair-B.jpg", "v": ["傳承", "工藝"]}, {"k": "C", "label": "懶骨頭", "img": "assets/img/chair-C.jpg", "v": ["自由", "安定"]}, {"k": "D", "label": "雕塑孤品椅", "img": "assets/img/chair-D.jpg", "v": ["表達", "好奇"]}, {"k": "E", "label": "藤編椅", "img": "assets/img/chair-E.jpg", "v": ["自然", "自由"]}, {"k": "F", "label": "貴妃椅", "img": "assets/img/chair-F.jpg", "v": ["慶祝", "地位"]}, {"k": "G", "label": "鋼管椅", "img": "assets/img/chair-G.jpg", "v": ["秩序", "本真"]}, {"k": "H", "label": "實木單椅", "img": "assets/img/chair-H.jpg", "v": ["工藝", "本真"]}]}, {"id": "vase", "title": "餐桌上,你想擺哪一組花?", "w": 1.0, "type": "photo", "options": [{"k": "A", "label": "素陶枯枝", "img": "assets/img/vase-A.jpg", "v": ["安定", "本真"]}, {"k": "B", "label": "水晶牡丹", "img": "assets/img/vase-B.jpg", "v": ["慶祝", "地位"]}, {"k": "C", "label": "白瓷馬蹄蓮", "img": "assets/img/vase-C.jpg", "v": ["秩序", "本真"]}, {"k": "D", "label": "玻璃野花", "img": "assets/img/vase-D.jpg", "v": ["自由", "自然"]}, {"k": "E", "label": "黃銅繡球", "img": "assets/img/vase-E.jpg", "v": ["傳承", "慶祝"]}, {"k": "F", "label": "雕塑天堂鳥", "img": "assets/img/vase-F.jpg", "v": ["表達", "好奇"]}, {"k": "G", "label": "燒瓶單葉", "img": "assets/img/vase-G.jpg", "v": ["秩序", "自然"]}, {"k": "H", "label": "琥珀乾燥花", "img": "assets/img/vase-H.jpg", "v": ["工藝", "本真"]}]}, {"id": "lamp", "title": "夜裡,你想點哪一盞燈?", "w": 1.0, "type": "photo", "options": [{"k": "A", "label": "和紙球燈", "img": "assets/img/lamp-A.jpg", "v": ["安定", "本真"]}, {"k": "B", "label": "水晶吊燈", "img": "assets/img/lamp-B.jpg", "v": ["慶祝", "地位"]}, {"k": "C", "label": "軌道燈", "img": "assets/img/lamp-C.jpg", "v": ["秩序", "本真"]}, {"k": "D", "label": "黃銅燭台", "img": "assets/img/lamp-D.jpg", "v": ["傳承", "工藝"]}, {"k": "E", "label": "閱讀燈", "img": "assets/img/lamp-E.jpg", "v": ["私密", "表達"]}, {"k": "F", "label": "雕塑燈", "img": "assets/img/lamp-F.jpg", "v": ["表達", "好奇"]}, {"k": "G", "label": "陶土桌燈", "img": "assets/img/lamp-G.jpg", "v": ["工藝", "本真"]}, {"k": "H", "label": "藤編吊燈", "img": "assets/img/lamp-H.jpg", "v": ["自然", "自由"]}]}, {"id": "cup", "title": "每天早上,你想用哪一只杯子?", "w": 1.0, "type": "photo", "options": [{"k": "1", "label": "圓潤矮杯", "img": "assets/img/cup-1.jpg", "v": ["安定", "私密"]}, {"k": "2", "label": "直紋高杯", "img": "assets/img/cup-2.jpg", "v": ["本真", "秩序"]}, {"k": "3", "label": "方形厚底", "img": "assets/img/cup-3.jpg", "v": ["秩序", "地位"]}, {"k": "4", "label": "馬丁尼杯", "img": "assets/img/cup-4.jpg", "v": ["慶祝", "地位"]}, {"k": "5", "label": "短梗香檳", "img": "assets/img/cup-5.jpg", "v": ["慶祝", "私密"]}, {"k": "6", "label": "刻花水晶", "img": "assets/img/cup-6.jpg", "v": ["傳承", "工藝"]}, {"k": "7", "label": "長梗紅酒", "img": "assets/img/cup-7.jpg", "v": ["自由", "慶祝"]}, {"k": "8", "label": "人臉雕塑", "img": "assets/img/cup-8.jpg", "v": ["表達", "好奇"]}, {"k": "9", "label": "扭轉曲線", "img": "assets/img/cup-9.jpg", "v": ["自然", "本真"]}, {"k": "10", "label": "雙層玻璃", "img": "assets/img/cup-10.jpg", "v": ["秩序", "本真"]}, {"k": "11", "label": "冰裂紋杯", "img": "assets/img/cup-11.jpg", "v": ["工藝", "本真"]}]}, {"id": "col", "title": "哪一組顏色,最像你想住的家?", "w": 0.8, "type": "swatch", "options": [{"k": "A", "label": "奶霧裸色", "hex": ["#EFE8DC", "#E3D5C3", "#D8CCC0", "#CDBFB2", "#B8AB9E"], "v": ["安定", "本真"]}, {"k": "B", "label": "大地木石", "hex": ["#8A7357", "#A98F6F", "#6B5B45", "#C4B49A", "#4F463A"], "v": ["自然", "安定"]}, {"k": "C", "label": "暗調奢華", "hex": ["#1A1A1A", "#3A3A3E", "#5A2B33", "#2E3440", "#7A6A55"], "v": ["地位", "秩序"]}, {"k": "D", "label": "柔霧粉彩", "hex": ["#F3D9DA", "#DCE7E2", "#E8E0EE", "#F5EAD6", "#D3E2EF"], "v": ["私密", "表達"]}, {"k": "E", "label": "撞色大膽", "hex": ["#D94F30", "#1F5FA8", "#F2B705", "#177E63", "#8E3B8E"], "v": ["表達", "好奇"]}, {"k": "F", "label": "清爽北歐", "hex": ["#F7F7F4", "#CFE0DC", "#A8C3BC", "#7FA8A0", "#E4EBE8"], "v": ["秩序", "本真"]}, {"k": "G", "label": "復古黃銅", "hex": ["#7A4A2B", "#9C6B3C", "#5C3A2E", "#B08D57", "#3E2F2A"], "v": ["傳承", "工藝"]}, {"k": "H", "label": "活潑亮彩", "hex": ["#FF6F61", "#FFD23F", "#4FC1E9", "#A0D468", "#F78FB3"], "v": ["好奇", "慶祝"]}]}, {"id": "view", "title": "醒來時,你想看見哪一片窗景?", "w": 0.6, "type": "photo", "options": [{"k": "A", "label": "遠山", "img": "assets/img/view-A.jpg", "v": ["安定", "本真"]}, {"k": "B", "label": "海景", "img": "assets/img/view-B.jpg", "v": ["自由", "慶祝"]}, {"k": "C", "label": "城市夜景", "img": "assets/img/view-C.jpg", "v": ["地位", "秩序"]}, {"k": "D", "label": "庭院綠意", "img": "assets/img/view-D.jpg", "v": ["自然", "安定"]}, {"k": "E", "label": "巷弄老屋", "img": "assets/img/view-E.jpg", "v": ["傳承", "工藝"]}, {"k": "F", "label": "雪夜", "img": "assets/img/view-F.jpg", "v": ["私密", "表達"]}, {"k": "G", "label": "田野", "img": "assets/img/view-G.jpg", "v": ["自由", "自然"]}, {"k": "H", "label": "叢林", "img": "assets/img/view-H.jpg", "v": ["好奇", "自由"]}]}, {"id": "handle", "title": "最後一題:哪個門把,你想天天握著?", "w": 0.6, "type": "photo", "options": [{"k": "A", "label": "手工黃銅", "img": "assets/img/handle-A.jpg", "v": ["工藝", "本真"]}, {"k": "B", "label": "古典銅雕", "img": "assets/img/handle-B.jpg", "v": ["傳承", "工藝"]}, {"k": "C", "label": "不鏽鋼", "img": "assets/img/handle-C.jpg", "v": ["秩序", "本真"]}, {"k": "D", "label": "隱藏暗把", "img": "assets/img/handle-D.jpg", "v": ["秩序", "地位"]}, {"k": "E", "label": "雕塑造型", "img": "assets/img/handle-E.jpg", "v": ["表達", "好奇"]}, {"k": "F", "label": "實木", "img": "assets/img/handle-F.jpg", "v": ["自然", "本真"]}, {"k": "G", "label": "皮革", "img": "assets/img/handle-G.jpg", "v": ["私密", "工藝"]}, {"k": "H", "label": "標準鋁製", "img": "assets/img/handle-H.jpg", "v": ["本真", "秩序"]}]}];
+const ARCH=[{"no": 1, "zh": "靜奢職人派", "en": "Quiet Luxurist", "v": ["工藝", "本真"], "tag": "品質,是你唯一的標準", "desc": "你不追流行,你追品質。一件對的東西,你可以用很多年——你的家,值得最好的材質,藏在每一個摸得到的地方。", "traits": ["以品質而非價格做判斷", "偏好唯一性與手工感", "挑東西很久，但用很多年"], "kw": ["全屋材質計畫", "暖光低照度", "觸感優先"], "mat": "大地色、實木、粗獷石材、未上釉陶；金屬偏黃銅原色", "dir": "把預算放在每天摸得到的地方——把手、檯面、地板。"}, {"no": 2, "zh": "侘寂留白派", "en": "Wabi Minimalist", "v": ["安定", "本真"], "tag": "留白,是你給自己的奢侈", "desc": "對你來說,留白就是奢侈。你要的不是空,是安靜的密度——一個什麼都不做、也不會無聊的家。", "traits": ["把留白當成一種奢侈", "獨處時最自在", "重視空間的「氣」勝於「物」"], "kw": ["無主燈", "動線流動", "一個放空的角落"], "mat": "微水泥、原石、宣紙、藤；低對比、單一色階", "dir": "少而精，一件對的東西勝過十件普通的。"}, {"no": 3, "zh": "酒店精準派", "en": "Hotel Precisionist", "v": ["秩序", "地位"], "tag": "你的家,是只屬於你的酒店", "desc": "你喜歡秩序,也享受質感。你的家像一間只屬於你的酒店:俐落、對稱、連燈光都調好。", "traits": ["喜歡秩序與掌控感", "低調但講究格調", "時間寶貴，討厭失控"], "kw": ["對稱軸線", "隱藏收納", "預設燈光場景"], "mat": "深色石材大板、深木、金屬點綴；酒店式精緻", "dir": "把家規劃得像一間只屬於你的精品酒店。"}, {"no": 4, "zh": "極簡工學派", "en": "Minimal Engineer", "v": ["秩序", "本真"], "tag": "少,但要準", "desc": "少,但要準。對你來說每件東西都得有存在的理由——看不見的地方,才是真正的設計。", "traits": ["每件物品都要有存在的理由", "研究型、重邏輯", "對多餘之物生理性不適"], "kw": ["隱藏式設備", "無把手門片", "線性燈光"], "mat": "單一材質語彙、留白、精準對縫；日系與北歐的克制", "dir": "美，來自看不見的地方——收納、整合、精度。"}, {"no": 5, "zh": "務實機能派", "en": "Functional Pragmatist", "v": ["本真", "秩序"], "tag": "好用,就是最好的設計", "desc": "好用,就是你心中最好的設計。你不為裝飾買單,你為「用得順」買單。", "traits": ["好用就是最好的設計", "重 CP 值與耐用度", "不為裝飾買單"], "kw": ["最短動線", "好清潔面材", "機能優先"], "mat": "耐用標準材、好維護表面；務實不花俏", "dir": "每個設計都先講「為什麼需要」，再談美感。"}, {"no": 6, "zh": "社交慶典派", "en": "Celebration Host", "v": ["慶祝", "地位"], "tag": "家,是你的舞台", "desc": "家對你來說是舞台。你享受款待、享受有人舉杯的夜晚——你的家,要能為熱鬧發光。", "traits": ["家是社交舞台", "享受款待與宴客", "願為視覺效果投資"], "kw": ["中島吧台", "入場序列", "多層情境燈"], "mat": "金屬光澤、亮面材質、戲劇性主燈；公領域是主角", "dir": "讓客人一進門，就記得你家的樣子。"}, {"no": 7, "zh": "私密慶祝派", "en": "Private Celebrant", "v": ["慶祝", "私密"], "tag": "最好的,你留給自己", "desc": "你把最好的留給自己。不必給別人看,只要你知道——努力,值得一場安靜的慶祝。", "traits": ["把最好的留給自己", "品質是給自己的交代", "低調的儀式感"], "kw": ["主臥套房化", "獨處角落", "細節收邊"], "mat": "精緻收邊、一兩處貴氣細節；內斂不外顯", "dir": "把全屋最好的一角，留給一個人的時光。"}, {"no": 8, "zh": "傳承收藏派", "en": "Heritage Keeper", "v": ["傳承", "工藝"], "tag": "有故事的,才值得留下", "desc": "你偏愛有故事的東西。你的家,是替回憶留位置的地方——經典,永遠比流行走得遠。", "traits": ["偏愛有故事的東西", "重傳承與出處", "經典勝於流行"], "kw": ["展示與藏品照明", "老件混新作", "書房／收藏空間"], "mat": "線板、深木、黃銅、皮革；古典或新古典語彙", "dir": "先替有記憶的物件找到位置，再設計其他。"}, {"no": 9, "zh": "慢享品味派", "en": "Slow Epicure", "v": ["自由", "慶祝"], "tag": "把時間,慢慢醒開", "desc": "你要的是把時間慢下來。一張長桌、一盞暖燈、一杯慢慢醒的酒——生活的濃度,急不得。", "traits": ["重過程與氛圍勝於效率", "餐酒與深度交談是核心", "討厭被催促"], "kw": ["長桌與酒櫃", "可調暗燈光", "公領域留白"], "mat": "溫潤木質、有表情的材質；光影層次豐富", "dir": "用一個場景說故事：週五晚，燈調到三成。"}, {"no": 10, "zh": "創作原生派", "en": "Creative Original", "v": ["表達", "好奇"], "tag": "要別人家沒有的", "desc": "你要別人家沒有的。你的家最怕「像樣品屋」——它該是一件,只有你能定義的作品。", "traits": ["要別人家沒有的", "有玩心、自我認同強", "最怕像樣品屋"], "kw": ["一件視覺焦點", "訂製與孤品", "藝廊式陳列"], "mat": "混搭、跳色、藝術品；一面牆放大膽，其餘收斂", "dir": "讓家成為一件，只有你能定義的作品。"}, {"no": 11, "zh": "感性詩意派", "en": "Emotional Aesthete", "v": ["私密", "表達"], "tag": "家,承接你所有情緒", "desc": "你的家要能承接你一天所有的情緒。柔軟的光、有溫度的材質——一個人,也可以很完整。", "traits": ["家要能承接情緒", "獨處充電、社交選擇性", "詩意與觸感優先"], "kw": ["閱讀角與浴缸", "柔霧色", "有層次的光"], "mat": "織品層疊、曲線、柔霧色調；一盞好燈勝過一組沙發", "dir": "讓光有表情——不是均勻，是層次。"}, {"no": 12, "zh": "自然療癒派", "en": "Natural Healer", "v": ["自然", "安定"], "tag": "家,是第二層皮膚", "desc": "家,是你的第二層皮膚。你要的是綠意、光、風——一個能讓身心呼吸的地方。", "traits": ["家是身心的第二層皮膚", "親近自然與慢步調", "材質要有生命感"], "kw": ["窗景與陽台", "綠植計畫", "通透採光"], "mat": "木、石、藤、亞麻；大量自然光與綠意", "dir": "把捨不得的那個窗景，當成設計的錨點。"}, {"no": 13, "zh": "隨性自然派", "en": "Effortless Naturalist", "v": ["自由", "自然"], "tag": "美,像隨手發生", "desc": "美,對你來說要像隨手發生。你討厭被安排——你的家可以被弄亂,然後還是好看。", "traits": ["美要像隨手發生", "拒絕過度安排", "生活感勝於完成度"], "kw": ["可變動佈局", "開放層架", "輕鬆材質"], "mat": "自然無修飾材、可移動傢俱；留白比收納重要", "dir": "留餘裕給你玩——家可以被弄亂，然後還是好看。"}, {"no": 14, "zh": "身體直覺派", "en": "Sculptural Intuitive", "v": ["自然", "本真"], "tag": "憑身體,感受空間", "desc": "你憑身體感受空間。你要的家是流動的:弧線、柔光,順著你最放鬆的姿勢長出來。", "traits": ["憑身體感受空間", "親近流動與自然", "思考獨立不從眾"], "kw": ["弧形牆與曲面", "無主燈", "順著身體的尺度"], "mat": "微水泥、原石、藝術塗料；有機曲線、柔和光影", "dir": "照你最放鬆的姿勢，長出空間的高度與尺度。"}, {"no": 15, "zh": "安居靜謐派", "en": "Calm Nester", "v": ["安定", "私密"], "tag": "把重量,放心交出去", "desc": "家,是你可以放心把重量交出去的地方。柔軟、溫暖、包覆——精緻,藏在觸感裡。", "traits": ["家是能放心鬆掉的地方", "重舒適與安心感", "家庭與關係優先"], "kw": ["加深沙發", "圓角傢俱", "間接光"], "mat": "溫潤木質、織品層疊、地毯；圓角、柔軟、包覆", "dir": "精緻不必被看見——它藏在你摸到的每一處。"}, {"no": 16, "zh": "都會玩趣派", "en": "Playful Curator", "v": ["好奇", "慶祝"], "tag": "家,要好玩才行", "desc": "你討厭無聊勝過討厭出錯。你的家要好玩、要有顏色——生活本來就該有點童心。", "traits": ["討厭無聊勝過討厭出錯", "童心與玩趣", "要互動、要好玩"], "kw": ["亮色點綴", "造型燈具", "遊戲角落"], "mat": "白底承載彩色、造型單品；活潑但不疲勞", "dir": "讓家好玩——生活本來就該有點顏色。"}];
+
+/* ===================== v2 追加資料 ===================== */
+const CTX=[
+ {n:"預售屋・客變階段", s:"還在毛胚或圖面階段", line:"你手上握著最大的一張牌——水電、格局、開關高度都還改得動。這個階段做對的決定，之後省下的不只是錢，是你每天的動線。"},
+ {n:"新成屋・準備入住", s:"房子拿到了，還沒動工", line:"空屋是最好的起點。現在畫下的每一條線，會決定你未來十年怎麼過日子。"},
+ {n:"老屋翻新", s:"屋齡 15 年以上", line:"老屋的限制，其實就是它的個性。翻新不是把它抹掉，是讓它終於配得上現在的你。"},
+ {n:"局部改造", s:"只想先動一個空間", line:"從一個空間開始沒有不好——但它要能定調，之後其他空間才有得跟。"}
+];
+const STQ=[
+ "我現在住的地方，比較像「暫時住著」，不太像我的家。",
+ "有些空間我幾乎不會去待，就這樣放著。",
+ "我常常想動手改，但不知道從哪裡開始。",
+ "有客人要來的時候，我會有一點緊張。"
+];
+const SLAB=["很少","有時","常常","幾乎總是"];
+const BANDS=[
+ {max:7, name:"綠燈・已經很接近", color:"#5B7A6B", d:"你的家大致已經在支撐你的生活。接下來要處理的不是「不夠好」，是「還可以更準」。"},
+ {max:10,name:"黃燈・差一次轉譯", color:"#C9A227", d:"你知道自己要什麼，只是空間還沒把它翻譯出來。缺的通常不是預算，是一次完整的規劃。"},
+ {max:13,name:"橙燈・空間在拖累你", color:"#C8763C", d:"你已經在忍受空間了——有些角落你繞著走，有些事你在家裡做不了。這不是你的問題，是格局的問題。"},
+ {max:16,name:"紅燈・還不是你的家", color:"#A6474A", d:"現在的空間，跟你想過的生活是兩件事。與其一直修修補補，不如先重新問一次：這個家，到底要為誰服務。"}
+];
+const ACT={
+ 1:{k:"那幾件你用了很久、越用越好看的老東西——它們是你家的基準線。",d:"當初為了「先湊合」買的替代品。它會一直提醒你那次妥協。",i:"每天摸得到的地方：門把、檯面、地板、水龍頭。"},
+ 2:{k:"家裡那個什麼都沒放、卻讓你最放鬆的角落。",d:"「以後可能會用到」的那一批。留白比收納重要。",i:"隱藏式收納與無主燈——讓「空」有辦法一直維持下去。"},
+ 3:{k:"你已經習慣的那套動線與作息，設計要順著它走。",d:"所有需要你「順手整理」才好看的檯面陳列。",i:"燈光場景與整面收納——秩序要靠系統維持，不是靠自律。"},
+ 4:{k:"你已經篩選過、確定要留的那份清單。",d:"沒有理由存在的線板、造型與裝飾。",i:"看不見的地方：設備整合、對縫精度、無把手五金。"},
+ 5:{k:"現在用得順的動線，不要為了好看去改它。",d:"只為了拍照好看、但你其實不會用的設計。",i:"好清潔的面材與耐用五金——十年後差距最明顯的地方。"},
+ 6:{k:"你最常招待客人的那個場景，把它放大。",d:"為了多塞一間房而被犧牲掉的公領域。",i:"中島、入場序列、主燈——客人記得的就是這三樣。"},
+ 7:{k:"你一個人時最常待的那個位置。",d:"為了「怕別人覺得奇怪」而做的那些妥協。",i:"主臥套房化——把全屋最好的一角留給自己。"},
+ 8:{k:"那些有出處、捨不得丟的老件——先替它們找到位置，再設計其他。",d:"買來填空、但你其實沒有感情的傢俱。",i:"展示照明與書房／收藏空間。"},
+ 9:{k:"那張你願意坐上一整晚的長桌。",d:"會催你「快一點」的動線與家電。",i:"可調暗的燈光與酒櫃——氛圍是靠光調出來的。"},
+ 10:{k:"那件別人覺得奇怪、你卻很喜歡的東西。",d:"整套買、整套配的套裝式傢俱。",i:"一個視覺焦點——一面牆或一件孤品，其餘全部收斂。"},
+ 11:{k:"家裡那盞你最喜歡的光。",d:"全屋均勻的天花板主燈——它會把情緒抹平。",i:"有層次的光、織品，還有一個只屬於你的閱讀角。"},
+ 12:{k:"那個你捨不得的窗景，把它當成整案的錨點。",d:"擋住光與風的隔間與滿櫃。",i:"採光、通風、綠植計畫——家是你的第二層皮膚。"},
+ 13:{k:"那些可以被移動、被弄亂、隔天還是好看的東西。",d:"一旦做了就不能改的固定式木作。",i:"可變動佈局與開放層架——留餘裕給你玩。"},
+ 14:{k:"你在家裡最放鬆的那個姿勢——空間要順著它長。",d:"每個轉角都會撞到你的直角與稜線。",i:"弧形收邊、無主燈、順著身體的尺度。"},
+ 15:{k:"那張全家人都會坐上去的沙發。",d:"太硬、太銳利、讓你不敢真正放鬆的材質。",i:"加深沙發、圓角、間接光——精緻藏在觸感裡。"},
+ 16:{k:"那個讓你每次看到都會笑的東西。",d:"為了「大人一點」而被你放棄的顏色。",i:"白底加幾件造型單品——玩趣要有底，才不會看久了累。"}
+};
+
+/* ===================== 流程 ===================== */
+let cur=0, scores={}, ctx=null, picks=[], st=[0,0,0,0];
+function el(id){return document.getElementById(id)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));el(id).classList.add('on');window.scrollTo(0,0)}
+function start(){cur=0;scores={};picks=[];st=[0,0,0,0];ctx=null;renderCtx();show('s-ctx')}
+function reset(){show('s-intro')}
+
+function renderCtx(){
+  el('ctxList').innerHTML=CTX.map((c,i)=>
+    '<div class="ctxrow" onclick="pickCtx('+i+')"><b>'+c.n+'</b><span>'+c.s+'</span></div>').join('');
+}
+function pickCtx(i){ctx=CTX[i];cur=0;render();show('s-quiz')}
+
+function render(){
+  const q=QUIZ[cur];
+  el('bar').style.width=((cur+1)/10*100)+'%';
+  el('qnum').textContent=(cur+2)+' / 10';
+  let html='<div class="qtitle">'+q.title+'</div><div class="qsub">憑直覺，三秒內選一個</div><div class="opts">';
+  q.options.forEach(o=>{
+    const arg=JSON.stringify(o.v).replace(/"/g,'&quot;')+','+q.w;
+    if(q.type==='swatch'){
+      html+='<div class="opt sw" onclick="pick('+arg+')"><div class="sws">'+o.hex.map(h=>'<i style="background:'+h+'"></i>').join('')+'</div><div class="lbl">'+o.label+'</div></div>';
+    }else{
+      html+='<div class="opt" onclick="pick('+arg+')"><img src="'+o.img+'" loading="lazy"><div class="lbl">'+o.label+'</div></div>';
+    }
+  });
+  el('qbody').innerHTML=html+'</div>';
+}
+function addScore(v,w,sign){
+  scores[v[0]]=(scores[v[0]]||0)+sign*2*w;
+  scores[v[1]]=(scores[v[1]]||0)+sign*1*w;
+}
+function pick(v,w){
+  picks[cur]={v:v,w:w}; addScore(v,w,1); cur++;
+  if(cur<QUIZ.length){render();window.scrollTo(0,0);}
+  else{renderState();show('s-state');}
+}
+function goBack(){
+  if(cur===0){show('s-ctx');return;}
+  cur--; const p=picks[cur]; if(p){addScore(p.v,p.w,-1);picks[cur]=null;}
+  render();
+}
+function backToPhotos(){
+  cur=QUIZ.length-1; const p=picks[cur]; if(p){addScore(p.v,p.w,-1);picks[cur]=null;}
+  render(); show('s-quiz');
+}
+function renderState(){
+  el('bar2').style.width='100%';
+  el('stBody').innerHTML=STQ.map((q,i)=>
+    '<div class="stq"><div class="t">'+(i+9)+'. '+q+'</div><div class="scale">'+
+    SLAB.map((l,j)=>'<div class="sc" data-i="'+i+'" data-v="'+(j+1)+'" onclick="setSt('+i+','+(j+1)+')"><b>'+(j+1)+'</b>'+l+'</div>').join('')+
+    '</div></div>').join('');
+  el('doneBtn').disabled=true;
+}
+function setSt(i,v){
+  st[i]=v;
+  document.querySelectorAll('.sc[data-i="'+i+'"]').forEach(x=>x.classList.remove('sel'));
+  document.querySelector('.sc[data-i="'+i+'"][data-v="'+v+'"]').classList.add('sel');
+  el('doneBtn').disabled=st.some(x=>x===0);
+}
+
+function finish(){
+  const sum=st.reduce((a,b)=>a+b,0);
+  const band=BANDS.find(b=>sum<=b.max);
+  const ranked=ARCH.map(a=>({a,sc:(scores[a.v[0]]||0)*2+(scores[a.v[1]]||0)*1,dom:(scores[a.v[0]]||0)}))
+    .sort((x,y)=> y.sc-x.sc || y.dom-x.dom);
+  const best=ranked[0].a;
+  const alt=ranked.find(r=>r.a.no!==best.no).a;
+  const act=ACT[best.no];
+  window._result=best; window._band=band; window._ctx=ctx; window._sum=sum;
+
+  el('card').innerHTML=
+    '<div class="top">'+
+      '<div class="lamp" style="background:'+band.color+'"></div>'+
+      '<div class="k">你的居家原型</div><h2>'+best.zh+'</h2><div class="en">'+best.en+'</div>'+
+      '<div class="tag">'+best.tag+'</div>'+
+      '<div class="band">在「'+ctx.n+'」的階段・'+band.name+'（狀態 '+sum+'/16）</div>'+
+    '</div>'+
+    '<div class="body">'+
+      '<div class="quote">「'+best.tag+'」</div>'+
+      '<div class="desc">'+best.desc+'</div>'+
+      '<div class="ctxline">'+ctx.line+'</div>'+
+      '<div class="state"><div class="h">你現在的狀態</div><p>'+band.d+'</p></div>'+
+      '<div class="sec"><div class="h">你的三個居家特質</div><ul>'+best.traits.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>'+
+      '<div class="sec"><div class="h">你的空間關鍵字</div><div class="kwrow">'+best.kw.map(k=>'<span>'+k+'</span>').join('')+'</div></div>'+
+      '<div class="sec"><div class="h">適合你的材質與色調</div><p class="t">'+best.mat+'</p></div>'+
+      '<div class="dir"><div class="h">給你的設計方向</div><p>'+best.dir+'</p></div>'+
+      '<div class="act"><div class="hd">你的「留 · 捨 · 投資」行動卡</div>'+
+        '<div class="r"><b>該留</b><span>'+act.k+'</span></div>'+
+        '<div class="r"><b>該捨</b><span>'+act.d+'</span></div>'+
+        '<div class="r"><b>該投資</b><span>'+act.i+'</span></div>'+
+      '</div>'+
+      '<div class="alt"><div class="h">你的另一面</div><b>'+alt.zh+'</b> <span>'+alt.en+'　'+alt.tag+'</span></div>'+
+    '</div>'+
+    '<div class="foot">菩語國際設計 <span class="g">PURELY</span>　聽 · 譯 · 顯 · 留 · 陪</div>';
+
+  el('ctaBox').innerHTML=
+    '<div class="cta2">'+
+      '<h4>把「'+best.zh+'」留下來</h4>'+
+      '<p>存成一張卡片，發限動、或哪天要跟設計師講你想要什麼的時候，直接拿出來。</p>'+
+      '<button class="btn-main" id="saveBtn" onclick="saveCard()">把這張卡存下來</button>'+
+      '<button class="btn-sub" onclick="toast(\'這裡接你的官網預約頁\')">預約菩語設計諮詢 →</button>'+
+    '</div>';
+  show('s-result');
+}
+
+/* ============ 結果卡輸出成圖片（1080×1350） ============ */
+const CW=1080, PAD=64, INNER=CW-PAD*2;
+function F(weight,size,serif){return weight+' '+size+'px "Noto '+(serif?'Serif':'Sans')+' TC", '+(serif?'serif':'sans-serif');}
+const NO_START='。，、；：？！）」』】〉》・…—～%',
+      NO_END  ='（「『【〈《';
+function wrapCJK(c,text,maxW){
+  const out=[]; let line='';
+  for(const ch of text){
+    if(ch==='\n'){out.push(line);line='';continue;}
+    if(line && c.measureText(line+ch).width>maxW){
+      // 避頭尾：不讓標點落在行首，也不讓開引號落在行尾
+      if(NO_START.indexOf(ch)>=0 && line.length>1){
+        out.push(line.slice(0,-1)); line=line.slice(-1)+ch;
+      }else if(NO_END.indexOf(line.slice(-1))>=0 && line.length>1){
+        out.push(line.slice(0,-1)); line=line.slice(-1)+ch;
+      }else{ out.push(line); line=ch; }
+    }
+    else line+=ch;
+  }
+  if(line)out.push(line);
+  return out;
+}
+function rr(c,x,y,w,h,r){
+  c.beginPath();
+  c.moveTo(x+r,y); c.lineTo(x+w-r,y); c.quadraticCurveTo(x+w,y,x+w,y+r);
+  c.lineTo(x+w,y+h-r); c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
+  c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y); c.closePath();
+}
+async function buildCard(){
+  const r=window._result, b=window._band, a=ACT[r.no], cx=window._ctx, sum=window._sum;
+  const cv=document.getElementById('cardCanvas'), c=cv.getContext('2d');
+  try{ if(document.fonts&&document.fonts.ready) await document.fonts.ready; }catch(e){}
+
+  // --- 先量高度 ---
+  c.font=F(300,30); const descL=wrapCJK(c,r.desc,INNER-96);
+  c.font=F(300,28); const actL=[a.k,a.d,a.i].map(t=>wrapCJK(c,t,INNER-96-110));
+  const HEAD=560;
+  const bodyH = 60 + 52 + descL.length*48 + 44
+              + 58 + actL.reduce((n,L)=>n+Math.max(64,L.length*42+26),0) + 40;
+  const H = HEAD + bodyH + 96;
+  cv.width=CW; cv.height=H;
+
+  // --- 背景 ---
+  c.fillStyle='#F5F2EC'; c.fillRect(0,0,CW,H);
+  c.fillStyle='#fff'; rr(c,PAD,PAD,INNER,H-PAD*2,28); c.fill();
+
+  // --- 深色頭 ---
+  c.save(); rr(c,PAD,PAD,INNER,H-PAD*2,28); c.clip();
+  c.fillStyle='#1A1A1A'; c.fillRect(PAD,PAD,INNER,HEAD-PAD);
+  c.restore();
+
+  let y=PAD+92;
+  c.textAlign='center';
+  c.fillStyle=b.color; c.beginPath(); c.arc(CW/2,y,38,0,Math.PI*2); c.fill();
+  y+=96;
+  c.fillStyle='#B08D57'; c.font=F(500,22); c.fillText('你 的 居 家 原 型',CW/2,y);
+  y+=76;
+  c.fillStyle='#F5F2EC'; c.font=F(600,68,true); c.fillText(r.zh,CW/2,y);
+  y+=40;
+  c.fillStyle='#9a9488'; c.font=F(400,22); c.fillText(r.en.toUpperCase(),CW/2,y);
+  y+=58;
+  c.font=F(400,26); const tw=c.measureText(r.tag).width;
+  c.strokeStyle='#B08D57'; c.lineWidth=1.5; rr(c,CW/2-tw/2-26,y-30,tw+52,46,23); c.stroke();
+  c.fillStyle='#D9C4A3'; c.fillText(r.tag,CW/2,y);
+  y+=54;
+  c.fillStyle='#9a9488'; c.font=F(300,23);
+  c.fillText('在「'+cx.n+'」的階段 · '+b.name+'（狀態 '+sum+'/16）',CW/2,y);
+
+  // --- 內文 ---
+  y=HEAD+40; c.textAlign='left';
+  const LX=PAD+48;
+  c.fillStyle='#B08D57'; c.font=F(500,34,true);
+  c.fillText('「'+r.tag+'」',LX,y); y+=52;
+  c.fillStyle='#3d3a35'; c.font=F(300,30);
+  descL.forEach(l=>{c.fillText(l,LX,y);y+=48;});
+  y+=32;
+
+  // --- 行動卡 ---
+  c.fillStyle='#D9C4A3'; rr(c,LX,y-34,INNER-96,52,8); c.fill();
+  c.fillStyle='#1A1A1A'; c.font=F(600,26,true);
+  c.fillText('  留 · 捨 · 投資',LX+8,y); y+=60;
+  ['該留','該捨','該投資'].forEach((lab,i)=>{
+    c.fillStyle='#B08D57'; c.font=F(500,28,true); c.fillText(lab,LX,y);
+    c.fillStyle='#3d3a35'; c.font=F(300,28);
+    actL[i].forEach((l,j)=>c.fillText(l,LX+110,y+j*42));
+    y+=Math.max(64,actL[i].length*42+26);
+    if(i<2){c.strokeStyle='#E3DDD1';c.lineWidth=1;c.beginPath();c.moveTo(LX,y-24);c.lineTo(PAD+INNER-48,y-24);c.stroke();}
+  });
+
+  // --- 頁尾 ---
+  c.textAlign='center'; c.fillStyle='#7A756B'; c.font=F(400,22);
+  c.fillText('菩語國際設計 PURELY   聽 · 譯 · 顯 · 留 · 陪',CW/2,H-PAD-16);
+  return cv;
+}
+function shareText(){
+  const r=window._result,b=window._band;
+  return '我的居家原型是【'+r.zh+'・'+r.en+'】——'+r.tag+'。\n目前狀態：'+b.name+'。\n你呢？來測你的居家 Lifestyle DNA！\n#菩語生活測驗 #PURELY';
+}
+function canvasBlob(cv){return new Promise(res=>cv.toBlob(res,'image/png'));}
+async function saveCard(){
+  const btn=document.getElementById('saveBtn'); const old=btn.textContent;
+  btn.textContent='產生中…'; btn.disabled=true;
+  try{
+    const cv=await buildCard();
+    const blob=await canvasBlob(cv);
+    const name='菩語居家原型_'+window._result.zh+'.png';
+    const file=new File([blob],name,{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:shareText()});
+      toast('已送出，貼到限動吧！');
+    }else{
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob); a.download=name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+      toast('卡片已存到你的下載資料夾');
+    }
+  }catch(e){ console.error(e); toast('存檔失敗，先截圖也可以'); }
+  btn.textContent=old; btn.disabled=false;
+}
+async function doShare(){
+  const txt=shareText();
+  try{
+    const cv=await buildCard();
+    const blob=await canvasBlob(cv);
+    const file=new File([blob],'菩語居家原型.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],text:txt}); return;
+    }
+  }catch(e){}
+  if(navigator.share){ try{ await navigator.share({title:'菩語生活測驗',text:txt}); return; }catch(e){} }
+  if(navigator.clipboard) navigator.clipboard.writeText(txt);
+  toast('文字已複製，也可以按「把這張卡存下來」');
+}
+let tt;
+function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2600);}
+</script>
+</body>
+</html>
