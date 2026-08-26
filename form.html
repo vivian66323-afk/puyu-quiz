@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>聊聊你家的可能｜菩語國際設計</title>
+<meta name="description" content="三步驟、約兩分鐘。說說你家現在的狀況與你最想解決的一件事，菩語會在一個工作天內回覆。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1A1A;--cream:#F5F2EC;--gold:#B08D57;--gold-soft:#D9C4A3;--paper:#FBFAF6;--line:#E3DDD1;--muted:#7A756B;--err:#A6474A}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-weight:300}
+#app{max-width:560px;margin:0 auto;min-height:100vh;padding:0 22px 60px}
+.screen{display:none}.screen.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* 頭 */
+.top{padding:26px 0 18px;position:sticky;top:0;background:var(--cream);z-index:10}
+.brand{font-family:"Noto Serif TC";font-size:15px;font-weight:600;letter-spacing:.08em}
+.brand small{font-size:9px;letter-spacing:.3em;color:var(--gold);font-weight:400;display:block;margin-top:2px}
+.track{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:16px}
+.track i{display:block;height:100%;background:var(--gold);transition:width .4s ease;width:0}
+.stepno{font-size:11.5px;color:var(--muted);letter-spacing:.1em;margin-top:9px;display:flex;justify-content:space-between}
+.back{background:none;border:none;font-family:inherit;font-size:11.5px;color:var(--muted);cursor:pointer;padding:0}
+.back:active{color:var(--gold)}
+
+/* 封面 */
+.intro{min-height:82vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:30px 8px}
+.eyebrow{font-size:11px;letter-spacing:.4em;color:var(--gold);font-weight:500;margin-bottom:16px}
+h1{font-family:"Noto Serif TC";font-weight:600;font-size:29px;letter-spacing:.03em;line-height:1.45}
+.intro p{color:var(--muted);font-size:14.5px;margin:18px auto 0;max-width:360px;line-height:1.95}
+.promise{margin:26px auto 32px;max-width:380px;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.promise div{font-size:13.5px;color:#3d3a35;padding:5px 0 5px 22px;position:relative}
+.promise div::before{content:"";position:absolute;left:2px;top:14px;width:6px;height:6px;border-radius:50%;background:var(--gold-soft)}
+.note{font-size:12px;color:var(--muted);margin-top:16px;letter-spacing:.03em}
+
+/* 題目 */
+.sechead{font-family:"Noto Serif TC";font-size:21px;font-weight:600;margin:22px 0 4px}
+.secsub{font-size:12.5px;color:var(--gold);letter-spacing:.04em;margin-bottom:22px}
+.q{margin-bottom:26px}
+.lab{font-size:14.5px;font-weight:400;margin-bottom:4px;color:#2b2926}
+.lab b{color:var(--err);font-weight:400;margin-left:3px}
+.hint{font-size:12.5px;color:var(--muted);margin-bottom:11px;line-height:1.75}
+.anchor{background:var(--paper);border-left:3px solid var(--gold);border-radius:6px;padding:13px 15px;margin-bottom:12px;font-size:13px;line-height:1.8;color:#3d3a35}
+.anchor em{font-style:normal;color:var(--gold);font-weight:500}
+.opts{display:grid;gap:9px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opt{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:13px 15px;cursor:pointer;font-size:14px;transition:.15s;line-height:1.5}
+.opt:active{transform:scale(.98)}
+.opt.sel{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.opts.two .opt,.opts.three .opt{text-align:center;padding:13px 6px}
+input[type=text],input[type=tel],textarea{width:100%;font-family:inherit;font-size:15px;font-weight:300;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:13px 15px;outline:none;transition:.15s}
+input:focus,textarea:focus{border-color:var(--gold);background:#fff}
+textarea{min-height:104px;resize:vertical;line-height:1.8}
+.err{border-color:var(--err)!important}
+.errmsg{color:var(--err);font-size:12.5px;margin-top:6px;display:none}
+.errmsg.on{display:block}
+
+/* 按鈕 */
+.nav{margin-top:34px}
+.btn{width:100%;font-family:inherit;font-size:16px;font-weight:500;padding:16px;border-radius:100px;border:none;cursor:pointer;letter-spacing:.06em;transition:.2s}
+.btn:active{transform:scale(.98)}
+.btn-dark{background:var(--ink);color:var(--cream)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-ghost{background:none;color:var(--ink);border:1px solid var(--ink);margin-top:10px}
+
+/* 完成 */
+.done{padding-top:44px;text-align:center}
+.tick{width:62px;height:62px;border-radius:50%;background:var(--gold);margin:0 auto 22px;position:relative}
+.tick::after{content:"";position:absolute;left:21px;top:16px;width:16px;height:26px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg)}
+.done h2{font-family:"Noto Serif TC";font-size:25px;font-weight:600;margin-bottom:10px}
+.done .sub{font-size:14px;color:var(--muted);margin-bottom:26px;line-height:1.9}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 20px;text-align:left;margin-bottom:22px}
+.row{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.row:last-child{border-bottom:none}
+.row b{color:var(--gold);font-weight:400;min-width:76px;flex-shrink:0;font-size:12.5px;padding-top:1px}
+.row span{color:#3d3a35;line-height:1.7}
+.foot{text-align:center;font-size:11.5px;color:var(--muted);letter-spacing:.06em;margin-top:34px;line-height:2}
+.foot a{color:var(--gold);text-decoration:none}
+.toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:12px 22px;border-radius:100px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:50;max-width:88vw;text-align:center}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- 封面 -->
+  <section class="screen on" id="s0">
+    <div class="intro">
+      <div class="eyebrow">PURELY · 預約諮詢</div>
+      <h1>聊聊你家的<br>可能</h1>
+      <p>三個步驟、大約兩分鐘。<br>先讓菩語知道你家現在的樣子，跟你最想解決的那一件事。</p>
+      <div class="promise">
+        <div>不推銷、不綁約，先聊聊而已</div>
+        <div>一個工作天內，由設計師本人回覆</div>
+        <div>你留的資料只用來回覆你</div>
+      </div>
+      <div><button class="btn btn-dark" onclick="go(1)">開始</button></div>
+      <div class="note">已經測過生活測驗？結果會自動帶進來</div>
+    </div>
+  </section>
+
+  <!-- 三個步驟 -->
+  <section class="screen" id="s1"></section>
+  <section class="screen" id="s2"></section>
+  <section class="screen" id="s3"></section>
+
+  <!-- 完成 -->
+  <section class="screen" id="s4">
+    <div class="done">
+      <div class="tick"></div>
+      <h2 id="doneTitle">收到了</h2>
+      <div class="sub" id="doneSub"></div>
+      <div class="card" id="summary"></div>
+      <button class="btn btn-gold" onclick="toLine()">用 LINE 傳給菩語　→</button>
+      <button class="btn btn-ghost" onclick="copyAll()">複製這份內容</button>
+      <div class="foot">
+        菩語國際設計 PURELY<br>
+        LINE @mtz3778c　│　0960-558-533<br>
+        <a href="https://www.purely2006.com" target="_blank" rel="noopener">purely2006.com</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== 表單定義 ===================== */
+/* ⚠️ TODO Vivian：下面 anchor 那句的價格帶要你填真實數字，我不編。 */
+const PRICE_ANCHOR =
+  '桃園整案（設計＋工程）目前多落在每坪 <em>__ – __ 萬</em>。'
++ '先讓你有個底，再看你心裡的範圍比較接近哪一段——'
++ '這一題只是抓方向，不是報價。';
+
+const STEPS=[
+ {t:'你的家', s:'先了解狀況，都是選擇題', q:[
+   {k:'stage', l:'你現在面對的是哪一種？', r:1, type:'radio', o:[
+     '預售屋・客變階段','新成屋・準備入住','老屋翻新（15 年以上）','局部改造（單一空間）','商業空間']},
+   {k:'city', l:'房子在哪裡？', r:1, type:'radio', cls:'three', o:['桃園','台北','新北','新竹','台中','其他']},
+   {k:'ping', l:'室內大約幾坪？', r:1, type:'radio', cls:'three', o:[
+     '20 坪以下','20–30 坪','30–50 坪','50–80 坪','80 坪以上','還不確定']},
+   {k:'layout', l:'目前的格局', type:'text', ph:'例：3 房 2 廳 2 衛（不確定就留空）'},
+ ]},
+ {t:'你的想像', s:'這一段最重要，慢慢寫沒關係', q:[
+   {k:'pain', l:'這次最想解決的，是哪一件事？', r:1, type:'area',
+    h:'一件就好。越具體，菩語越能先幫你想。',
+    ph:'例：客廳整天都很暗／收納永遠不夠／想要一個自己的角落／爸媽要一起住，但想保留各自的空間…'},
+   {k:'pet', l:'家裡有毛孩嗎？', type:'radio', cls:'two', o:['沒有','有狗','有貓','狗貓都有']},
+   {k:'when', l:'希望什麼時候動工？', r:1, type:'radio', cls:'two', o:[
+     '3 個月內','3–6 個月','半年以上','還在觀望']},
+   {k:'budget', l:'你心裡的預算範圍？', type:'radio', anchor:PRICE_ANCHOR, o:[
+     '100 萬以下','100–200 萬','200–350 萬','350–500 萬','500 萬以上','想先聽聽建議']},
+ ]},
+ {t:'怎麼找你', s:'最後一步了', q:[
+   {k:'name', l:'怎麼稱呼你？', r:1, type:'text', ph:'例：陳小姐'},
+   {k:'contact', l:'電話或 LINE ID', r:1, type:'text', ph:'留一個方便的就好'},
+   {k:'time', l:'方便聯絡的時段', type:'radio', cls:'two', o:['上班時間','晚上','假日','都可以']},
+   {k:'from', l:'你是從哪裡認識菩語的？', type:'radio', cls:'two', o:[
+     '生活測驗','Facebook','Instagram','Threads','Google 搜尋','朋友介紹']},
+ ]},
+];
+
+/* ===================== 狀態 ===================== */
+const A={};                       // 答案
+let cur=0;
+const el=id=>document.getElementById(id);
+
+/* 從測驗帶過來的參數 */
+const P=new URLSearchParams(location.search);
+const fromQuiz={type:P.get('type')||'', stage:P.get('stage')||'', band:P.get('band')||''};
+if(fromQuiz.stage) A.stage=fromQuiz.stage;
+if(fromQuiz.type)  A.from='生活測驗';
+
+/* ===================== 繪製 ===================== */
+function render(n){
+  const S=STEPS[n-1];
+  let h='<div class="top">'
+   +'<div class="brand">菩語國際設計<small>PURELY INTERIOR DESIGN</small></div>'
+   +'<div class="track"><i style="width:'+(n/3*100)+'%"></i></div>'
+   +'<div class="stepno"><button class="back" onclick="go('+(n-1)+')">← 上一步</button>'
+   +'<span>步驟 '+n+' / 3</span></div></div>'
+   +'<div class="sechead">'+S.t+'</div><div class="secsub">'+S.s+'</div>';
+
+  S.q.forEach(q=>{
+    h+='<div class="q" id="q-'+q.k+'">'
+      +'<div class="lab">'+q.l+(q.r?'<b>*</b>':'')+'</div>'
+      +(q.h?'<div class="hint">'+q.h+'</div>':'')
+      +(q.anchor?'<div class="anchor">'+q.anchor+'</div>':'');
+    if(q.type==='radio'){
+      h+='<div class="opts '+(q.cls||'')+'">'
+        +q.o.map(o=>'<div class="opt'+(A[q.k]===o?' sel':'')+'" data-k="'+q.k+'" data-v="'+o+'">'+o+'</div>').join('')
+        +'</div>';
+    }else if(q.type==='area'){
+      h+='<textarea id="i-'+q.k+'" placeholder="'+q.ph+'">'+(A[q.k]||'')+'</textarea>';
+    }else{
+      h+='<input type="text" id="i-'+q.k+'" placeholder="'+q.ph+'" value="'+(A[q.k]||'').replace(/"/g,'&quot;')+'">';
+    }
+    h+='<div class="errmsg" id="e-'+q.k+'">這一題要填喔</div></div>';
+  });
+
+  h+='<div class="nav"><button class="btn btn-dark" onclick="next('+n+')">'
+   +(n===3?'送出':'下一步')+'</button></div>';
+  el('s'+n).innerHTML=h;
+
+  el('s'+n).querySelectorAll('.opt').forEach(o=>o.addEventListener('click',()=>{
+    const k=o.dataset.k;
+    el('s'+n).querySelectorAll('.opt[data-k="'+k+'"]').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel'); A[k]=o.dataset.v; clearErr(k);
+  }));
+  S.q.forEach(q=>{
+    const i=el('i-'+q.k);
+    if(i) i.addEventListener('input',()=>{A[q.k]=i.value.trim();clearErr(q.k);});
+  });
+}
+function clearErr(k){
+  const e=el('e-'+k); if(e) e.classList.remove('on');
+  const i=el('i-'+k); if(i) i.classList.remove('err');
+}
+
+/* ===================== 流程 ===================== */
+function show(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  el('s'+n).classList.add('on'); window.scrollTo(0,0); cur=n;
+}
+function go(n){ if(n<=0){show(0);return;} render(n); show(n); }
+function next(n){
+  const S=STEPS[n-1]; let ok=true, first=null;
+  S.q.forEach(q=>{
+    if(!q.r) return;
+    if(!A[q.k]){
+      ok=false; if(!first) first=q.k;
+      el('e-'+q.k).classList.add('on');
+      const i=el('i-'+q.k); if(i) i.classList.add('err');
+    }
+  });
+  if(!ok){ el('q-'+first).scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if(n<3){ go(n+1); } else { finish(); }
+}
+
+/* ===================== 完成 ===================== */
+const LABEL={stage:'階段',city:'地點',ping:'坪數',layout:'格局',pain:'最想解決',
+ pet:'毛孩',when:'動工時間',budget:'預算範圍',name:'稱呼',contact:'聯絡方式',
+ time:'方便時段',from:'認識管道'};
+const ORDER=['stage','city','ping','layout','pain','pet','when','budget','name','contact','time','from'];
+
+function lines(){
+  const out=[];
+  if(fromQuiz.type) out.push(['居家原型', fromQuiz.type+(fromQuiz.band?'（'+fromQuiz.band+'）':'')]);
+  ORDER.forEach(k=>{ if(A[k]) out.push([LABEL[k], A[k]]); });
+  return out;
+}
+function finish(){
+  el('doneTitle').textContent='收到了，'+A.name;
+  el('doneSub').innerHTML='菩語會在 <b style="color:#B08D57">一個工作天內</b> 回覆你。<br>'
+   +'想更快的話，直接用 LINE 把這份內容傳過來。';
+  el('summary').innerHTML=lines().map(([k,v])=>
+    '<div class="row"><b>'+k+'</b><span>'+v.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</span></div>').join('');
+  show(4);
+}
+function asText(){
+  return '【菩語諮詢預約】\n'+lines().map(([k,v])=>k+'：'+v).join('\n');
+}
+function toLine(){
+  const t=asText();
+  try{ if(navigator.clipboard) navigator.clipboard.writeText(t); }catch(e){}
+  toast('內容已複製，貼上就能傳給菩語');
+  setTimeout(()=>{ location.href='https://line.me/R/oaMessage/'
+    +encodeURIComponent('@mtz3778c')+'/?'+encodeURIComponent(t); },700);
+}
+function copyAll(){
+  const t=asText();
+  if(navigator.clipboard){ navigator.clipboard.writeText(t); toast('已複製'); }
+  else toast('請長按上面的內容複製');
+}
+let tt;
+function toast(m){const e=el('toast');e.textContent=m;e.classList.add('on');
+  clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),2600);}
+</script>
+</body>
+</html>
