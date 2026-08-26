@@ -144,6 +144,9 @@ const STEPS=[
    {k:'pain', l:'這次最想解決的是什麼？', r:1, type:'area',
     h:'最少寫出一件就好。越具體，菩語越能先幫你想。沒有想法請寫沒有想法，設計討論階段菩語會幫你找出你的問題。',
     ph:'例：客廳整天都很暗／收納永遠不夠／想要一個自己的角落／爸媽要一起住，但想保留各自的空間…'},
+   {k:'family', l:'會有哪些人一起住？', r:1, type:'radio', cls:'two',
+    h:'這一題會直接影響房間數、動線與收納的規劃。',
+    o:['一個人住','兩人（夫妻／伴侶）','兩代同堂（有小孩）','三代同堂（含長輩）','其它']},
    {k:'pet', l:'家裡有毛孩嗎？', type:'radio', cls:'two', o:['沒有','有狗','有貓','狗貓都有','其它']},
    {k:'when', l:'希望什麼時候動工？', r:1, type:'radio', cls:'two', o:[
      '3 個月內','3–6 個月','半年以上','還在觀望']},
@@ -248,10 +251,11 @@ function next(n){
 
 /* ===================== 完成 ===================== */
 const LABEL={stage:'房子狀況',service:'需要的服務',city:'地點',ping:'坪數',layout:'格局',
- pain:'最想解決',pet:'毛孩',when:'動工時間',endby:'完工期望',budget:'預算範圍',
- name:'稱呼',phone:'電話',lineid:'LINE ID',email:'信箱',time:'方便時段',from:'認識管道'};
-const ORDER=['stage','service','city','ping','layout','pain','pet','when','endby','budget',
- 'name','phone','lineid','email','time','from'];
+ pain:'最想解決',family:'家庭成員',pet:'毛孩',when:'動工時間',endby:'完工期望',
+ budget:'預算範圍',name:'稱呼',phone:'電話',lineid:'LINE ID',email:'信箱',
+ time:'方便時段',from:'認識管道'};
+const ORDER=['stage','service','city','ping','layout','pain','family','pet','when','endby',
+ 'budget','name','phone','lineid','email','time','from'];
 
 function lines(){
   const out=[];
