@@ -136,9 +136,11 @@ const PRICE_ANCHOR =
 
 const STEPS=[
  {t:'你的家', s:'先了解狀況，都是選擇題', q:[
-   {k:'stage', l:'你現在面對的是哪一種？', r:1, type:'radio', o:[
-     '預售屋・客變階段','新成屋／新古屋（室內未裝修過）','舊屋翻新（室內已有裝潢物件）','商業空間',
-     '只需要設計（不含工程）','只需要施工（已有設計圖）']},
+   {k:'stage', l:'你的房子現在是什麼狀況？', r:1, type:'radio', o:[
+     '預售屋・客變階段','新成屋／新古屋（室內未裝修過）','舊屋翻新（室內已有裝潢物件）',
+     '商業空間','其它']},
+   {k:'service', l:'這次需要菩語做什麼？', r:1, type:'radio', o:[
+     '設計＋工程都需要','只需要設計（不含工程）','只需要施工（已有設計圖）']},
    {k:'city', l:'房子在哪裡？', r:1, type:'radio', cls:'three', o:['桃園','台北','新北','新竹','台中','其他']},
    {k:'ping', l:'室內大約幾坪？', r:1, type:'radio', cls:'three', o:[
      '20 坪以下','20–30 坪','30–50 坪','50–80 坪','80 坪以上','還不確定']},
@@ -245,10 +247,10 @@ function next(n){
 }
 
 /* ===================== 完成 ===================== */
-const LABEL={stage:'階段',city:'地點',ping:'坪數',layout:'格局',pain:'最想解決',
- pet:'毛孩',when:'動工時間',endby:'完工期望',budget:'預算範圍',name:'稱呼',
- contact:'聯絡方式',time:'方便時段',from:'認識管道'};
-const ORDER=['stage','city','ping','layout','pain','pet','when','endby','budget',
+const LABEL={stage:'房子狀況',service:'需要的服務',city:'地點',ping:'坪數',layout:'格局',
+ pain:'最想解決',pet:'毛孩',when:'動工時間',endby:'完工期望',budget:'預算範圍',
+ name:'稱呼',contact:'聯絡方式',time:'方便時段',from:'認識管道'};
+const ORDER=['stage','service','city','ping','layout','pain','pet','when','endby','budget',
  'name','contact','time','from'];
 
 function lines(){
