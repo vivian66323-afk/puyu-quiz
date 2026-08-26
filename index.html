@@ -504,12 +504,21 @@ function lineMsg(){
   const r=window._result, c=window._ctx, b=window._band;
   return '我剛測完菩語生活測驗，結果是「'+r.zh+'」，目前在'+c.n+'（'+b.name+'）。想聊聊我家的可能。';
 }
+/* ---- iframe 安全跳轉：Wix 等嵌入環境會擋掉 iframe 內的 top-level 導頁 ---- */
+const INFRAME = (function(){ try{ return window.self!==window.top; }catch(e){ return true; } })();
+function goOut(url){
+  const w=window.open(url,'_blank','noopener');
+  if(w) return true;
+  try{ window.top.location.href=url; return true; }catch(e){}
+  try{ location.href=url; return true; }catch(e){}
+  return false;
+}
 function toLine(){
   const msg=lineMsg();
   try{ if(navigator.clipboard) navigator.clipboard.writeText(msg); }catch(e){}
   toast('結果已複製，貼上就能傳給菩語');
   const url='https://line.me/R/oaMessage/'+encodeURIComponent(LINE_ID)+'/?'+encodeURIComponent(msg);
-  setTimeout(()=>{ location.href=url; }, 700);
+  setTimeout(()=>{ if(!goOut(url)) toast('請開啟 LINE 搜尋 '+LINE_ID+'，結果已複製'); }, 700);
 }
 function shareText(){
   const r=window._result,b=window._band;
@@ -528,11 +537,18 @@ async function saveCard(){
       await navigator.share({files:[file],text:shareText()});
       toast('已送出，貼到限動吧！');
     }else{
-      const a=document.createElement('a');
-      a.href=URL.createObjectURL(blob); a.download=name;
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-      toast('卡片已存到你的下載資料夾');
+      const href=URL.createObjectURL(blob);
+      if(INFRAME){
+        /* 嵌入環境多半擋 download，改開新分頁讓使用者自己長按／右鍵存 */
+        const w=window.open(href,'_blank');
+        toast(w ? '卡片已開新分頁，長按或右鍵存下來' : '請允許彈出視窗，才能存下卡片');
+      }else{
+        const a=document.createElement('a');
+        a.href=href; a.download=name;
+        document.body.appendChild(a); a.click(); a.remove();
+        toast('卡片已存到你的下載資料夾');
+      }
+      setTimeout(()=>URL.revokeObjectURL(href),20000);
     }
   }catch(e){ console.error(e); toast('存檔失敗，先截圖也可以'); }
   btn.textContent=old; btn.disabled=false;

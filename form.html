@@ -274,12 +274,21 @@ function finish(){
 function asText(){
   return '【菩語諮詢預約】\n'+lines().map(([k,v])=>k+'：'+v).join('\n');
 }
+/* ---- iframe 安全跳轉：Wix 等嵌入環境會擋掉 iframe 內的 top-level 導頁 ---- */
+const INFRAME = (function(){ try{ return window.self!==window.top; }catch(e){ return true; } })();
+function goOut(url){
+  const w=window.open(url,'_blank','noopener');
+  if(w) return true;
+  try{ window.top.location.href=url; return true; }catch(e){}
+  try{ location.href=url; return true; }catch(e){}
+  return false;
+}
 function toLine(){
   const t=asText();
   try{ if(navigator.clipboard) navigator.clipboard.writeText(t); }catch(e){}
+  const url='https://line.me/R/oaMessage/'+encodeURIComponent('@mtz3778c')+'/?'+encodeURIComponent(t);
   toast('內容已複製，貼上就能傳給菩語');
-  setTimeout(()=>{ location.href='https://line.me/R/oaMessage/'
-    +encodeURIComponent('@mtz3778c')+'/?'+encodeURIComponent(t); },700);
+  setTimeout(()=>{ if(!goOut(url)) toast('請開啟 LINE 搜尋 @mtz3778c，內容已複製'); },700);
 }
 function copyAll(){
   const t=asText();
