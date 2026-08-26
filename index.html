@@ -319,9 +319,9 @@ function finish(){
   el('ctaBox').innerHTML=
     '<div class="cta2">'+
       '<h4>把「'+best.zh+'」留下來</h4>'+
-      '<p>存成一張卡片，發限動、或哪天要跟設計師講你想要什麼的時候，直接拿出來。</p>'+
+      '<p>存成一張卡片發限動；或者直接跟菩語聊聊——你的測驗結果會自動帶過去，不用重講一次。</p>'+
       '<button class="btn-main" id="saveBtn" onclick="saveCard()">把這張卡存下來</button>'+
-      '<button class="btn-sub" onclick="toast(\'這裡接你的官網預約頁\')">預約菩語設計諮詢 →</button>'+
+      '<button class="btn-sub" onclick="toLine()">加菩語官方 LINE・聊聊你家的可能 →</button>'+
     '</div>';
   show('s-result');
 }
@@ -420,6 +420,19 @@ async function buildCard(){
   c.textAlign='center'; c.fillStyle='#7A756B'; c.font=F(400,22);
   c.fillText('菩語國際設計 PURELY   聽 · 譯 · 顯 · 留 · 陪',CW/2,H-PAD-16);
   return cv;
+}
+/* ---- 加 LINE，把測驗結果當開場白帶過去 ---- */
+const LINE_ID='@mtz3778c';
+function lineMsg(){
+  const r=window._result, c=window._ctx, b=window._band;
+  return '我剛測完菩語生活測驗，結果是「'+r.zh+'」，目前在'+c.n+'（'+b.name+'）。想聊聊我家的可能。';
+}
+function toLine(){
+  const msg=lineMsg();
+  try{ if(navigator.clipboard) navigator.clipboard.writeText(msg); }catch(e){}
+  toast('結果已複製，貼上就能傳給菩語');
+  const url='https://line.me/R/oaMessage/'+encodeURIComponent(LINE_ID)+'/?'+encodeURIComponent(msg);
+  setTimeout(()=>{ location.href=url; }, 700);
 }
 function shareText(){
   const r=window._result,b=window._band;
