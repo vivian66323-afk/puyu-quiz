@@ -289,7 +289,7 @@ function finish(){
   const best=ranked[0].a;
   const alt=ranked.find(r=>r.a.no!==best.no).a;
   const act=ACT[best.no];
-  window._result=best; window._band=band; window._ctx=ctx; window._sum=sum;
+  window._result=best; window._band=band; window._ctx=ctx; window._sum=sum; window._alt=alt;
 
   el('card').innerHTML=
     '<div class="top">'+
@@ -355,70 +355,147 @@ function rr(c,x,y,w,h,r){
   c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
   c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y); c.closePath();
 }
+function secH(c,t,x,y){c.fillStyle='#B08D57';c.font=F(500,21);c.fillText(t.split('').join(' '),x,y);}
 async function buildCard(){
-  const r=window._result, b=window._band, a=ACT[r.no], cx=window._ctx, sum=window._sum;
+  const r=window._result, b=window._band, a=ACT[r.no], cx=window._ctx,
+        sum=window._sum, alt=window._alt;
   const cv=document.getElementById('cardCanvas'), c=cv.getContext('2d');
   try{ if(document.fonts&&document.fonts.ready) await document.fonts.ready; }catch(e){}
+  const LX=PAD+48, CWD=CW-LX*2, SH=52;
 
-  // --- 先量高度 ---
-  c.font=F(300,30); const descL=wrapCJK(c,r.desc,INNER-96);
-  c.font=F(300,28); const actL=[a.k,a.d,a.i].map(t=>wrapCJK(c,t,INNER-96-110));
-  const HEAD=560;
-  const bodyH = 60 + 52 + descL.length*48 + 44
-              + 58 + actL.reduce((n,L)=>n+Math.max(64,L.length*42+26),0) + 40;
-  const H = HEAD + bodyH + 96;
+  /* ---------- 第一遍：量 ---------- */
+  c.font=F(500,34,true); const Lq=wrapCJK(c,'「'+r.tag+'」',CWD);
+  c.font=F(300,30);      const Ld=wrapCJK(c,r.desc,CWD);
+  c.font=F(400,28,true); const Lc=wrapCJK(c,cx.line,CWD-56);
+  c.font=F(300,28);      const Lb=wrapCJK(c,b.d,CWD-44);
+  c.font=F(300,28);      const Lt=r.traits.map(t=>wrapCJK(c,t,CWD-44));
+  c.font=F(300,28);      const Lm=wrapCJK(c,r.mat,CWD);
+  c.font=F(500,30,true); const Ldir=wrapCJK(c,r.dir,CWD-56);
+  c.font=F(300,28);      const La=[a.k,a.d,a.i].map(t=>wrapCJK(c,t,CWD-48-110));
+  c.font=F(400,25);
+  const pills=r.kw.map(k=>({t:k,w:c.measureText(k).width+46}));
+  const kwRows=[]; let row=[], rw=0;
+  pills.forEach(p=>{ if(row.length && rw+p.w>CWD){kwRows.push(row);row=[];rw=0;} row.push(p); rw+=p.w+12; });
+  if(row.length) kwRows.push(row);
+
+  const GAP=38, HEAD=560, FOOT=214;
+  const hQ  = Lq.length*52+12;
+  const hD  = Ld.length*48+GAP;
+  const hC  = Lc.length*46+44+GAP;
+  const hB  = SH+Lb.length*44+GAP;
+  const hT  = SH+Lt.reduce((n,x)=>n+Math.max(60,x.length*44+20),0)+GAP;
+  const hK  = SH+kwRows.length*64+GAP;
+  const hM  = SH+Lm.length*46+GAP;
+  const hDir= SH+Ldir.length*48+46+GAP;
+  const hA  = 66+La.reduce((n,x)=>n+Math.max(68,x.length*42+30),0)+GAP;
+  const hAl = SH+92+GAP;
+  const H = HEAD+44+hQ+hD+hC+hB+hT+hK+hM+hDir+hA+hAl+FOOT;
   cv.width=CW; cv.height=H;
 
-  // --- 背景 ---
+  /* ---------- 第二遍：畫 ---------- */
   c.fillStyle='#F5F2EC'; c.fillRect(0,0,CW,H);
-  c.fillStyle='#fff'; rr(c,PAD,PAD,INNER,H-PAD*2,28); c.fill();
+  c.fillStyle='#fff'; rr(c,PAD,PAD,CW-PAD*2,H-PAD*2,28); c.fill();
+  c.save(); rr(c,PAD,PAD,CW-PAD*2,H-PAD*2,28); c.clip();
+  c.fillStyle='#1A1A1A'; c.fillRect(PAD,PAD,CW-PAD*2,HEAD-PAD); c.restore();
 
-  // --- 深色頭 ---
-  c.save(); rr(c,PAD,PAD,INNER,H-PAD*2,28); c.clip();
-  c.fillStyle='#1A1A1A'; c.fillRect(PAD,PAD,INNER,HEAD-PAD);
-  c.restore();
-
-  let y=PAD+92;
-  c.textAlign='center';
+  /* 頭 */
+  let y=PAD+92; c.textAlign='center';
   c.fillStyle=b.color; c.beginPath(); c.arc(CW/2,y,38,0,Math.PI*2); c.fill();
-  y+=96;
-  c.fillStyle='#B08D57'; c.font=F(500,22); c.fillText('你 的 居 家 原 型',CW/2,y);
-  y+=76;
-  c.fillStyle='#F5F2EC'; c.font=F(600,68,true); c.fillText(r.zh,CW/2,y);
-  y+=40;
-  c.fillStyle='#9a9488'; c.font=F(400,22); c.fillText(r.en.toUpperCase(),CW/2,y);
-  y+=58;
-  c.font=F(400,26); const tw=c.measureText(r.tag).width;
+  y+=96; c.fillStyle='#B08D57'; c.font=F(500,22); c.fillText('你 的 居 家 原 型',CW/2,y);
+  y+=76; c.fillStyle='#F5F2EC'; c.font=F(600,68,true); c.fillText(r.zh,CW/2,y);
+  y+=40; c.fillStyle='#9a9488'; c.font=F(400,22); c.fillText(r.en.toUpperCase(),CW/2,y);
+  y+=58; c.font=F(400,26); const tw=c.measureText(r.tag).width;
   c.strokeStyle='#B08D57'; c.lineWidth=1.5; rr(c,CW/2-tw/2-26,y-30,tw+52,46,23); c.stroke();
   c.fillStyle='#D9C4A3'; c.fillText(r.tag,CW/2,y);
-  y+=54;
-  c.fillStyle='#9a9488'; c.font=F(300,23);
+  y+=54; c.fillStyle='#9a9488'; c.font=F(300,23);
   c.fillText('在「'+cx.n+'」的階段 · '+b.name+'（狀態 '+sum+'/16）',CW/2,y);
 
-  // --- 內文 ---
-  y=HEAD+40; c.textAlign='left';
-  const LX=PAD+48;
-  c.fillStyle='#B08D57'; c.font=F(500,34,true);
-  c.fillText('「'+r.tag+'」',LX,y); y+=52;
-  c.fillStyle='#3d3a35'; c.font=F(300,30);
-  descL.forEach(l=>{c.fillText(l,LX,y);y+=48;});
-  y+=32;
+  /* 內文 */
+  c.textAlign='left'; y=HEAD+44; let y0;
 
-  // --- 行動卡 ---
-  c.fillStyle='#D9C4A3'; rr(c,LX,y-34,INNER-96,52,8); c.fill();
-  c.fillStyle='#1A1A1A'; c.font=F(600,26,true);
-  c.fillText('  留 · 捨 · 投資',LX+8,y); y+=60;
-  ['該留','該捨','該投資'].forEach((lab,i)=>{
-    c.fillStyle='#B08D57'; c.font=F(500,28,true); c.fillText(lab,LX,y);
+  y0=y; c.fillStyle='#B08D57'; c.font=F(500,34,true);
+  Lq.forEach((l,i)=>c.fillText(l,LX,y0+i*52)); y+=hQ;
+
+  y0=y; c.fillStyle='#3d3a35'; c.font=F(300,30);
+  Ld.forEach((l,i)=>c.fillText(l,LX,y0+i*48)); y+=hD;
+
+  y0=y;                                             /* 情境 */
+  c.fillStyle='#FBFAF6'; c.strokeStyle='#D9C4A3'; c.lineWidth=1.5;
+  rr(c,LX,y0-34,CWD,Lc.length*46+44,10); c.fill(); c.stroke();
+  c.fillStyle='#3d3a35'; c.font=F(400,28,true);
+  Lc.forEach((l,i)=>c.fillText(l,LX+28,y0+i*46)); y+=hC;
+
+  y0=y; secH(c,'你現在的狀態',LX,y0);                 /* 狀態 */
+  c.fillStyle='#B08D57'; c.fillRect(LX,y0+22,4,Lb.length*44-8);
+  c.fillStyle='#3d3a35'; c.font=F(300,28);
+  Lb.forEach((l,i)=>c.fillText(l,LX+24,y0+SH+i*44)); y+=hB;
+
+  y0=y; secH(c,'你的三個居家特質',LX,y0);              /* 特質 */
+  let ty=y0+SH;
+  Lt.forEach((L,i)=>{
+    c.fillStyle='#D9C4A3'; c.beginPath(); c.arc(LX+7,ty-10,7,0,Math.PI*2); c.fill();
     c.fillStyle='#3d3a35'; c.font=F(300,28);
-    actL[i].forEach((l,j)=>c.fillText(l,LX+110,y+j*42));
-    y+=Math.max(64,actL[i].length*42+26);
-    if(i<2){c.strokeStyle='#E3DDD1';c.lineWidth=1;c.beginPath();c.moveTo(LX,y-24);c.lineTo(PAD+INNER-48,y-24);c.stroke();}
-  });
+    L.forEach((l,j)=>c.fillText(l,LX+34,ty+j*44));
+    ty+=Math.max(60,L.length*44+20);
+    if(i<2){c.strokeStyle='#E3DDD1';c.lineWidth=1;c.beginPath();c.moveTo(LX,ty-30);c.lineTo(LX+CWD,ty-30);c.stroke();}
+  }); y+=hT;
 
-  // --- 頁尾 ---
-  c.textAlign='center'; c.fillStyle='#7A756B'; c.font=F(400,22);
-  c.fillText('菩語國際設計 PURELY   聽 · 譯 · 顯 · 留 · 陪',CW/2,H-PAD-16);
+  y0=y; secH(c,'你的空間關鍵字',LX,y0);                /* 關鍵字 */
+  let ky=y0+SH-6;
+  kwRows.forEach(rowP=>{
+    let kx=LX;
+    rowP.forEach(p=>{
+      c.fillStyle='#FBFAF6'; c.strokeStyle='#D9C4A3'; c.lineWidth=1.5;
+      rr(c,kx,ky-34,p.w,48,24); c.fill(); c.stroke();
+      c.fillStyle='#B08D57'; c.font=F(400,25); c.textAlign='center';
+      c.fillText(p.t,kx+p.w/2,ky); c.textAlign='left';
+      kx+=p.w+12;
+    });
+    ky+=64;
+  }); y+=hK;
+
+  y0=y; secH(c,'適合你的材質與色調',LX,y0);            /* 材質 */
+  c.fillStyle='#3d3a35'; c.font=F(300,28);
+  Lm.forEach((l,i)=>c.fillText(l,LX,y0+SH+i*46)); y+=hM;
+
+  y0=y;                                             /* 設計方向 */
+  c.fillStyle='#1A1A1A'; rr(c,LX,y0-26,CWD,SH+Ldir.length*48+22,12); c.fill();
+  c.fillStyle='#D9C4A3'; c.font=F(500,21); c.fillText('給 你 的 設 計 方 向',LX+28,y0+8);
+  c.fillStyle='#F5F2EC'; c.font=F(500,30,true);
+  Ldir.forEach((l,i)=>c.fillText(l,LX+28,y0+SH+12+i*48)); y+=hDir;
+
+  y0=y;                                             /* 留捨投資 */
+  c.fillStyle='#D9C4A3'; rr(c,LX,y0-34,CWD,52,8); c.fill();
+  c.fillStyle='#1A1A1A'; c.font=F(600,26,true); c.fillText('  留 · 捨 · 投資',LX+8,y0);
+  let ay=y0+66;
+  ['該留','該捨','該投資'].forEach((lab,i)=>{
+    c.fillStyle='#B08D57'; c.font=F(500,28,true); c.fillText(lab,LX,ay);
+    c.fillStyle='#3d3a35'; c.font=F(300,28);
+    La[i].forEach((l,j)=>c.fillText(l,LX+110,ay+j*42));
+    ay+=Math.max(68,La[i].length*42+30);
+    if(i<2){c.strokeStyle='#E3DDD1';c.lineWidth=1;c.beginPath();c.moveTo(LX,ay-32);c.lineTo(LX+CWD,ay-32);c.stroke();}
+  }); y+=hA;
+
+  y0=y;                                             /* 另一面 */
+  c.fillStyle='#FBFAF6'; rr(c,LX,y0-32,CWD,SH+70,10); c.fill();
+  secH(c,'你的另一面',LX+28,y0);
+  c.fillStyle='#1A1A1A'; c.font=F(600,28,true); c.fillText(alt.zh,LX+28,y0+48);
+  const aw=c.measureText(alt.zh).width;
+  c.fillStyle='#7A756B'; c.font=F(300,24); c.fillText(alt.tag,LX+28+aw+20,y0+48);
+
+  /* 頁尾：品牌 + 聯繫方式 */
+  c.textAlign='center';
+  const FY=H-PAD-166;
+  c.strokeStyle='#E3DDD1'; c.lineWidth=1;
+  c.beginPath(); c.moveTo(LX,FY); c.lineTo(LX+CWD,FY); c.stroke();
+  c.fillStyle='#1A1A1A'; c.font=F(600,34,true);
+  c.fillText('菩語國際設計',CW/2,FY+58);
+  c.fillStyle='#B08D57'; c.font=F(500,20);
+  c.fillText('P U R E L Y   I N T E R I O R   D E S I G N',CW/2,FY+92);
+  c.fillStyle='#7A756B'; c.font=F(300,23);
+  c.fillText('聽 · 譯 · 顯 · 留 · 陪',CW/2,FY+130);
+  c.fillStyle='#3d3a35'; c.font=F(400,24);
+  c.fillText('LINE @mtz3778c　│　0960-558-533　│　purely2006.com',CW/2,FY+172);
   return cv;
 }
 /* ---- 加 LINE，把測驗結果當開場白帶過去 ---- */
