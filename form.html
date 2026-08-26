@@ -92,9 +92,9 @@ textarea{min-height:104px;resize:vertical;line-height:1.8}
       <h1>聊聊你家的<br>可能</h1>
       <p>三個步驟、大約兩分鐘。<br>先讓菩語知道你家現在的樣子，跟你最想解決的那一件事。</p>
       <div class="promise">
-        <div>不推銷、不綁約，先聊聊而已</div>
+        <div>你寫的每一句，設計師本人都會看</div>
         <div>一個工作天內，由設計師本人回覆</div>
-        <div>你留的資料只用來回覆你</div>
+        <div>資料僅用於回覆你的諮詢</div>
       </div>
       <div><button class="btn btn-dark" onclick="go(1)">開始</button></div>
       <div class="note">已經測過生活測驗？結果會自動帶進來</div>
@@ -132,25 +132,29 @@ textarea{min-height:104px;resize:vertical;line-height:1.8}
 const PRICE_ANCHOR =
   '桃園整案（設計＋工程）目前多落在每坪 <em>__ – __ 萬</em>。'
 + '先讓你有個底，再看你心裡的範圍比較接近哪一段——'
-+ '這一題只是抓方向，不是報價。';
++ '這一題先抓個方向就好，細節等聊過再談。';
 
 const STEPS=[
  {t:'你的家', s:'先了解狀況，都是選擇題', q:[
    {k:'stage', l:'你現在面對的是哪一種？', r:1, type:'radio', o:[
-     '預售屋・客變階段','新成屋・準備入住','老屋翻新（15 年以上）','局部改造（單一空間）','商業空間']},
+     '預售屋・客變階段','新成屋・準備入住','老屋翻新（15 年以上）','商業空間',
+     '只需要設計（不含工程）','只需要施工（已有設計圖）']},
    {k:'city', l:'房子在哪裡？', r:1, type:'radio', cls:'three', o:['桃園','台北','新北','新竹','台中','其他']},
    {k:'ping', l:'室內大約幾坪？', r:1, type:'radio', cls:'three', o:[
      '20 坪以下','20–30 坪','30–50 坪','50–80 坪','80 坪以上','還不確定']},
    {k:'layout', l:'目前的格局', type:'text', ph:'例：3 房 2 廳 2 衛（不確定就留空）'},
  ]},
  {t:'你的想像', s:'這一段最重要，慢慢寫沒關係', q:[
-   {k:'pain', l:'這次最想解決的，是哪一件事？', r:1, type:'area',
-    h:'一件就好。越具體，菩語越能先幫你想。',
+   {k:'pain', l:'這次最想解決的是什麼？', r:1, type:'area',
+    h:'最少寫出一件就好。越具體，菩語越能先幫你想。沒有想法請寫沒有想法，設計討論階段菩語會幫你找出你的問題。',
     ph:'例：客廳整天都很暗／收納永遠不夠／想要一個自己的角落／爸媽要一起住，但想保留各自的空間…'},
-   {k:'pet', l:'家裡有毛孩嗎？', type:'radio', cls:'two', o:['沒有','有狗','有貓','狗貓都有']},
+   {k:'pet', l:'家裡有毛孩嗎？', type:'radio', cls:'two', o:['沒有','有狗','有貓','狗貓都有','其它']},
    {k:'when', l:'希望什麼時候動工？', r:1, type:'radio', cls:'two', o:[
      '3 個月內','3–6 個月','半年以上','還在觀望']},
-   {k:'budget', l:'你心裡的預算範圍？', type:'radio', anchor:PRICE_ANCHOR, o:[
+   {k:'endby', l:'希望什麼時候完工？', type:'radio', cls:'two',
+    h:'有婚期、小孩入學、長輩入住這類時間點的話，選「有指定日期」，之後我們再談細節。',
+    o:['沒有特別期限','3 個月內','半年內','一年內','有指定日期']},
+   {k:'budget', l:'你願意花多少預算，在這次打造夢想中的家？', type:'radio', anchor:PRICE_ANCHOR, o:[
      '100 萬以下','100–200 萬','200–350 萬','350–500 萬','500 萬以上','想先聽聽建議']},
  ]},
  {t:'怎麼找你', s:'最後一步了', q:[
@@ -158,7 +162,8 @@ const STEPS=[
    {k:'contact', l:'電話或 LINE ID', r:1, type:'text', ph:'留一個方便的就好'},
    {k:'time', l:'方便聯絡的時段', type:'radio', cls:'two', o:['上班時間','晚上','假日','都可以']},
    {k:'from', l:'你是從哪裡認識菩語的？', type:'radio', cls:'two', o:[
-     '生活測驗','Facebook','Instagram','Threads','Google 搜尋','朋友介紹']},
+     '生活測驗','Facebook','Instagram','Threads','Google 搜尋',
+     'AI 推薦（ChatGPT 等）','朋友介紹','其它']},
  ]},
 ];
 
@@ -241,9 +246,10 @@ function next(n){
 
 /* ===================== 完成 ===================== */
 const LABEL={stage:'階段',city:'地點',ping:'坪數',layout:'格局',pain:'最想解決',
- pet:'毛孩',when:'動工時間',budget:'預算範圍',name:'稱呼',contact:'聯絡方式',
- time:'方便時段',from:'認識管道'};
-const ORDER=['stage','city','ping','layout','pain','pet','when','budget','name','contact','time','from'];
+ pet:'毛孩',when:'動工時間',endby:'完工期望',budget:'預算範圍',name:'稱呼',
+ contact:'聯絡方式',time:'方便時段',from:'認識管道'};
+const ORDER=['stage','city','ping','layout','pain','pet','when','endby','budget',
+ 'name','contact','time','from'];
 
 function lines(){
   const out=[];
