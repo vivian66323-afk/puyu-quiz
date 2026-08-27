@@ -50,8 +50,12 @@ h1{font-family:"Noto Serif TC";font-weight:600;font-size:29px;letter-spacing:.03
 .opt:active{transform:scale(.98)}
 .opt.sel{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 .opts.two .opt,.opts.three .opt{text-align:center;padding:13px 6px}
-input[type=text],input[type=tel],textarea{width:100%;font-family:inherit;font-size:15px;font-weight:300;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:13px 15px;outline:none;transition:.15s}
-input:focus,textarea:focus{border-color:var(--gold);background:#fff}
+input[type=text],input[type=tel],input[type=email],textarea,select{width:100%;font-family:inherit;font-size:15px;font-weight:300;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:13px 15px;outline:none;transition:.15s}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);background-color:#fff}
+select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:42px;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A756B' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 16px center}
+select:invalid,select.ph{color:var(--muted)}
 textarea{min-height:104px;resize:vertical;line-height:1.8}
 .err{border-color:var(--err)!important}
 .errmsg{color:var(--err);font-size:12.5px;margin-top:6px;display:none}
@@ -130,9 +134,10 @@ textarea{min-height:104px;resize:vertical;line-height:1.8}
 /* ===================== 表單定義 ===================== */
 const STEPS=[
  {t:'你的家', s:'先了解狀況，都是選擇題', q:[
-   {k:'stage', l:'你的房子現在是什麼狀況？', r:1, type:'radio', o:[
-     '預售屋・客變階段','新成屋／新古屋（室內未裝修過）','舊屋翻新（室內已有裝潢物件）',
-     '商業空間','其它']},
+   {k:'stage', l:'你的房子現在是什麼狀況？', r:1, type:'select', o:[
+     '預售屋・客變階段','毛胚屋','新成屋／新古屋（室內未裝修過）',
+     '舊屋翻新（室內已有裝潢物件）','自地自建','商業空間','辦公空間',
+     '醫療診所','酒店旅館','樣品屋','其它']},
    {k:'service', l:'這次需要菩語做什麼？', r:1, type:'radio', o:[
      '設計＋工程都需要','只需要設計（有自己的工程團隊）','只需要施工（已有設計圖）']},
    {k:'city', l:'房子在哪裡？', r:1, type:'radio', cls:'three', o:['桃園','台北','新北','新竹','台中','其他']},
@@ -200,6 +205,11 @@ function render(n){
       h+='<div class="opts '+(q.cls||'')+'">'
         +q.o.map(o=>'<div class="opt'+(A[q.k]===o?' sel':'')+'" data-k="'+q.k+'" data-v="'+o+'">'+o+'</div>').join('')
         +'</div>';
+    }else if(q.type==='select'){
+      h+='<select id="i-'+q.k+'"'+(A[q.k]?'':' class="ph"')+'>'
+        +'<option value="">請選擇…</option>'
+        +q.o.map(o=>'<option'+(A[q.k]===o?' selected':'')+'>'+o+'</option>').join('')
+        +'</select>';
     }else if(q.type==='area'){
       h+='<textarea id="i-'+q.k+'" placeholder="'+q.ph+'">'+(A[q.k]||'')+'</textarea>';
     }else{
@@ -219,7 +229,13 @@ function render(n){
   }));
   S.q.forEach(q=>{
     const i=el('i-'+q.k);
-    if(i) i.addEventListener('input',()=>{A[q.k]=i.value.trim();clearErr(q.k);});
+    if(!i) return;
+    const sync=()=>{
+      A[q.k]=i.value.trim(); clearErr(q.k);
+      if(i.tagName==='SELECT') i.classList.toggle('ph', !A[q.k]);
+    };
+    i.addEventListener('input',sync);
+    if(i.tagName==='SELECT') i.addEventListener('change',sync);
   });
 }
 function clearErr(k){
