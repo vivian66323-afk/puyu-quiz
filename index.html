@@ -160,6 +160,12 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 .cv .cvk b{font-family:"Noto Serif TC";font-size:16px;color:var(--gold-txt);font-weight:600}
 .cv .cvk span{display:block;font-size:10px;letter-spacing:.14em;color:var(--muted);margin-top:3px}
 .cv .cvd{font-size:13.5px;line-height:1.72;color:#3d3a35;align-self:center}
+.dt{margin-top:2px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.dt .dtrow{display:flex;gap:12px;padding:11px 15px;border-bottom:1px solid var(--line);background:#fff}
+.dt .dtrow:nth-child(even){background:var(--paper)}
+.dt .dtrow:last-child{border-bottom:none}
+.dt .dtk{flex-shrink:0;min-width:56px;font-family:"Noto Serif TC";font-size:14px;color:var(--gold-txt);font-weight:600}
+.dt .dtd{font-size:13.5px;line-height:1.68;color:#3d3a35}
 </style>
 </head>
 <body>
@@ -376,6 +382,26 @@ const VALDEF={
  "地位":"對的物件會替你說話，不需要多做解釋。"
 };
 
+/* v2.2 逐空間設計轉譯（每型 4–5 條，取自知識庫「設計轉譯」；螢幕限定，卡片不放） */
+const DTRANS={
+ 1:["材料｜大地色、實木、粗獷石材、未上釉陶，金屬走黃銅原色","燈光｜暖光低照度，重點打在材質上","家具｜少件，單椅是主角","收納｜把預算放在每天摸得到的把手與檯面"],
+ 2:["客廳｜降低物件密度，留一面完全空的牆","材料｜霧面塗料、無過度紋理的木皮，避免高反光材質","燈光｜間接光源為主，不做太多層次的重點打光","色彩｜燕麥色、霧灰、米白為主軸，避免對比色"],
+ 3:["客廳｜對稱式布局，主牆一致收邊","材料｜拋光石材、噴砂金屬，大板材減少接縫","燈光｜情境分區控制，線條藏光","收納｜全屋隱藏式系統櫃，檯面淨空","動線｜公私動線分離，訪客不進私密區"],
+ 4:["材料｜清水混凝土、鋼件原色、不鏽鋼收邊","燈光｜線性光源，強調光的軸線而非情境","家具｜機能主義單品，避免裝飾性造型","動線｜模矩化規劃，尺寸有邏輯可循","收納｜系統化、模組化，可拆解重組"],
+ 5:["廚房｜動線三角優化，收納依使用頻率分層","材料｜超耐磨地板、抗污水性塗料","收納｜系統櫃到頂，依生活習慣客製分格","玄關｜落塵區、鞋櫃通風，回家第一步就順","燈光｜功能導向，工作區域照度優先"],
+ 6:["餐廳｜大長桌為核心，可容納臨時加入的客人","燈光｜戲劇化重點照明，可調情境場景","廚房｜開放式中島，烹飪即表演","材料｜絲絨、鎏金收邊、酒紅色系軟裝","收納｜獨立酒櫃與精緻餐瓷展示區"],
+ 7:["主臥｜獨立起居角落，兼具閱讀與獨飲功能","材料｜胡桃木、絲絨包廂座","燈光｜可調暗、暖色溫，強調收攏感","收納｜私人酒藏或香氛展示，不對外開放","窗簾｜厚重遮光，隔絕外界視線"],
+ 8:["客廳｜為家傳家具預留主位，新舊混搭而非全新替換","材料｜老柚木、做舊黃銅、皮革","燈光｜暖黃光，強調物件的時間感","收納｜展示型收納，讓故事被看見","藝術｜家族老照片、老物件的策展式陳列"],
+ 9:["餐廚｜大檯面工作區，可久站備料","材料｜石灰岩、亞麻、手工陶器","燈光｜自然光為主，黃昏時段的暖光層次","收納｜開放式展示廚具與酒藏","戶外｜露台或庭院，延伸用餐與品飲場域"],
+ 10:["牆面｜可替換式策展牆，定期更換藝術陳列","材料｜複合媒材、手工陶、異材質拼接","燈光｜可移動式重點燈，配合展品調整","家具｜獨立設計師單品混搭，不追求成套","收納｜展示與收藏並重，而非全隱藏"],
+ 11:["臥室｜可調光源，搭配香氛與音樂系統","材料｜老件木家具、手感陶器","燈光｜多層次，可隨心情切換情境","角落｜保留一處完全私人的閱讀或書寫空間","軟裝｜帶敘事性的織品、老照片"],
+ 12:["開窗｜大面採光，模糊室內外界線","材料｜台灣檜木、天然石材、藤編","燈光｜盡量接近自然光的暖色溫","陽台／庭院｜延伸為半戶外生活空間","香氛｜木質調為主，呼應材質本身的氣味"],
+ 13:["玄關｜不追求儀式感，順手好用即可","材料｜原木、麻繩、手工陶，帶使用痕跡也無妨","燈光｜自然光為主，人工光源盡量柔和不搶戲","綠植｜大量隨性擺放的植栽，而非精修盆景","家具｜二手混搭新品，不追求成套一致"],
+ 14:["空間序列｜刻意安排高低差與轉折，製造身體的節奏感","材料｜清水混凝土、粗鑿石材，保留觸感","光｜順著日照軌跡設計開窗，而非只考慮採光量","動線｜避免過於筆直，留一點需要身體轉向的細節","地坪｜赤腳觸感納入材質選擇考量"],
+ 15:["主臥｜獨立、隔音良好，作為徹底休息的核心","材料｜棉麻寢具、木質地板，觸感柔軟","燈光｜低照度、暖光，傍晚後全室可調暗","色彩｜低彩度、單一色系為主軸","動線｜為固定的休憩角落預留專屬位置"],
+ 16:["玄關／走廊｜適合做視覺焦點牆，撞色磁磚或藝術牆貼","材料｜撞色磁磚、復古家具混搭","燈光｜局部戲劇化重點燈，製造探索感","收納｜開放式選物展示，而非全隱藏","軟裝｜定期可替換的小型裝飾，保持新鮮感"]
+};
+
 /* ===================== 流程 ===================== */
 let cur=0, scores={}, ctx=null, picks=[], st=[0,0,0,0];
 function el(id){return document.getElementById(id)}
@@ -475,6 +501,7 @@ function finish(){
       '<div class="sec"><div class="h">你的三個居家特質</div><ul>'+best.traits.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>'+
       '<div class="sec"><div class="h">你的空間關鍵字</div><div class="kwrow">'+best.kw.map(k=>'<span>'+k+'</span>').join('')+'</div></div>'+
       '<div class="sec"><div class="h">適合你的材質與色調</div><p class="t">'+best.mat+'</p></div>'+
+      (DTRANS[best.no]?'<div class="sec"><div class="h">為你的家 · 逐空間設計方向</div><div class="dt">'+DTRANS[best.no].map(function(s){var p=s.split('｜');return '<div class="dtrow"><div class="dtk">'+p[0]+'</div><div class="dtd">'+p.slice(1).join('｜')+'</div></div>';}).join('')+'</div></div>':'')+
       (X.anchors&&X.anchors.length?'<div class="sec"><div class="h">你的生活風格錨點</div><ul class="anc">'+X.anchors.map(function(a){var p=a.split('｜');return '<li>'+(p.length>1?'<b>'+p[0]+'</b>'+p.slice(1).join('｜'):a)+'</li>';}).join('')+'</ul></div>':'')+
       (CAUT[best.no]?'<div class="caution"><div class="ch">一個溫柔的提醒</div><p>'+CAUT[best.no]+'</p></div>':'')+
       '<div class="dir"><div class="h">給你的設計方向</div><p>'+best.dir+'</p></div>'+
