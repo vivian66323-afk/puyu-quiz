@@ -149,6 +149,17 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 .anc li:last-child{border-bottom:none}
 .anc li::before{content:"◈";position:absolute;left:1px;top:9px;color:var(--gold-soft);font-size:11px}
 .anc li b{font-family:"Noto Serif TC";color:var(--gold-txt);font-weight:600;margin-right:6px}
+.caution{background:var(--paper);border:1px solid var(--gold-soft);border-radius:10px;padding:15px 17px;margin-top:18px;text-align:left}
+.caution .ch{font-size:11px;letter-spacing:.18em;color:var(--gold-txt);font-weight:500;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.caution .ch::before{content:"❋";font-size:12px;color:var(--gold-soft)}
+.caution p{font-size:13.5px;line-height:1.9;color:#4a4640}
+.cv{margin-top:2px}
+.cv .cvrow{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
+.cv .cvrow:last-child{border-bottom:none}
+.cv .cvk{flex-shrink:0;min-width:58px}
+.cv .cvk b{font-family:"Noto Serif TC";font-size:16px;color:var(--gold-txt);font-weight:600}
+.cv .cvk span{display:block;font-size:10px;letter-spacing:.14em;color:var(--muted);margin-top:3px}
+.cv .cvd{font-size:13.5px;line-height:1.72;color:#3d3a35;align-self:center}
 </style>
 </head>
 <body>
@@ -329,6 +340,42 @@ const ARCHX={
    anchors:["選物店｜富錦樹 Fujin Tree 系列","地方｜台北中山、富錦街一帶","一杯｜選物店酒吧的特調雞尾酒"]}
 };
 
+/* v2.1 溫柔提醒：每型的反面／盲點，用成長體貼的口氣（螢幕限定，卡片不放） */
+const CAUT={
+ 1:"你對耐久的講究，有時讓你遲遲不敢下手——別讓「還不夠完美」擋住「已經夠好」。",
+ 2:"你的留白有時候會被誤讀成「還沒佈置好」——這其實是你刻意的選擇，只是這份講究不一定每個人都看得懂，或許值得留一兩件溫度更高的物件當橋樑。",
+ 3:"這份精準有時候會讓家人覺得不敢放鬆——太完美的空間，偶爾也需要留一點容許亂的餘地，那才是真的有人在住。",
+ 4:"你對「準確」的堅持，有時候會讓空間少了一點呼吸的餘地——精準不等於冷，或許可以留一兩個不那麼講理由的角落。",
+ 5:"你對「有沒有用」的堅持，有時候會讓家裡少了一點沒理由但讓人開心的東西——偶爾容許一件純粹好看的存在，也無妨。",
+ 6:"你把不少心力放在「別人怎麼看這個家」上，有時候會忘了問自己——這個家，獨自一人的時候，你也喜歡嗎。",
+ 7:"你把最好的都留給自己或極少數人，有時候身邊的人會感覺被隔在外面——或許可以偶爾把那扇門，留一道縫。",
+ 8:"你對過去的珍惜，有時候會讓新的生活習慣很難擠進這個家——留住故事，也要留一點空間給正在發生的事。",
+ 9:"你對慢的堅持，有時候會讓步調較快的人覺得跟不上——慢，是你選的節奏，不必要求所有人都同步。",
+ 10:"你追求獨特的過程中，有時候會讓空間一直在變、有點不安定——獨特很珍貴，偶爾也可以留幾件不變的錨點。",
+ 11:"你的家會隨心情起伏，有時候會顯得不太一致——不一致，其實是誠實的另一種樣子，不必勉強自己統一。",
+ 12:"你對自然材質的堅持，有時候會遇到維護保養較費心的現實——這是自然材質必然的代價，值得提前準備好心理預期。",
+ 13:"你的隨性，有時候會讓收納系統跟不上生活的速度——一點點基礎的秩序，其實能讓你的隨性維持得更久、更輕鬆。",
+ 14:"你憑直覺做的判斷，有時候很難跟別人解釋清楚為什麼——這不代表判斷是錯的，只是提醒自己，溝通時可能需要多一點耐心把感覺翻譯成語言。",
+ 15:"你對安靜的需求，有時候會讓家人誤以為你在迴避互動——或許讓身邊的人知道，安靜是你充電的方式，而不是拒絕靠近。",
+ 16:"你的玩趣有時候會讓空間顯得有點鬧、不好收拾——保留一兩個相對安靜的角落，能讓整個家的節奏更耐看。"
+};
+
+/* v2.1 12 核心價值一句話定義（給結果頁「驅動你的核心價值」段用） */
+const VALDEF={
+ "安定":"回到家，肩膀可以放下來的那種鬆。",
+ "本真":"不裝、不演，讓材質與生活都誠實。",
+ "秩序":"各安其位，心力才能留給真正重要的事。",
+ "工藝":"相信手感與時間，是效率換不走的價值。",
+ "慶祝":"把日常，過成值得被記得的場合。",
+ "私密":"最放鬆的自己，只留給自己和最親的人。",
+ "傳承":"物件是記憶的容器，值得被留下、被修。",
+ "自由":"家可以隨時改變心意，不必遷就規格。",
+ "表達":"家，是你自我延伸出去的一塊畫布。",
+ "好奇":"對一成不變不耐，總想知道還有沒有別的可能。",
+ "自然":"人本來就屬於自然，把光、風請進家裡。",
+ "地位":"對的物件會替你說話，不需要多做解釋。"
+};
+
 /* ===================== 流程 ===================== */
 let cur=0, scores={}, ctx=null, picks=[], st=[0,0,0,0];
 function el(id){return document.getElementById(id)}
@@ -424,10 +471,12 @@ function finish(){
       '<div class="ctxline">'+ctx.line+'</div>'+
       '<div class="state"><div class="h">你現在的狀態</div><p>'+band.d+'</p></div>'+
       (X.insight&&X.insight.length?'<div class="sec"><div class="h">為什麼測出你是這一型</div><div class="why">'+X.insight.map(function(s){var p=s.split('→');return '<div class="wi"><span class="o">'+p[0].trim()+'</span><span class="arw">→</span><span class="f">'+(p[1]||'').trim()+'</span></div>';}).join('')+'</div></div>':'')+
+      '<div class="sec"><div class="h">驅動你的核心價值</div><div class="cv">'+[[best.v[0],'主導'],[best.v[1],'次要']].map(function(pr){return '<div class="cvrow"><div class="cvk"><b>'+pr[0]+'</b><span>'+pr[1]+'</span></div><div class="cvd">'+(VALDEF[pr[0]]||'')+'</div></div>';}).join('')+'</div></div>'+
       '<div class="sec"><div class="h">你的三個居家特質</div><ul>'+best.traits.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>'+
       '<div class="sec"><div class="h">你的空間關鍵字</div><div class="kwrow">'+best.kw.map(k=>'<span>'+k+'</span>').join('')+'</div></div>'+
       '<div class="sec"><div class="h">適合你的材質與色調</div><p class="t">'+best.mat+'</p></div>'+
       (X.anchors&&X.anchors.length?'<div class="sec"><div class="h">你的生活風格錨點</div><ul class="anc">'+X.anchors.map(function(a){var p=a.split('｜');return '<li>'+(p.length>1?'<b>'+p[0]+'</b>'+p.slice(1).join('｜'):a)+'</li>';}).join('')+'</ul></div>':'')+
+      (CAUT[best.no]?'<div class="caution"><div class="ch">一個溫柔的提醒</div><p>'+CAUT[best.no]+'</p></div>':'')+
       '<div class="dir"><div class="h">給你的設計方向</div><p>'+best.dir+'</p></div>'+
       '<div class="act"><div class="hd">你的「留 · 捨 · 投資」行動卡</div>'+
         '<div class="r"><b>該留</b><span>'+act.k+'</span></div>'+
