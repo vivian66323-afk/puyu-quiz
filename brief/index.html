@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>菩語｜居家深度需求單</title>
+<title>菩語｜客戶生活需求調查表</title>
 <meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -15,150 +15,124 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 a{color:var(--gold-txt)}
 
-/* intro */
-.intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:48px 30px;max-width:560px;margin:0 auto}
+.intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:48px 30px;max-width:600px;margin:0 auto}
 .frame{width:96px;height:96px;margin:0 auto 26px;border-radius:2px;position:relative;overflow:hidden;box-shadow:0 18px 44px rgba(26,26,26,.18);background:linear-gradient(135deg,#2a2723,#141210)}
 .frame::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 34% 32%,var(--gold-soft) 0 12%,transparent 13%),radial-gradient(circle at 68% 64%,var(--gold) 0 9%,transparent 10%)}
 .eyebrow{font-size:12px;letter-spacing:.4em;color:var(--gold-txt);font-weight:500;margin-bottom:16px}
-.intro h1{font-family:"Noto Serif TC";font-weight:600;font-size:30px;letter-spacing:.03em;line-height:1.4}
-.intro .lead{color:var(--muted);font-size:15px;margin:20px auto 0;max-width:420px;line-height:1.95}
-.dims{margin:28px 0 30px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.dims span{font-size:12.5px;color:var(--gold-txt);border:1px solid var(--gold-soft);border-radius:100px;padding:5px 13px;background:var(--paper)}
-.btn{display:inline-block;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer;padding:15px 46px;border-radius:100px;border:1px solid var(--ink);background:var(--ink);color:var(--cream);letter-spacing:.08em;transition:transform .15s}
+.intro h1{font-family:"Noto Serif TC";font-weight:600;font-size:29px;letter-spacing:.03em;line-height:1.45}
+.intro .lead{color:var(--muted);font-size:14.5px;margin:20px auto 0;max-width:440px;line-height:1.95}
+.btn{display:inline-block;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer;padding:15px 46px;border-radius:100px;border:1px solid var(--ink);background:var(--ink);color:var(--cream);letter-spacing:.08em;transition:transform .15s;margin-top:30px}
 .btn:active{transform:scale(.97)}
 .note{font-size:12px;color:var(--muted);margin-top:18px;letter-spacing:.02em}
 
-/* layout with sidebar */
-.wrap{display:grid;grid-template-columns:236px 1fr;gap:0;min-height:100vh}
+.wrap{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
 @media(max-width:820px){.wrap{grid-template-columns:1fr}.side{display:none}}
 .side{background:var(--paper);border-right:1px solid var(--line);padding:32px 24px}
-.side .brand{font-family:"Noto Serif TC";font-size:17px;font-weight:600;letter-spacing:.02em}
+.side .brand{font-family:"Noto Serif TC";font-size:17px;font-weight:600}
 .side .sub{font-size:11px;letter-spacing:.3em;color:var(--gold-txt);margin:4px 0 22px}
-.side .pline{font-size:12px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+.pline{font-size:12px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
 .track{height:4px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:26px}
 .track i{display:block;height:100%;background:var(--gold);transition:width .4s ease;width:0}
 .nav{list-style:none}
-.nav li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted);padding:9px 0;cursor:pointer;transition:color .15s}
+.nav li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted);padding:9px 0;cursor:pointer}
 .nav li .n{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;background:#fff}
-.nav li.on{color:var(--ink);font-weight:500}
-.nav li.on .n{background:var(--gold);border-color:var(--gold);color:#fff}
-.nav li.done .n{background:#5B7A6B;border-color:#5B7A6B;color:#fff}
-.nav li.done{color:#4a4640}
+.nav li.on{color:var(--ink);font-weight:500}.nav li.on .n{background:var(--gold);border-color:var(--gold);color:#fff}
+.nav li.done .n{background:#5B7A6B;border-color:#5B7A6B;color:#fff}.nav li.done{color:#4a4640}
 
-.main{padding:40px 44px 64px;max-width:760px}
-@media(max-width:820px){.main{padding:28px 20px 56px}}
+.main{padding:40px 44px 64px;max-width:770px}
+@media(max-width:820px){.main{padding:26px 18px 56px}}
 .step{font-size:12px;letter-spacing:.3em;color:var(--gold-txt);font-weight:500}
-.h2{font-family:"Noto Serif TC";font-size:27px;font-weight:600;margin:8px 0 4px;letter-spacing:.02em}
-.stepnote{font-size:13px;color:var(--muted);margin-bottom:6px}
-.mprog{display:none}
-@media(max-width:820px){.mprog{display:block;margin:2px 0 22px}.mprog .track{margin-bottom:6px}.mprog .pline{font-size:11.5px;color:var(--muted)}}
+.h2{font-family:"Noto Serif TC";font-size:27px;font-weight:600;margin:8px 0 4px}
+.stepnote{font-size:13px;color:var(--muted);line-height:1.8}
+.mprog{display:none}@media(max-width:820px){.mprog{display:block;margin:14px 0 4px}.mprog .track{margin-bottom:6px}.mprog .pline{font-size:11.5px}}
 
-.q{margin-top:30px}
-.q .qh{font-size:16px;font-weight:500;line-height:1.6;margin-bottom:4px}
-.q .qh .idx{color:var(--gold-txt);margin-right:8px;font-family:"Noto Serif TC"}
-.q .req{color:#B26B4A;font-size:12px;margin-left:6px}
-.q .qhint{font-size:12.5px;color:var(--muted);margin:2px 0 12px}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.subhead{font-family:"Noto Serif TC";font-size:18px;font-weight:600;color:var(--gold-txt);margin:34px 0 2px;padding-bottom:8px;border-bottom:1px solid var(--gold-soft)}
+.desc{font-size:13px;color:var(--muted);background:var(--paper);border-left:3px solid var(--gold-soft);padding:10px 14px;border-radius:0 6px 6px 0;margin-top:14px;line-height:1.8}
+.q{margin-top:26px}
+.q .qh{font-size:15.5px;font-weight:500;line-height:1.6;margin-bottom:2px}
+.q .qh .idx{color:var(--gold-txt);margin-right:7px;font-family:"Noto Serif TC"}
+.q .tagm{font-size:11px;color:var(--muted);margin-left:8px;font-weight:400}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}
 @media(max-width:560px){.opts{grid-template-columns:1fr}}
-.opt{border:1px solid var(--line);border-radius:9px;background:#fff;padding:13px 15px;cursor:pointer;display:flex;align-items:center;gap:11px;font-size:14px;color:#3d3a35;transition:all .13s;user-select:none}
-.opt:hover{border-color:var(--gold-soft)}
-.opt:active{transform:scale(.985)}
-.opt .box{width:18px;height:18px;border:1.5px solid var(--gold-soft);border-radius:4px;flex-shrink:0;position:relative;transition:all .13s}
+.opt{border:1px solid var(--line);border-radius:9px;background:#fff;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:11px;font-size:14px;color:#3d3a35;transition:all .12s;user-select:none}
+.opt:hover{border-color:var(--gold-soft)}.opt:active{transform:scale(.99)}
+.opt .box{width:18px;height:18px;border:1.5px solid var(--gold-soft);border-radius:4px;flex-shrink:0;position:relative}
 .opt.single .box{border-radius:50%}
-.opt.sel{border-color:var(--gold);background:var(--sel)}
-.opt.sel .box{background:var(--gold);border-color:var(--gold)}
+.opt.sel{border-color:var(--gold);background:var(--sel)}.opt.sel .box{background:var(--gold);border-color:var(--gold)}
 .opt.sel .box::after{content:"";position:absolute;left:5px;top:1.5px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .opt.single.sel .box::after{left:4px;top:4px;width:8px;height:8px;border:none;border-radius:50%;background:#fff;transform:none}
-
-textarea{width:100%;border:1px solid var(--line);border-radius:9px;background:#fff;padding:14px;font-family:inherit;font-size:14px;line-height:1.8;color:#3d3a35;resize:vertical;min-height:130px}
-textarea::placeholder{color:#b9b2a5}
-input.txt{width:100%;border:1px solid var(--line);border-radius:9px;background:#fff;padding:12px 14px;font-family:inherit;font-size:14px;color:#3d3a35}
-.field{margin-bottom:16px}.field label{display:block;font-size:12.5px;color:var(--gold-txt);margin-bottom:6px;letter-spacing:.04em}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+input.qin,textarea.qin{width:100%;border:1px solid var(--line);border-radius:9px;background:#fff;padding:12px 14px;font-family:inherit;font-size:14px;color:#3d3a35;margin-top:11px}
+textarea.qin{line-height:1.8;resize:vertical;min-height:110px}
+input.qin::placeholder,textarea.qin::placeholder{color:#bcb5a8}
+.grp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:11px}
+@media(max-width:560px){.grp{grid-template-columns:1fr}}
+.grp .f label{display:block;font-size:12.5px;color:var(--gold-txt);margin-bottom:4px}
+.grp .f input{width:100%;border:1px solid var(--line);border-radius:8px;background:#fff;padding:10px 12px;font-family:inherit;font-size:14px;color:#3d3a35}
+.grp .f.wide{grid-column:1/-1}
+.mxwrap{overflow-x:auto;margin-top:12px}
+table.mx{border-collapse:collapse;font-size:13px;min-width:100%}
+table.mx th,table.mx td{border:1px solid var(--line);padding:8px 6px;text-align:center;background:#fff}
+table.mx th{background:var(--paper);color:var(--gold-txt);font-weight:500;white-space:nowrap}
+table.mx td.rl{text-align:left;color:#3d3a35;white-space:nowrap;font-weight:400;background:var(--paper)}
+table.mx .cell{cursor:pointer}
+table.mx .cell .dot{width:16px;height:16px;border:1.5px solid var(--gold-soft);border-radius:50%;margin:0 auto;position:relative}
+table.mx .cell.sel .dot{background:var(--gold);border-color:var(--gold)}
+table.mx .cell.sel .dot::after{content:"";position:absolute;left:4px;top:4px;width:6px;height:6px;border-radius:50%;background:#fff}
 
 .footer{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
-.back{font-size:14px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:inherit;letter-spacing:.03em}
-.back:active{color:var(--gold)}
+.back{font-size:14px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:inherit}
 .next{font-family:inherit;font-size:15px;font-weight:500;padding:13px 34px;border-radius:100px;border:none;background:var(--ink);color:var(--cream);cursor:pointer;letter-spacing:.06em;transition:transform .15s}
 .next:active{transform:scale(.97)}
-.next:disabled{background:var(--line);color:#a9a396;cursor:default}
-.warn{font-size:12.5px;color:#B26B4A;margin-top:14px;min-height:16px}
+.tip{font-size:12.5px;color:var(--muted);margin-top:8px}
 
-/* priority */
-.prio{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
-@media(max-width:560px){.prio{grid-template-columns:1fr}}
-.pcard{border:1px solid var(--line);border-radius:10px;background:#fff;padding:16px;cursor:pointer;transition:all .13s;position:relative}
-.pcard:active{transform:scale(.98)}
-.pcard b{font-family:"Noto Serif TC";font-size:15.5px;font-weight:600;display:block}
-.pcard span{font-size:12px;color:var(--muted);display:block;margin-top:3px}
-.pcard.sel{border-color:var(--gold);background:var(--sel)}
-.pcard .rank{position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;font-family:"Noto Serif TC";font-size:13px;display:none;align-items:center;justify-content:center}
-.pcard.sel .rank{display:flex}
-
-/* summary */
 .sumhead{text-align:center;padding:30px 0 8px}
 .sumhead .k{font-size:12px;letter-spacing:.3em;color:var(--gold-txt)}
 .sumhead h1{font-family:"Noto Serif TC";font-size:28px;font-weight:600;margin-top:8px}
 .sumhead p{font-size:13.5px;color:var(--muted);margin-top:8px}
-.sumbar{display:flex;gap:10px;justify-content:center;margin:18px 0 30px;flex-wrap:wrap}
+.hl{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+.hl .p{background:var(--ink);color:var(--cream);border-radius:10px;padding:12px 16px;font-family:"Noto Serif TC";font-size:14.5px;flex:1;min-width:150px}
+.hl .p em{display:block;font-style:normal;font-size:11px;color:var(--gold-soft);letter-spacing:.1em;margin-bottom:3px}
 .sumsec{border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:16px;overflow:hidden}
-.sumsec .st{background:var(--ink);color:var(--cream);padding:12px 20px;font-family:"Noto Serif TC";font-size:15px;font-weight:600;display:flex;gap:10px;align-items:baseline}
-.sumsec .st .num{color:var(--gold-soft);font-size:12px}
+.sumsec .st{background:var(--ink);color:var(--cream);padding:12px 20px;font-family:"Noto Serif TC";font-size:15px;font-weight:600}
 .sumsec .sb{padding:6px 20px 16px}
-.sumrow{padding:12px 0;border-bottom:1px dashed var(--line)}
-.sumrow:last-child{border-bottom:none}
-.sumrow .sq{font-size:13px;color:var(--muted);margin-bottom:5px}
-.sumrow .sa{font-size:14.5px;color:#2d2a25}
-.sumrow .sa .chip{display:inline-block;background:var(--paper);border:1px solid var(--gold-soft);color:var(--gold-txt);border-radius:100px;font-size:13px;padding:3px 12px;margin:3px 6px 3px 0}
+.sumrow{padding:11px 0;border-bottom:1px dashed var(--line)}.sumrow:last-child{border-bottom:none}
+.sumrow .sq{font-size:12.5px;color:var(--muted);margin-bottom:5px}
+.sumrow .sa{font-size:14px;color:#2d2a25}
+.sumrow .sa .chip{display:inline-block;background:var(--paper);border:1px solid var(--gold-soft);color:var(--gold-txt);border-radius:100px;font-size:12.5px;padding:2px 11px;margin:3px 5px 3px 0}
 .sumrow .sa.free{font-family:"Noto Serif TC";line-height:1.9;white-space:pre-wrap}
-.sumrow .sa.empty{color:#b9b2a5;font-size:13px}
-.prio-sum{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
-.prio-sum .p{background:var(--ink);color:var(--cream);border-radius:10px;padding:12px 16px;font-family:"Noto Serif TC";font-size:15px;flex:1;min-width:150px}
-.prio-sum .p em{display:block;font-style:normal;font-size:11px;color:var(--gold-soft);letter-spacing:.1em;margin-bottom:3px}
-.sumactions{display:flex;gap:12px;justify-content:center;margin:26px 0 10px;flex-wrap:wrap}
+.sumrow .sa.empty{color:#c2bbae;font-size:12.5px}
+.sumactions{display:flex;gap:12px;justify-content:center;margin:26px 0 8px;flex-wrap:wrap}
 .pbtn{font-family:inherit;font-size:15px;font-weight:500;padding:14px 30px;border-radius:100px;cursor:pointer;letter-spacing:.05em;border:1px solid var(--ink)}
 .pbtn.solid{background:var(--gold);border-color:var(--gold);color:#fff}
 .pbtn.ghost{background:transparent;color:var(--ink)}
-.tip{text-align:center;font-size:12.5px;color:var(--muted);margin-top:8px}
 
-@media print{
-  .side,.footer,.sumbar,.sumactions,.tip,.mprog{display:none!important}
-  body{background:#fff}.wrap{display:block}.main{max-width:none;padding:0}
-  .sumsec{break-inside:avoid;box-shadow:none}
-  .sumsec .st{background:#1A1A1A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .prio-sum .p{background:#1A1A1A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
+@media print{.side,.footer,.sumactions,.mprog,#sendTip{display:none!important}body{background:#fff}.wrap{display:block}.main{max-width:none;padding:0}
+  .sumsec{break-inside:avoid;box-shadow:none}.sumsec .st,.hl .p{background:#1A1A1A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
 <div id="app">
-
-  <!-- INTRO -->
   <section class="screen on" id="s-intro">
     <div class="intro">
       <div class="frame"></div>
-      <div class="eyebrow">PURELY · LIVING BRIEF</div>
-      <h1>你的家，<br>九個生活重點</h1>
-      <p class="lead">這不是問卷，是我們一起把「你想怎麼生活」說清楚的過程。<br>沒有標準答案，請依你現在與未來真正的生活方式作答——你答得越具體，我們的設計就越貼近你。</p>
-      <div class="dims" id="introDims"></div>
+      <div class="eyebrow">PURELY · 客戶生活需求調查表</div>
+      <h1>簽約了。<br>從這一刻起，我們一起進入設計階段。</h1>
+      <p class="lead">這份表單是起點。您想了很久的那個家，會從這裡的每一個答案開始長出來——櫃子多深、廚房開不開放、床放哪一面，都來自您真實的生活。<br><br>沒有標準答案。請照現在與未來真正的生活方式填。所有資料只用於本案設計，不會對外提供。</p>
       <div><button class="btn" onclick="start()">開始填寫</button></div>
-      <div class="note">約 8–12 分鐘 · 進度會自動保存，可隨時關掉再回來</div>
+      <div class="note">約 20–25 分鐘 · 進度自動保存，可隨時關掉再回來</div>
     </div>
   </section>
 
-  <!-- FORM -->
   <section class="screen" id="s-form">
     <div class="wrap">
       <aside class="side">
         <div class="brand">菩語國際設計</div>
-        <div class="sub">LIVING BRIEF</div>
+        <div class="sub">需求調查表</div>
         <div class="pline"><span id="pText">已完成 0 題</span><span id="pPct">0%</span></div>
         <div class="track"><i id="bar"></i></div>
         <ul class="nav" id="nav"></ul>
       </aside>
-      <div class="main">
-        <div id="body"></div>
-        <div class="warn" id="warn"></div>
+      <div class="main"><div id="body"></div>
         <div class="footer">
           <button class="back" id="backBtn" onclick="prev()">← 上一步</button>
           <button class="next" id="nextBtn" onclick="next()">下一步 →</button>
@@ -167,267 +141,294 @@ input.txt{width:100%;border:1px solid var(--line);border-radius:9px;background:#
     </div>
   </section>
 
-  <!-- SUMMARY -->
-  <section class="screen" id="s-sum">
-    <div class="main" style="max-width:820px;margin:0 auto">
-      <div id="sumBody"></div>
-    </div>
-  </section>
-
+  <section class="screen" id="s-sum"><div class="main" style="max-width:820px;margin:0 auto"><div id="sumBody"></div></div></section>
 </div>
 
 <script>
-/* ============ 題庫（9 重點 + 收尾）＝v1 草稿，皆為資料，好增刪 ============ */
-const M = 'multi', S = 'single';
+/* ========= 題庫：菩語客戶生活需求調查表（A–G 七段，82 題）＝資料，好增刪 ========= */
 const BRIEF = [
- {key:'family', title:'家庭與生活動線', qs:[
-   {id:'f1', q:'未來 5–10 年，預計哪些成員會共同居住？', t:M, o:['自己','伴侶','學齡前或學齡子女','成年子女','父母或長輩','毛小孩','可能同住的照護者']},
-   {id:'f2', q:'家中最常同時出現的生活狀態是？', t:M, o:['各自活動，彼此保有安靜空間','多數時間在公共空間相聚','工作、學習與休息經常交錯','作息差異大，需要互不干擾']},
-   {id:'f3', q:'在家工作或學習的頻率？', t:S, o:['幾乎沒有','每週 1–2 天','每週 3 天以上','多人同時，需要固定工作/學習區']},
-   {id:'f4', q:'家中有哪些成員或物品需要特別納入設計？', t:M, o:['貓/狗等寵物','大量衣物或收藏','運動/樂器設備','大型行李或季節用品','嬰幼兒','行動輔具','無特別項目']},
- ]},
- {key:'storage', title:'收納與儲物', qs:[
-   {id:'s1', q:'目前最頭痛的收納問題？', t:M, o:['玄關鞋物太多','衣物換季難處理','廚房備品雜亂','書籍與文件','孩子玩具','收藏品沒地方陳列','清潔家電無處收','家裡沒有儲藏室']},
-   {id:'s2', q:'你偏好的收納原則？', t:S, o:['盡量藏起來、看不見最好','展示與收藏並重','好拿好歸位優先','依使用頻率分區分層']},
-   {id:'s3', q:'有沒有需要「專屬空間」的收藏或嗜好？', t:M, o:['酒藏','茶具','書籍','公仔/模型','包款/鞋款','運動器材','樂器','無']},
- ]},
- {key:'kitchen', title:'廚房與餐食', qs:[
-   {id:'k1', q:'平日在家料理的頻率？', t:S, o:['很少，主要外食','每週 1–3 次簡單料理','幾乎每天料理','常多人一起備餐或宴客']},
-   {id:'k2', q:'最常進行哪些料理或飲食活動？', t:M, o:['中式煎炒/重油煙','烘焙/甜點','咖啡/茶/輕食','火鍋/多人聚餐','健康餐/生鮮備料']},
-   {id:'k3', q:'廚房目前最想改善的是？', t:M, o:['檯面不足、操作不順','電器多、插座或散熱不足','收納分類與庫存管理','油煙與氣味擴散','料理時無法和家人互動']},
-   {id:'k4', q:'餐桌在家中還需要扮演哪些角色？', t:M, o:['日常用餐','親友聚會','工作/閱讀/孩子作業','手作/插花/興趣活動','正式宴客']},
- ]},
- {key:'bath', title:'衛浴與盥洗', qs:[
-   {id:'b1', q:'主衛浴你最重視哪些條件？', t:M, o:['乾濕分離','泡澡浴缸','雙洗手槽','大量收納','採光與通風','精緻質感']},
-   {id:'b2', q:'盥洗的習慣與需求？', t:M, o:['以淋浴為主','喜歡泡澡放鬆','早晚尖峰需兩人同時使用','需要化妝/梳理區','需要更衣/曬衣銜接']},
-   {id:'b3', q:'衛浴收納最需要放哪些？', t:M, o:['備品囤貨','瓶罐分類','毛巾浴巾','吹風機等家電','清潔用品']},
- ]},
- {key:'health', title:'健康與環境', qs:[
-   {id:'h1', q:'你或家人是否有下列健康敏感狀況？', t:M, o:['過敏/氣喘','對氣味或化學物質敏感','睡眠品質不穩定','怕冷、怕熱或濕度敏感','無明顯狀況']},
-   {id:'h2', q:'對室內空氣品質最在意的是？', t:M, o:['通風與悶熱','除濕與防霉','PM2.5/粉塵過濾','異味與油煙','希望設備自動維持']},
-   {id:'h3', q:'你對採光與日照的偏好？', t:S, o:['明亮開放，盡量引入自然光','柔和不刺眼，可依時段調整','重視遮陽與隔熱，不追求大量日照','不同空間有不同光環境']},
-   {id:'h4', q:'在材料與清潔方面，最重視哪些條件？', t:M, o:['低甲醛、低 VOC','防霉、抗菌、耐潮','好清潔、減少死角','天然觸感與可回收性','耐刮耐撞、容易維修']},
- ]},
- {key:'soft', title:'軟裝與風格美學', qs:[
-   {id:'a1', q:'哪一種空間氛圍最打動你？（可多選）', t:M, o:['溫潤自然的木質感','侘寂留白的安靜','精緻俐落的飯店感','有故事的古典/收藏','現代簡約','大膽有個性','柔和療癒']},
-   {id:'a2', q:'你偏好的色調方向？', t:M, o:['奶霧裸色','大地木石','暗調奢華','柔霧粉彩','清爽北歐','復古黃銅','低調黑白灰']},
-   {id:'a3', q:'軟裝這幾項，哪些你重視、也想一起挑選？', t:M, o:['窗簾/布藝','沙發/單椅','寢具/織品','地毯','掛畫/藝術品','花藝/植栽','燈飾','餐瓷/杯器']},
-   {id:'a4', q:'有沒有想保留、融入新家的舊物或收藏？', t:S, o:['有家傳家具想留','有藝術/收藏品要陳列','有旅行帶回的物件','想全部換新','再與設計師討論']},
-   {id:'a5', q:'希望家給人的第一印象/情緒是？', t:S, o:['安靜、放鬆','溫暖、有人味','俐落、有品味','獨特、有故事','明亮、有活力']},
- ]},
- {key:'relax', title:'影音娛樂與放鬆', qs:[
-   {id:'r1', q:'在家最常進行哪些影音或休閒活動？', t:M, o:['電影/影集','音樂/黑膠/演奏','遊戲','運動/瑜伽','閱讀/靜坐']},
-   {id:'r2', q:'影音空間希望達到什麼程度？', t:S, o:['一般電視與背景音樂即可','重視畫質、音質與設備整合','希望接近家庭劇院的沉浸感','多人可同時享受不同內容']},
-   {id:'r3', q:'為提升放鬆品質，你會優先選擇？', t:M, o:['遮光與情境照明','隔音與吸音','舒適座椅與觀看距離','隱藏設備與線材','能快速恢復為一般客廳']},
-   {id:'r4', q:'需要一個「只屬於自己」的角落嗎？', t:S, o:['需要，一個閱讀角','需要，一個獨處放空區','需要，一間工作書房','不需要']},
- ]},
- {key:'smart', title:'智慧與設備', qs:[
-   {id:'m1', q:'最希望智慧系統協助哪些日常？', t:M, o:['燈光與窗簾情境','空調、換氣與除濕','門鎖、監控與緊急通知','影音設備一鍵啟動','能源監測與節能','目前偏好傳統操作']},
-   {id:'m2', q:'對智慧控制方式的偏好？', t:S, o:['手機 App 為主','實體按鍵為主、App 輔助','語音加自動感測','先預留線路，未來再擴充']},
-   {id:'m3', q:'網路與設備上的需求？', t:M, o:['全屋 WiFi 無死角','大量智慧家電','居家辦公/視訊','高品質影音串流','監視與安防','電動車充電樁']},
- ]},
- {key:'senior', title:'銀齡長住／無障礙', qs:[
-   {id:'e1', q:'希望這個家能支持多長期的居住計畫？', t:S, o:['5 年內可依生活再調整','預計居住 10–15 年','希望作為退休後長住宅','希望一生安心居住、不必搬家']},
-   {id:'e2', q:'是否需要預先考量行動能力的改變？', t:M, o:['目前不需要特別規劃','希望減少門檻與跌倒風險','需預留助行器/輪椅動線','已有明確行動不便需求']},
-   {id:'e3', q:'衛浴安全最希望優先改善哪些項目？', t:M, o:['乾濕分離與止滑','無高差入口','扶手補強與可坐式洗浴','夜間照明與緊急求助']},
-   {id:'e4', q:'是否需要保留照護或跨代同住的彈性？', t:M, o:['不需要','希望客房可彈性轉換','需預留照護者同住空間','需規劃長輩獨立生活區']},
- ]},
+{key:'A',title:'A｜基本資料',intro:'合約上已有的資料不用重填，這裡只確認會直接影響設計溝通的部分。',items:[
+ {id:'a1',q:'這份表單由誰填寫？',t:'single',o:['屋主本人','配偶／伴侶','家人代填','夫妻／家人一起填']},
+ {id:'a2',q:'家中的主要決策者是？（設計討論時需要知道誰拍板）',t:'single',o:['我本人','配偶／伴侶','兩人共同決定','其他']},
+ {id:'a3',q:'學歷（家中最高學歷）',t:'single',o:['高中職以下','專科','大學','研究所以上']},
+ {id:'a4',q:'科系或專業領域（影響書籍量、工作設備與閱讀空間）',t:'text',ph:'例：建築、護理、資訊工程'},
+ {id:'a5',q:'職業（本人／配偶）',t:'multi',o:['企業經營者／老闆','高階主管','一般上班族','專業人士（醫師律師會計師工程師等）','公教人員','教師','服務業／技術人員','自由工作者／接案','家管','退休','其他']},
+ {id:'a6',q:'工作型態',t:'multi',o:['外出上班','在家工作','輪班','常出差、旅行']},
+ {id:'a7',q:'在家工作的話，一週約幾天？',t:'text',ph:'例：2 天'},
+ {id:'a8',q:'聯絡方式（若合約已提供可略）',t:'group',fields:[
+   {k:'name',label:'姓名',t:'text'},{k:'bd',label:'生日',t:'date'},{k:'phone',label:'電話',t:'text'},
+   {k:'line',label:'LINE ID',t:'text'},{k:'email',label:'E-mail',t:'text'},{k:'addr',label:'案件地址',t:'text',wide:true}]},
+]},
+{key:'B',title:'B｜房屋狀況',items:[
+ {id:'b1',q:'房屋類型',t:'single',o:['預售屋（客變階段）','新成屋','中古屋','自地自建','商業／辦公空間']},
+ {id:'b2',q:'中古屋請填屋齡',t:'text',ph:'例：25 年'},
+ {id:'b3',q:'基本條件',t:'group',fields:[
+   {k:'ping',label:'室內坪數',t:'text',ph:'例：32 坪'},{k:'geju',label:'格局',t:'text',ph:'例：3房2廳2衛'},
+   {k:'floor',label:'樓層',t:'text',ph:'例：8 樓'}]},
+ {id:'b4',q:'電梯（影響材料搬運與費用）',t:'single',o:['有電梯','無電梯']},
+ {id:'b5',q:'這個空間的使用目的',t:'single',o:['長期自住','假日／度假使用','出租','未來出售']},
+ {id:'b6',q:'這個家預計住多久？（決定材料等級與預留彈性）',t:'single',o:['5 年內可能再依生活調整','預計居住 10～15 年','希望作為退休後長住的家','希望一生安心居住，不打算搬家']},
+ {id:'b7',q:'需要規劃的空間（沒列到的請填在下方）',t:'multi',o:['玄關','客廳','餐廳','廚房','主臥','次臥','小孩房','客房／孝親房','書房／工作室','更衣室','儲藏室','佛堂／神明廳','洗衣／工作陽台']},
+ {id:'b7b',q:'其他要規劃的空間',t:'text'},
+ {id:'b8',q:'希望的完工入住時間',t:'single',o:['3 個月內','3～6 個月','6 個月～1 年','不急，品質優先','其他（特殊狀況請說明）']},
+ {id:'b9',q:'社區是否有施工規定（施工時段、保證金、電梯保護等）？',t:'single',o:['有，已取得規定文件','有，尚未取得','沒有管委會','不確定']},
+ {id:'b10',q:'要保留使用的現有家具、家電（品項＋大約尺寸，也可拍照傳設計師群組相簿）',t:'area',ph:'例：餐桌 180×90、雙門冰箱、鋼琴'},
+]},
+{key:'C',title:'C｜居住成員與未來變化',intro:'空間是為人設計的。誰住、幾歲、未來會怎麼變，比風格更優先。',items:[
+ {id:'c1',q:'本人／配偶',t:'single',o:['1 人（自己住）','2 人（夫妻／伴侶）']},
+ {id:'c2',q:'其他居住成員（各類成員的人數）',t:'matrix',rows:['父母／長輩','小孩','其他同住者','幫傭／看護'],cols:['0','1','2','3','4 位以上']},
+ {id:'c3',q:'各成員年齡與特殊需求（身高、慣用手、行動狀況）',t:'area',ph:'例：本人 42、太太 40、女兒 8、母親 70（膝蓋不好）'},
+ {id:'c4',q:'毛小孩',t:'multi',o:['貓','小型犬','中型犬','大型犬','沒有','其他']},
+ {id:'c5',q:'毛小孩數量與需求',t:'text',ph:'例：貓 2 隻，需要跳台與貓砂區'},
+ {id:'c6',q:'未來 3～5 年家庭可能的變化',t:'multi',o:['迎接新生兒','小孩長大需要獨立房間','長輩搬來同住','小孩離家','開始在家工作','增加寵物','沒有預期的變化']},
+ {id:'c7',q:'需要特別考慮的需求',t:'multi',o:['長輩／行動不便：無障礙、扶手、防滑','幼兒安全：防撞、防夾、圍欄','過敏／氣喘：低甲醛、少布料、易清潔','祭祀空間：神明桌、佛堂、祖先牌位','視訊會議／在家工作','樂器練習或影音需要隔音','沒有特別需求']},
+ {id:'c8',q:'行動能力的預留（家中有長輩或行動不便者才填）',t:'single',o:['目前不需要特別規劃','希望減少門檻與跌倒風險','需預留助行器／輪椅動線','已有明確的行動不便需求']},
+ {id:'c9',q:'衛浴安全最希望優先改善的',t:'multi',o:['乾濕分離與止滑','無高差入口','扶手補強與可坐式洗浴','夜間照明與緊急求助','目前不需要']},
+ {id:'c10',q:'照護與同住的彈性',t:'single',o:['不需要','希望客房可彈性轉換','需預留照護者同住空間','需規劃長輩獨立生活區']},
+ {id:'c11',q:'家人作息',t:'single',o:['大致相同，早睡早起','大致相同，晚睡晚起','作息差異大（需考慮隔音、分區照明）','輪班，不固定']},
+ {id:'c12',q:'家人在家最常見的狀態',t:'multi',o:['各自活動，彼此保有安靜空間','多數時間在公共空間相聚','工作、學習與休息經常交錯','作息差異大，需要互不干擾']},
+ {id:'c13',q:'社交型態',t:'single',o:['以家人相處為主，很少有客人','常有朋友來訪聚會','偶爾有客人']},
+ {id:'c14',q:'聚會通常是什麼型態？',t:'multi',o:['影音娛樂（看電影、唱歌、聽音樂）','美食聚會（下廚、小酌、品酒）','桌遊、電玩、麻將','泡茶、咖啡聊天','小孩玩伴聚會','家族聚餐、節慶團圓','運動、瑜珈、健身','手作、烘焙、插花','其他']},
+ {id:'c15',q:'常有聚會的話，一次最多約幾人？',t:'text',ph:'例：10 人'},
+]},
+{key:'D',title:'D｜生活習慣',intro:'每一題都對應一個空間決定。照真實習慣填，不用想「應該」怎樣。',items:[
+ {sub:'餐廚'},
+ {id:'d1',q:'在家開伙的頻率',t:'single',o:['幾乎每天','每週 3～5 次','每週 1～2 次','幾乎不開伙']},
+ {id:'d2',q:'烹飪型態',t:'multi',o:['中式熱炒（油煙多，影響開放與否）','西式／輕食','烘焙','只加熱、煮水']},
+ {id:'d3',q:'廚房形式偏好',t:'single',o:['開放式','半開放（玻璃拉門可關）','封閉式','交給設計師依動線判斷']},
+ {id:'d4',q:'用餐人數',t:'group',fields:[{k:'daily',label:'平日用餐人數',t:'text',ph:'例：4 人'},{k:'max',label:'餐桌最多需容納',t:'text',ph:'例：8 人'}]},
+ {id:'d5',q:'餐桌在家中還要扮演哪些角色？',t:'multi',o:['日常用餐','親友聚會','工作、閱讀、孩子作業','手作、插花、興趣活動','正式宴客']},
+ {id:'d6',q:'常用廚房電器（需要固定收納位置的請標尺寸）',t:'multi',o:['電鍋／電子鍋','微波爐','烤箱／蒸烤箱','洗碗機','氣炸鍋','咖啡機','熱水瓶／飲水機','果汁機／攪拌機','烘碗機','淨水器','冰箱','其他']},
+ {id:'d7',q:'冰箱類型與寬度，以及其他需固定位置的電器尺寸',t:'text',ph:'例：對開冰箱寬 90cm、烤箱 60cm 嵌入'},
+ {id:'d8',q:'目前的廚房最困擾您的是？',t:'multi',o:['檯面不足、操作不順','電器多、插座或散熱不足','收納分類與庫存管理','油煙與氣味擴散','料理時無法和家人互動','目前沒有明顯困擾']},
+ {id:'d9',q:'飲品習慣（決定是否需要吧台、茶水區、酒櫃）',t:'multi',o:['泡茶（需茶具收納與泡茶區）','咖啡（咖啡角落）','酒（酒櫃／紅酒櫃）','常需要冰塊（製冰機、大量冰品收納）','氣泡水／飲水機（需給排水）','手搖、飲料為主','沒有特別','其他']},
+ {sub:'客廳'},
+ {id:'d10',q:'客廳主要用途',t:'multi',o:['看電視','投影／影音','不看電視，以聊天、閱讀為主','小孩活動空間','接待客人','運動、瑜珈','考慮去客廳化（不以沙發電視為中心）']},
+ {id:'d11',q:'影音空間希望達到什麼程度？',t:'single',o:['一般電視與背景音樂即可','重視畫質、音質與設備整合','希望接近家庭劇院的沉浸感','多人可同時享受不同內容']},
+ {id:'d12',q:'為了提升放鬆品質，您會優先選擇？',t:'multi',o:['遮光與情境照明','隔音與吸音','舒適座椅與觀看距離','隱藏設備與線材','能快速恢復為一般客廳']},
+ {id:'d13',q:'影音與智慧需求',t:'multi',o:['智慧照明','電動窗簾','全屋網路佈線／Wi-Fi','監視器／門禁／電子鎖','音響／家庭劇院','掃地機器人基地','沒有需求']},
+ {id:'d14',q:'對智慧控制方式的偏好',t:'single',o:['手機 App 為主','實體按鍵為主，App 輔助','語音加自動感測','先預留線路，未來再擴充']},
+ {id:'d15',q:'網路與設備上的需求',t:'multi',o:['全屋 Wi-Fi 無死角','大量智慧家電','居家辦公／視訊','高品質影音串流','監視與安防','電動車充電樁']},
+ {id:'d16',q:'需要一個「只屬於自己」的角落嗎？',t:'single',o:['需要，一個閱讀角','需要，一個獨處放空區','需要，一間工作書房','不需要']},
+ {sub:'衛浴'},
+ {id:'d17',q:'沐浴習慣',t:'single',o:['淋浴','泡澡','兩者都要']},
+ {id:'d18',q:'衛浴配備需求',t:'multi',o:['免治馬桶','雙面盆','浴缸','乾濕分離','暖風機／抽風','化妝鏡＋鏡燈','小便斗','無障礙扶手','浴室置物櫃','洗衣機放浴室']},
+ {id:'d19',q:'盥洗的習慣與需求',t:'multi',o:['早晚尖峰需兩人同時使用','需要化妝／梳理區','需要與更衣、曬衣動線銜接','重視採光與通風','重視精緻質感','沒有特別']},
+ {id:'d20',q:'衛浴收納最需要放哪些？',t:'multi',o:['備品囤貨','瓶罐分類','毛巾浴巾','吹風機等家電','清潔用品']},
+ {id:'d21',q:'花灑偏好',t:'single',o:['手持','頂噴','淋浴柱（兩者都有）','無意見']},
+ {id:'d22',q:'熱水器',t:'single',o:['瓦斯','電熱','熱泵／太陽能','依現況不變']},
+ {sub:'洗衣與家務'},
+ {id:'d23',q:'洗衣方式',t:'multi',o:['洗衣機','烘衣機','陽台曬衣','室內晾衣（需電動晾衣架）','送洗為主']},
+ {id:'d24',q:'有烘衣機的話，希望怎麼放？',t:'single',o:['直立堆疊','並排','沒有烘衣機／不確定']},
+ {id:'d25',q:'清掃工具',t:'multi',o:['拖把','掃拖機器人','吸塵器（需充電收納位）','其他']},
+ {id:'d26',q:'用拖把的話，習慣在哪裡洗拖把？',t:'single',o:['前陽台','後陽台','浴室','其他']},
+ {sub:'光線、聲音與空氣'},
+ {id:'d27',q:'您對採光與日照的偏好',t:'single',o:['明亮開放，盡量引入自然光','柔和不刺眼，可依時段調整','重視遮陽與隔熱，不追求大量日照','不同空間有不同光環境']},
+ {id:'d28',q:'居家聲音最常造成哪種困擾？',t:'multi',o:['戶外車流或鄰居噪音','樓上樓下的腳步、排水聲','天花板管線、水管流水聲','家人作息互相干擾','影音設備影響其他空間','機電設備運轉聲（冷氣、抽風、馬達）','目前沒有','其他']},
+ {id:'d29',q:'對室內空氣品質最在意的是？',t:'multi',o:['通風與悶熱','除濕與防霉','PM2.5、粉塵過濾','異味與油煙','希望設備自動維持','沒有特別在意']},
+ {id:'d30',q:'您或家人是否有下列健康敏感狀況？',t:'multi',o:['過敏、氣喘','對氣味或化學物質敏感','睡眠品質不穩定','怕冷、怕熱或濕度敏感','無明顯狀況']},
+ {sub:'睡眠與工作'},
+ {id:'d31',q:'床的尺寸需求（沒有該房間請跳過該列）',t:'matrix',rows:['主臥','次臥 1','次臥 2','小孩房','客房／孝親房'],cols:['單人 3/3.5尺','雙人 5尺','6尺 Queen','7尺 King','其他／不需要']},
+ {id:'d32',q:'其他房間的房間名稱與床尺寸',t:'group',fields:[{k:'r1',label:'其他房間 ①',t:'text',ph:'例：孝親房2樓，5尺雙人'},{k:'r2',label:'其他房間 ②',t:'text'}]},
+ {id:'d33',q:'工作／閱讀空間',t:'single',o:['獨立書房','臥室內書桌','客餐廳共用（餐桌兼工作桌）','不需要']},
+ {id:'d34',q:'獨立書房的話，幾人同時使用？',t:'text',ph:'例：2 人'},
+ {id:'d35',q:'平常在哪裡用電腦、上網？',t:'multi',o:['客廳沙發','臥室','書房','餐桌']},
+]},
+{key:'E',title:'E｜收納',intro:'收納做對，家才會乾淨。這一段請盡量具體。',items:[
+ {id:'e1',q:'全家鞋子總數（含拖鞋、靴子）',t:'single',o:['20 雙以下','21～40 雙','41～60 雙','60 雙以上']},
+ {id:'e2',q:'鞋子收納補充',t:'multi',o:['需要換季收納區','靴子多，需要高空間收納','都不需要','其他']},
+ {id:'e3',q:'玄關需求',t:'multi',o:['坐著穿鞋','全身鏡','鑰匙、零錢放置處','外套掛','雨傘收納','包裹暫放','鞋櫃通風／除臭','安全帽','推車／嬰兒車','拆包裹的剪刀與垃圾桶']},
+ {id:'e4',q:'衣物比例（依全家總量勾選）',t:'matrix',rows:['折疊衣物（T恤運動服）','吊掛衣物（襯衫長褲西裝）','長版衣物（大衣洋裝）','配件（領帶襪子內衣）','包包、帽子','寢具、棉被'],cols:['多','中','少']},
+ {id:'e5',q:'行李箱數量與尺寸',t:'text',ph:'例：29吋 2個、20吋 1個'},
+ {id:'e6',q:'主臥衣物收納型態',t:'single',o:['更衣室（walk-in）','整面衣櫃','衣櫃＋梳妝台','交給設計師判斷']},
+ {id:'e7',q:'您偏好的收納原則',t:'single',o:['盡量藏起來，看不見最好','展示與收藏並重','好拿好歸位優先','依使用頻率分區分層']},
+ {id:'e8',q:'大型或特殊物品',t:'multi',o:['腳踏車','高爾夫球具','露營裝備','健身器材','樂器','大量書籍','收藏品需展示','酒藏','茶具','包款、鞋款','公仔、模型','小孩玩具','囤貨（衛生紙、飲料、米）','沒有']},
+ {id:'e9',q:'樂器種類、書籍數量、收藏品內容',t:'text',ph:'例：直立鋼琴、書約15箱、模型公仔30件'},
+ {id:'e10',q:'目前最讓您頭痛的收納問題（越具體越好）',t:'area',ph:'例：玄關鞋子永遠放不進去、廚房小家電沒地方放'},
+ {id:'e11',q:'陳設習慣',t:'single',o:['喜歡展示（收藏、藝術品、植物、書）','喜歡全部收起來，檯面淨空','介於中間','沒有陳設習慣']},
+]},
+{key:'F',title:'F｜風格與美感',intro:'不確定沒關係。「不喜歡什麼」通常比「喜歡什麼」更有用。',items:[
+ {id:'f1',q:'喜歡的風格（最多 3 項）',t:'multi',o:['現代簡約','無印／日系','北歐','現代輕奢','侘寂／自然質樸','美式','工業','新古典／法式','台式復古、老宅新生','混搭','不確定，請設計師引導']},
+ {id:'f2',q:'哪一種空間氛圍最打動您？',t:'multi',o:['溫潤自然的木質感','侘寂留白的安靜','精緻俐落的飯店感','有故事的古典、收藏','現代簡約','大膽有個性','柔和療癒']},
+ {id:'f3',q:'希望這個家給人的第一印象是？',t:'single',o:['安靜、放鬆','溫暖、有人味','俐落、有品味','獨特、有故事','明亮、有活力']},
+ {id:'f4',q:'整體色調',t:'group',fields:[{k:'ming',label:'明度',t:'single',o:['淺','中','深']},{k:'wen',label:'溫度',t:'single',o:['偏冷','偏暖','中性']}]},
+ {id:'f5',q:'喜歡的顏色',t:'multi',o:['白','灰','黑','米／奶茶色','木色','綠','藍','粉','紅／酒紅','黃／橘','其他']},
+ {id:'f6',q:'不喜歡、不想出現的顏色與材質（這題很重要）',t:'group',fields:[{k:'nocolor',label:'不喜歡的顏色',t:'text',ph:'例：粉色、亮黃'},{k:'nomat',label:'不喜歡的材質',t:'text',ph:'例：亮面大理石、鏡面'}]},
+ {id:'f7',q:'喜歡的材質',t:'multi',o:['實木','木皮','石材／大理石','磁磚','水泥／樂土','金屬鐵件','玻璃／長虹玻璃','布料','藤／編織','藝術漆／礦物塗料','壁紙','其他']},
+ {id:'f8',q:'在材料與清潔方面，最重視哪些條件？（最多 3 項）',t:'multi',o:['低甲醛、低 VOC','防霉、抗菌、耐潮','好清潔、減少死角','天然觸感與可回收性','耐刮耐撞、容易維修']},
+ {id:'f9',q:'地板偏好',t:'single',o:['實木地板','海島型（實木皮）','超耐磨','磁磚','石材','SPC 石塑','各空間不同']},
+ {id:'f10',q:'各空間不同的話，請說明',t:'text',ph:'例：公共區磁磚、房間超耐磨'},
+ {id:'f11',q:'木色偏好',t:'single',o:['淺（白橡、橡木）','中（柚木、淺胡桃）','深（胡桃、黑檀）','不想用木色']},
+ {id:'f12',q:'特別喜歡的元素',t:'multi',o:['線板','格柵','弧形／拱門','玻璃磚','長虹玻璃','鐵件','復古磚／花磚','藝術漆','間接照明','大面留白','其他']},
+ {id:'f13',q:'軟裝這幾項，哪些您重視、也想和設計師一起挑選？',t:'multi',o:['窗簾／布藝','沙發／單椅','寢具／織品','地毯','掛畫／藝術品','花藝／植栽','燈飾','餐瓷／杯器','都交給設計師','軟裝自己處理']},
+ {id:'f14',q:'哪些空間想做不同的處理？',t:'group',fields:[{k:'s1',label:'空間 ① 與想法',t:'text',ph:'例：小孩房，想用大地色系'},{k:'s2',label:'空間 ② 與想法',t:'text'}]},
+ {id:'f15',q:'Pinterest 或其他參考連結（圖片請直接用 LINE 傳給設計師，並各寫一句喜歡哪裡）',t:'text',ph:'https://'},
+]},
+{key:'G',title:'G｜預算與期待',items:[
+ {id:'g1',q:'裝修總預算（不含活動家具、家電）',t:'single',o:['150 萬以下','150～250 萬','250～400 萬','400～600 萬','600 萬以上','尚未確定，想聽建議']},
+ {id:'g2',q:'若只能先做好三件事，您的最高優先是？（最多 3 項）',t:'multi',o:['動線與收納','健康與空氣品質','安全與長住','廚房與餐敘','影音與放鬆','智慧與節能','風格與質感','預算控制'],feature:'prio'},
+ {id:'g3',q:'預算有限時，您的取捨傾向是？',t:'single',o:['寧可少做，但用好材質','寧可先做滿機能，日後再升級','公共空間優先','主臥與私領域優先','聽設計師的專業建議'],feature:'trade'},
+ {id:'g4',q:'預算優先投入的空間（最多 3 項）',t:'multi',o:['玄關','客餐廳','廚房','主臥','次臥／小孩房','書房','衛浴','陽台','儲藏']},
+ {id:'g5',q:'預算優先投入的項目（最多 3 項）',t:'multi',o:['木作櫃體','系統櫃','廚具','衛浴設備','地板','燈光','家具','家電','五金','窗簾／軟裝']},
+ {id:'g6',q:'這次裝修最在意的事',t:'multi',o:['施工品質','材料品牌與品質','時程準時','預算控制','後續保固維修','和設計師的溝通與共識','鄰居／管委會關係','其他']},
+ {id:'g7',q:'您是怎麼認識菩語的？',t:'multi',o:['Google 搜尋','AI 搜尋（ChatGPT、Gemini 等）','Facebook','Instagram','Threads','YouTube','朋友推薦','建商／房仲介紹','看過菩語作品','舊客戶再合作','其他']},
+ {id:'g8',q:'用 AI 搜尋的話，是哪一個？',t:'single',o:['ChatGPT','Gemini','Claude','Perplexity','Copilot','其他']},
+ {id:'g9',q:'看過菩語作品的話，是哪一案？（案名或網址）',t:'text',ph:'案名或網址'},
+ {id:'g10',q:'最後決定和菩語合作的原因（最多 2 項）',t:'multi',o:['作品風格','設計師懂我，溝通順','網路評價','報價透明','時程配合','朋友推薦','其他']},
+ {id:'g11',q:'請描述您理想中的家，或最不希望新家再次發生的問題。任何事都可以寫。',t:'area',ph:'例：希望一家人在公共空間相聚，但晚上彼此不受聲音干擾；也希望父母偶爾同住時仍然安全舒適。',feature:'story'},
+]},
 ];
-const TITLES = BRIEF.map(s=>s.title);
-const TRADEOFF = ['寧可少做，但用好材質','寧可先做滿機能，日後再升級','公共空間優先','主臥與私領域優先','看設計師的專業建議'];
 
-/* ============ 狀態 ============ */
-let cur = 0;                 // 0..8 = 9 面向；9 = 排序；10 = 開放/取捨；11 = 客戶資料
-const LAST = 11;
-const A = { ans:{}, prio:[], tradeoff:'', story:'', client:{name:'',phone:'',email:'',proj:'',addr:''} };
-const el = id => document.getElementById(id);
-const KEY = 'puyu_brief_v1';
-/* 填入 Google Apps Script 部署後的 /exec 網址 → 客戶按「送出給菩語」就自動寄回 */
-const CONFIG = { SUBMIT_URL: '' };
+const el=id=>document.getElementById(id);
+const KEY='puyu_brief_v2';
+/* 填入 Google Apps Script 部署後的 /exec 網址 → 客戶按「送出給菩語」自動寄回 */
+const CONFIG={SUBMIT_URL:''};
 
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify({cur,A})); }catch(e){} }
-function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)); if(d&&d.A){ Object.assign(A,d.A); return true; } }catch(e){} return false; }
+let cur=0; const LAST=BRIEF.length-1;
+const A={ans:{}};
+function save(){try{localStorage.setItem(KEY,JSON.stringify({cur,ans:A.ans}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.ans){A.ans=d.ans;}}catch(e){}}
 
-function totalQ(){ let n=0; BRIEF.forEach(s=>n+=s.qs.length); return n+3; } // +排序+取捨+開放
-function answeredQ(){
-  let n=0;
-  BRIEF.forEach(s=>s.qs.forEach(q=>{ const v=A.ans[q.id]; if(Array.isArray(v)?v.length:!!v) n++; }));
-  if(A.prio.length===3) n++;
-  if(A.tradeoff) n++;
-  if(A.story && A.story.trim()) n++;
-  return n;
+/* 題目計數 */
+function allQs(){const a=[];BRIEF.forEach(s=>s.items.forEach(it=>{if(it.id)a.push(it);}));return a;}
+function isAns(it){const v=A.ans[it.id];
+  if(it.t==='multi')return Array.isArray(v)&&v.length>0;
+  if(it.t==='group')return v&&Object.keys(v).some(k=>v[k]);
+  if(it.t==='matrix')return v&&Object.keys(v).length>0;
+  return !!v;}
+function answered(){return allQs().filter(isAns).length;}
+
+function start(){el('s-intro').classList.remove('on');el('s-form').classList.add('on');render();window.scrollTo(0,0);}
+
+function progress(){
+  const tot=allQs().length,ans=answered(),pct=Math.round(ans/tot*100);
+  el('pText').textContent='已完成 '+ans+' / '+tot+' 題';el('pPct').textContent=pct+'%';el('bar').style.width=pct+'%';
+  const mb=el('mb');if(mb){mb.style.width=pct+'%';el('mt').textContent='已完成 '+ans+' / '+tot+'　·　'+pct+'%';}
+  el('nav').innerHTML=BRIEF.map((s,i)=>{
+    const done=s.items.filter(it=>it.id).every(isAns);
+    const cls=i===cur?'on':(done?'done':'');
+    return '<li class="'+cls+'" onclick="jump('+i+')"><span class="n">'+(done&&i!==cur?'✓':(i+1))+'</span>'+s.title.replace(/｜/,' ')+'</li>';
+  }).join('');
 }
+function jump(i){if(i<=cur){cur=i;render();}}
 
-/* ============ intro ============ */
-el('introDims').innerHTML = TITLES.map(t=>'<span>'+t+'</span>').join('');
-function start(){ el('s-intro').classList.remove('on'); el('s-form').classList.add('on'); render(); window.scrollTo(0,0); }
+function esc(s){return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+function av(s){return (s||'').replace(/"/g,'&quot;');}
 
-/* ============ 進度 / 側欄 ============ */
-function refreshProgress(){
-  const tot=totalQ(), ans=answeredQ(), pct=Math.round(ans/tot*100);
-  el('pText').textContent='已完成 '+ans+' / '+tot+' 題';
-  el('pPct').textContent=pct+'%'; el('bar').style.width=pct+'%';
-  const mp=el('mprogBar'); if(mp){ mp.style.width=pct+'%'; el('mprogText').textContent='已完成 '+ans+' / '+tot+'　·　'+pct+'%'; }
-  el('nav').innerHTML = BRIEF.map((s,i)=>{
-    const done = s.qs.every(q=>{const v=A.ans[q.id];return Array.isArray(v)?v.length:!!v;});
-    const cls = i===cur?'on':(done?'done':'');
-    return '<li class="'+cls+'" onclick="jump('+i+')"><span class="n">'+(done&&i!==cur?'✓':(i+1))+'</span>'+s.title+'</li>';
-  }).join('') +
-   ['排序重點','理想與取捨','客戶與案件'].map((t,k)=>{
-     const i=9+k; return '<li class="'+(i===cur?'on':'')+'" onclick="jump('+i+')"><span class="n">'+(i+1)+'</span>'+t+'</li>';
-   }).join('');
-}
-function jump(i){ if(i<=cur){ cur=i; render(); } }
-
-/* ============ render ============ */
 function render(){
-  el('warn').textContent='';
-  el('backBtn').style.visibility = cur===0 ? 'hidden':'visible';
-  el('nextBtn').textContent = cur===LAST ? '完成 · 產出需求摘要' : '下一步 →';
-  let html='';
-  if(cur<9){
-    const s=BRIEF[cur];
-    html+='<div class="step">STEP '+String(cur+1).padStart(2,'0')+' / 09</div>';
-    html+='<div class="h2">'+s.title+'</div>';
-    html+='<div class="stepnote">憑你真實的生活作答，可複選；沒有標準答案。</div>';
-    html+='<div class="mprog"><div class="track"><i id="mprogBar"></i></div><div class="pline" id="mprogText"></div></div>';
-    s.qs.forEach((q,qi)=>{
-      const cur2=A.ans[q.id]||(q.t===M?[]:'');
-      html+='<div class="q"><div class="qh"><span class="idx">'+(qi+1)+'.</span>'+q.q+(q.t===M?'':'<span class="req">單選</span>')+'</div>';
-      html+='<div class="opts">'+q.o.map(op=>{
-        const sel = q.t===M ? cur2.indexOf(op)>=0 : cur2===op;
-        return '<div class="opt '+(q.t===S?'single':'')+(sel?' sel':'')+'" onclick="pick(\''+q.id+'\',\''+esc(op)+'\','+(q.t===M)+')"><span class="box"></span>'+op+'</div>';
-      }).join('')+'</div></div>';
-    });
-  } else if(cur===9){
-    html+='<div class="step">最後幾步 · 排序</div><div class="h2">若只能先做到位三件事</div>';
-    html+='<div class="stepnote">從九大重點中選出你最在意的 3 個（依序點選），這會決定我們把心力與預算優先放哪裡。</div>';
-    html+='<div class="prio">'+TITLES.map((t,i)=>{
-      const idx=A.prio.indexOf(i);
-      return '<div class="pcard'+(idx>=0?' sel':'')+'" onclick="pickPrio('+i+')"><span class="rank">'+(idx>=0?idx+1:'')+'</span><b>'+t+'</b><span>重點 '+(i+1)+'</span></div>';
+  const s=BRIEF[cur];
+  el('backBtn').style.visibility=cur===0?'hidden':'visible';
+  el('nextBtn').textContent=cur===LAST?'完成 · 產出需求摘要':'下一步 →';
+  let h='<div class="step">'+s.key+' · 第 '+(cur+1)+' / '+BRIEF.length+' 段</div><div class="h2">'+s.title.replace(/^[A-G]｜/,'')+'</div>';
+  if(s.intro)h+='<div class="stepnote">'+s.intro+'</div>';
+  h+='<div class="mprog"><div class="track"><i id="mb"></i></div><div class="pline" id="mt"></div></div>';
+  let qn=0;
+  s.items.forEach(it=>{
+    if(it.sub){h+='<div class="subhead">'+it.sub+'</div>';return;}
+    qn++;
+    h+='<div class="q"><div class="qh"><span class="idx">'+qn+'.</span>'+it.q+
+       (it.t==='single'?'<span class="tagm">單選</span>':it.t==='multi'?'<span class="tagm">可複選</span>':'')+'</div>';
+    h+=field(it);
+    h+='</div>';
+  });
+  el('body').innerHTML=h;progress();window.scrollTo(0,0);
+}
+function field(it){
+  const v=A.ans[it.id];
+  if(it.t==='single'||it.t==='multi'){
+    const multi=it.t==='multi';const cur2=v||(multi?[]:'');
+    return '<div class="opts">'+it.o.map(op=>{
+      const sel=multi?cur2.indexOf(op)>=0:cur2===op;
+      return '<div class="opt '+(multi?'':'single')+(sel?' sel':'')+'" onclick="pick(\''+it.id+'\',\''+esc(op)+'\','+multi+')"><span class="box"></span>'+op+'</div>';
     }).join('')+'</div>';
-  } else if(cur===10){
-    html+='<div class="step">最後幾步 · 想法</div><div class="h2">理想的家，與你的取捨</div>';
-    html+='<div class="q"><div class="qh">當預算需要取捨時，你比較傾向？<span class="req">單選</span></div>';
-    html+='<div class="opts">'+TRADEOFF.map(op=>'<div class="opt single'+(A.tradeoff===op?' sel':'')+'" onclick="pickTrade(\''+esc(op)+'\')"><span class="box"></span>'+op+'</div>').join('')+'</div></div>';
-    html+='<div class="q"><div class="qh">請描述你理想中的家，或最不希望新家再次發生的問題。<span class="req">必填</span></div>';
-    html+='<div class="qhint">寫得越具體越好，情境句最有幫助。</div>';
-    html+='<textarea id="story" oninput="A.story=this.value;save()" placeholder="例如：希望一家人在公共空間相聚，但晚上彼此不受聲音干擾；也希望未來父母偶爾同住時仍然安全舒適。上一個家最困擾的是玄關永遠很亂、廚房油煙會飄到客廳……">'+(A.story||'')+'</textarea></div>';
-  } else if(cur===11){
-    html+='<div class="step">最後一步</div><div class="h2">確認客戶與案件</div>';
-    html+='<div class="stepnote">方便我們把這份需求單對應到你的案子。</div>';
-    html+='<div class="grid2" style="margin-top:22px">'+
-      field('name','姓名')+field('phone','聯絡電話')+field('email','Email')+field('proj','案名 / 稱呼')+'</div>'+
-      '<div class="field" style="margin-top:0">'+lbl('建物地址')+'<input class="txt" value="'+escAttr(A.client.addr)+'" oninput="A.client.addr=this.value;save()"></div>';
   }
-  el('body').innerHTML=html;
-  refreshProgress();
-  window.scrollTo(0,0);
-}
-function field(k,l){ return '<div class="field">'+lbl(l)+'<input class="txt" value="'+escAttr(A.client[k])+'" oninput="A.client.'+k+'=this.value;save()"></div>'; }
-function lbl(l){ return '<label>'+l+'</label>'; }
-function esc(s){ return s.replace(/'/g,"\\'"); }
-function escAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
-
-/* ============ 互動 ============ */
-function pick(id,op,multi){
-  if(multi){ const a=A.ans[id]||[]; const i=a.indexOf(op); if(i>=0)a.splice(i,1); else a.push(op); A.ans[id]=a; }
-  else A.ans[id]=op;
-  save(); render();
-}
-function pickPrio(i){ const p=A.prio; const k=p.indexOf(i); if(k>=0)p.splice(k,1); else{ if(p.length>=3){el('warn').textContent='最多選 3 個——先取消一個再選。';return;} p.push(i);} el('warn').textContent=''; save(); render(); }
-function pickTrade(op){ A.tradeoff=op; save(); render(); }
-
-/* ============ 導覽 + 驗證 ============ */
-function requiredMissing(){
-  if(cur<9){ const miss=BRIEF[cur].qs.filter(q=>{const v=A.ans[q.id];return !(Array.isArray(v)?v.length:!!v);}); return miss.length?('這一頁還有 '+miss.length+' 題沒作答'):''; }
-  if(cur===9) return A.prio.length===3?'':'請依序選出 3 個最重要的重點';
-  if(cur===10) return (A.story&&A.story.trim())?'':'請描述你理想中的家（這題必填）';
+  if(it.t==='text')return '<input class="qin" value="'+av(v)+'" placeholder="'+av(it.ph)+'" oninput="setVal(\''+it.id+'\',this.value)">';
+  if(it.t==='area')return '<textarea class="qin" placeholder="'+av(it.ph)+'" oninput="setVal(\''+it.id+'\',this.value)">'+(v||'')+'</textarea>';
+  if(it.t==='date')return '<input type="date" class="qin" value="'+av(v)+'" oninput="setVal(\''+it.id+'\',this.value)">';
+  if(it.t==='group'){
+    const g=v||{};
+    return '<div class="grp">'+it.fields.map(f=>{
+      let inner;
+      if(f.t==='single'){inner='<div class="opts" style="margin-top:6px">'+f.o.map(op=>{const sel=g[f.k]===op;return '<div class="opt single'+(sel?' sel':'')+'" onclick="setGrp(\''+it.id+'\',\''+f.k+'\',\''+esc(op)+'\')"><span class="box"></span>'+op+'</div>';}).join('')+'</div>';}
+      else{const type=f.t==='date'?'date':'text';inner='<input type="'+type+'" value="'+av(g[f.k])+'" placeholder="'+av(f.ph)+'" oninput="setGrp(\''+it.id+'\',\''+f.k+'\',this.value)">';}
+      return '<div class="f'+(f.wide||f.t==='single'?' wide':'')+'"><label>'+f.label+'</label>'+inner+'</div>';
+    }).join('')+'</div>';
+  }
+  if(it.t==='matrix'){
+    const m=v||{};
+    let h='<div class="mxwrap"><table class="mx"><tr><th></th>'+it.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>';
+    it.rows.forEach(r=>{h+='<tr><td class="rl">'+r+'</td>'+it.cols.map(c=>'<td class="cell'+(m[r]===c?' sel':'')+'" onclick="setMx(\''+it.id+'\',\''+esc(r)+'\',\''+esc(c)+'\')"><div class="dot"></div></td>').join('')+'</tr>';});
+    return h+'</table></div>';
+  }
   return '';
 }
-function next(){
-  const m=requiredMissing(); if(m){ el('warn').textContent=m; return; }
-  if(cur===LAST){ buildSummary(); return; }
-  cur++; render();
-}
-function prev(){ if(cur>0){ cur--; render(); } }
+function pick(id,op,multi){if(multi){const a=A.ans[id]||[];const i=a.indexOf(op);if(i>=0)a.splice(i,1);else a.push(op);A.ans[id]=a;}else A.ans[id]=op;save();render();}
+function setVal(id,val){A.ans[id]=val;save();progress();}
+function setGrp(id,k,val){const g=A.ans[id]||{};g[k]=val;A.ans[id]=g;save();if(BRIEF[cur].items.find(x=>x.id===id).fields.find(f=>f.k===k).t==='single')render();else progress();}
+function setMx(id,r,c){const m=A.ans[id]||{};m[r]=c;A.ans[id]=m;save();render();}
 
-/* ============ 需求摘要 ============ */
+function next(){if(cur===LAST){buildSummary();return;}cur++;render();}
+function prev(){if(cur>0){cur--;render();}}
+
+/* ========= 需求摘要 ========= */
+function featVal(f){let r=null;BRIEF.forEach(s=>s.items.forEach(it=>{if(it.feature===f)r=A.ans[it.id];}));return r;}
+function clientObj(){return A.ans['a8']||{};}
+function ansText(it){const v=A.ans[it.id];
+  if(v==null||(Array.isArray(v)&&!v.length)||(typeof v==='object'&&!Array.isArray(v)&&!Object.keys(v).length)||v==='')return null;
+  if(Array.isArray(v))return v.join('、');
+  if(it.t==='group')return it.fields.filter(f=>v[f.k]).map(f=>f.label+'：'+v[f.k]).join('　');
+  if(it.t==='matrix')return Object.keys(v).map(r=>r+'→'+v[r]).join('；');
+  return v;}
 function buildSummary(){
-  save();
-  const c=A.client;
-  let h='<div class="sumhead"><div class="k">菩語國際設計 · LIVING BRIEF</div><h1>居家深度需求摘要</h1>'+
-    '<p>'+(c.name?c.name+'　':'')+(c.proj?'｜'+c.proj:'')+(c.phone?'　·　'+c.phone:'')+'</p></div>';
-
-  // 排序
-  h+='<div class="sumsec"><div class="st">最優先的三件事</div><div class="sb"><div class="prio-sum">'+
-     A.prio.map((i,k)=>'<div class="p"><em>PRIORITY '+(k+1)+'</em>'+TITLES[i]+'</div>').join('')+'</div></div></div>';
-
-  // 九大面向
-  BRIEF.forEach((s,si)=>{
+  save();const c=clientObj();
+  let h='<div class="sumhead"><div class="k">菩語國際設計 · 客戶生活需求調查表</div><h1>需求摘要</h1>'+
+    '<p>'+(c.name?c.name:'')+(A.ans['b3']&&A.ans['b3'].ping?'　·　'+A.ans['b3'].ping:'')+(c.phone?'　·　'+c.phone:'')+'</p></div>';
+  const prio=featVal('prio'),trade=featVal('trade'),story=featVal('story');
+  if((prio&&prio.length)||trade){
+    h+='<div class="hl">';
+    if(prio&&prio.length)h+='<div class="p"><em>最優先</em>'+prio.join('　')+'</div>';
+    if(trade)h+='<div class="p"><em>取捨傾向</em>'+trade+'</div>';
+    h+='</div>';
+  }
+  BRIEF.forEach(s=>{
     let rows='';
-    s.qs.forEach(q=>{
-      const v=A.ans[q.id]; let sa;
-      if(Array.isArray(v)&&v.length) sa='<div class="sa">'+v.map(x=>'<span class="chip">'+x+'</span>').join('')+'</div>';
-      else if(!Array.isArray(v)&&v) sa='<div class="sa"><span class="chip">'+v+'</span></div>';
-      else sa='<div class="sa empty">—（未填）</div>';
-      rows+='<div class="sumrow"><div class="sq">'+q.q+'</div>'+sa+'</div>';
+    s.items.forEach(it=>{ if(!it.id)return; const a=ansText(it);
+      rows+='<div class="sumrow"><div class="sq">'+it.q+'</div>'+
+        (a?(it.feature==='story'?'<div class="sa free">'+escH(a)+'</div>':'<div class="sa">'+(Array.isArray(A.ans[it.id])?A.ans[it.id].map(x=>'<span class="chip">'+x+'</span>').join(''):(it.t==='single'?'<span class="chip">'+a+'</span>':escH(a)))+'</div>')
+             :'<div class="sa empty">—</div>')+'</div>';
     });
-    h+='<div class="sumsec"><div class="st"><span class="num">0'+(si+1)+'</span>'+s.title+'</div><div class="sb">'+rows+'</div></div>';
+    h+='<div class="sumsec"><div class="st">'+s.title+'</div><div class="sb">'+rows+'</div></div>';
   });
-
-  // 取捨 + 開放
-  h+='<div class="sumsec"><div class="st">理想與取捨</div><div class="sb">'+
-     '<div class="sumrow"><div class="sq">預算取捨傾向</div><div class="sa">'+(A.tradeoff?'<span class="chip">'+A.tradeoff+'</span>':'<span class="empty">—</span>')+'</div></div>'+
-     '<div class="sumrow"><div class="sq">理想的家 / 最不希望再發生的問題</div><div class="sa free">'+(A.story?escHtml(A.story):'<span class="empty">—</span>')+'</div></div>'+
-     '</div></div>';
-
-  // 客戶資料
-  h+='<div class="sumsec"><div class="st">客戶與案件資料</div><div class="sb">'+
-     row2('姓名',c.name)+row2('聯絡電話',c.phone)+row2('Email',c.email)+row2('案名',c.proj)+row2('建物地址',c.addr)+
-     '</div></div>';
-
   h+='<div class="sumactions">'+
-     '<button class="pbtn solid" id="sendBtn" onclick="submitToStudio()">送出給菩語</button>'+
-     '<button class="pbtn ghost" onclick="window.print()">列印 / 存成 PDF</button>'+
-     '<button class="pbtn ghost" onclick="backToEdit()">← 回去修改</button></div>'+
-     '<div class="tip" id="sendTip">按「送出給菩語」把需求直接傳給我們；也可以另存 PDF 留底。</div>';
-
-  el('sumBody').innerHTML=h;
-  el('s-form').classList.remove('on'); el('s-sum').classList.add('on'); window.scrollTo(0,0);
+    '<button class="pbtn solid" id="sendBtn" onclick="submitToStudio()">送出給菩語</button>'+
+    '<button class="pbtn ghost" onclick="window.print()">列印 / 存成 PDF</button>'+
+    '<button class="pbtn ghost" onclick="backToEdit()">← 回去修改</button></div>'+
+    '<div class="tip" id="sendTip" style="text-align:center">按「送出給菩語」把需求直接傳給我們；也可以另存 PDF 留底。</div>';
+  el('sumBody').innerHTML=h;el('s-form').classList.remove('on');el('s-sum').classList.add('on');window.scrollTo(0,0);
 }
-function row2(l,v){ return '<div class="sumrow"><div class="sq">'+l+'</div><div class="sa'+(v?'':' empty')+'">'+(v?escHtml(v):'—')+'</div></div>'; }
-function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function backToEdit(){ el('s-sum').classList.remove('on'); el('s-form').classList.add('on'); render(); }
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function backToEdit(){el('s-sum').classList.remove('on');el('s-form').classList.add('on');cur=LAST;render();}
 
-/* ============ 送出給菩語（POST 到 Apps Script） ============ */
 function summaryText(){
-  const c=A.client; let t='【菩語 · 居家深度需求摘要】\n';
+  const c=clientObj();let t='【菩語 · 客戶生活需求摘要】\n';
   t+='客戶：'+(c.name||'—')+'　電話：'+(c.phone||'—')+'　Email：'+(c.email||'—')+'\n';
-  t+='案名：'+(c.proj||'—')+'　地址：'+(c.addr||'—')+'\n\n';
-  t+='◆ 最優先三件事：'+(A.prio.map((i,k)=>(k+1)+'. '+TITLES[i]).join('　')||'—')+'\n\n';
-  BRIEF.forEach((s,si)=>{
-    t+='【0'+(si+1)+' '+s.title+'】\n';
-    s.qs.forEach(q=>{ const v=A.ans[q.id]; const a=Array.isArray(v)?v.join('、'):(v||''); t+='· '+q.q+'\n   → '+(a||'—')+'\n'; });
-    t+='\n';
-  });
-  t+='【理想與取捨】\n· 取捨傾向：'+(A.tradeoff||'—')+'\n· 理想的家 / 最不希望發生：'+(A.story||'—')+'\n';
+  t+='地址：'+(c.addr||'—')+'\n';
+  const prio=featVal('prio'),trade=featVal('trade');
+  t+='最優先：'+((prio&&prio.join('、'))||'—')+'　取捨：'+(trade||'—')+'\n\n';
+  BRIEF.forEach(s=>{t+='＝＝'+s.title+'＝＝\n';s.items.forEach(it=>{if(!it.id)return;const a=ansText(it);t+='· '+it.q+'\n   → '+(a||'—')+'\n';});t+='\n';});
   return t;
 }
 function submitToStudio(){
-  const btn=el('sendBtn'), tip=el('sendTip');
-  if(!CONFIG.SUBMIT_URL){ tip.textContent='（自動寄送尚未設定，請先用「列印 / 存成 PDF」回傳）'; return; }
-  btn.disabled=true; btn.textContent='送出中…';
+  const btn=el('sendBtn'),tip=el('sendTip');
+  if(!CONFIG.SUBMIT_URL){tip.textContent='（自動寄送尚未設定，請先用「列印 / 存成 PDF」回傳）';return;}
+  btn.disabled=true;btn.textContent='送出中…';
   const body=new URLSearchParams();
-  body.set('summary', summaryText());
-  body.set('client', JSON.stringify(A.client));
-  body.set('data', JSON.stringify({ans:A.ans, prio:A.prio.map(i=>TITLES[i]), tradeoff:A.tradeoff, story:A.story}));
-  fetch(CONFIG.SUBMIT_URL, {method:'POST', mode:'no-cors', body})
-    .then(()=>{ btn.textContent='✓ 已送出'; tip.textContent='已送給菩語，我們會盡快與你聯繫 — 感謝你這麼用心填寫。你也可以另存 PDF 留底。'; try{localStorage.removeItem(KEY);}catch(e){} })
-    .catch(()=>{ btn.disabled=false; btn.textContent='送出給菩語'; tip.textContent='送出失敗，請改用「列印 / 存成 PDF」回傳，或稍後再試。'; });
+  body.set('summary',summaryText());body.set('client',JSON.stringify(clientObj()));body.set('data',JSON.stringify(A.ans));
+  fetch(CONFIG.SUBMIT_URL,{method:'POST',mode:'no-cors',body})
+    .then(()=>{btn.textContent='✓ 已送出';tip.textContent='已送給菩語，我們會盡快與您約下一次討論。謝謝您這麼用心填寫。';try{localStorage.removeItem(KEY);}catch(e){}})
+    .catch(()=>{btn.disabled=false;btn.textContent='送出給菩語';tip.textContent='送出失敗，請改用「列印 / 存成 PDF」回傳，或稍後再試。';});
 }
 
-/* ============ 啟動 ============ */
 load();
 </script>
 </body>
