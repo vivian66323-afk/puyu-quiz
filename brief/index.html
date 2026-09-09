@@ -299,7 +299,9 @@ function isAns(it){const v=A.ans[it.id];
   return !!v;}
 function answered(){return allQs().filter(isAns).length;}
 
-function scrollTop0(){const s=document.querySelector('.screen.on');if(s)s.scrollTop=0;try{window.scrollTo(0,0);}catch(e){}}
+function scrollTop0(){const s=document.querySelector('.screen.on');if(s)s.scrollTop=0;try{window.scrollTo(0,0);}catch(e){}
+  /* 嵌入時通知外層 Wix 頁把本 iframe 捲回頂端（解決跳頁停在中間） */
+  try{window.parent.postMessage({puyuBrief:'top'},'*');}catch(e){}}
 function start(){el('s-intro').classList.remove('on');el('s-form').classList.add('on');render();scrollTop0();}
 
 function progress(){
