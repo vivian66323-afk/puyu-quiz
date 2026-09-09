@@ -314,7 +314,7 @@ function progress(){
     return '<li class="'+cls+'" onclick="jump('+i+')"><span class="n">'+(done&&i!==cur?'✓':(i+1))+'</span>'+s.title.replace(/｜/,' ')+'</li>';
   }).join('');
 }
-function jump(i){if(i<=cur){cur=i;render();}}
+function jump(i){if(i<=cur){cur=i;render();scrollTop0();}}
 
 function esc(s){return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;');}
 function av(s){return (s||'').replace(/"/g,'&quot;');}
@@ -335,7 +335,7 @@ function render(){
     h+=field(it);
     h+='</div>';
   });
-  el('body').innerHTML=h;progress();scrollTop0();
+  el('body').innerHTML=h;progress();
 }
 function field(it){
   const v=A.ans[it.id];
@@ -371,8 +371,8 @@ function setVal(id,val){A.ans[id]=val;save();progress();}
 function setGrp(id,k,val){const g=A.ans[id]||{};g[k]=val;A.ans[id]=g;save();if(BRIEF[cur].items.find(x=>x.id===id).fields.find(f=>f.k===k).t==='single')render();else progress();}
 function setMx(id,r,c){const m=A.ans[id]||{};m[r]=c;A.ans[id]=m;save();render();}
 
-function next(){if(cur===LAST){buildSummary();return;}cur++;render();}
-function prev(){if(cur>0){cur--;render();}}
+function next(){if(cur===LAST){buildSummary();return;}cur++;render();scrollTop0();}
+function prev(){if(cur>0){cur--;render();scrollTop0();}}
 
 /* ========= 需求摘要 ========= */
 function featVal(f){let r=null;BRIEF.forEach(s=>s.items.forEach(it=>{if(it.feature===f)r=A.ans[it.id];}));return r;}
@@ -411,7 +411,7 @@ function buildSummary(){
   el('sumBody').innerHTML=h;el('s-form').classList.remove('on');el('s-sum').classList.add('on');scrollTop0();
 }
 function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function backToEdit(){el('s-sum').classList.remove('on');el('s-form').classList.add('on');cur=LAST;render();}
+function backToEdit(){el('s-sum').classList.remove('on');el('s-form').classList.add('on');cur=LAST;render();scrollTop0();}
 
 function summaryText(){
   const c=clientObj();let t='【菩語 · 客戶生活需求摘要】\n';
