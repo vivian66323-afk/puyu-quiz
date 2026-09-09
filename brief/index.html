@@ -242,6 +242,8 @@ const LAST = 11;
 const A = { ans:{}, prio:[], tradeoff:'', story:'', client:{name:'',phone:'',email:'',proj:'',addr:''} };
 const el = id => document.getElementById(id);
 const KEY = 'puyu_brief_v1';
+/* 填入 Google Apps Script 部署後的 /exec 網址 → 客戶按「送出給菩語」就自動寄回 */
+const CONFIG = { SUBMIT_URL: '' };
 
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify({cur,A})); }catch(e){} }
 function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)); if(d&&d.A){ Object.assign(A,d.A); return true; } }catch(e){} return false; }
@@ -386,9 +388,10 @@ function buildSummary(){
      '</div></div>';
 
   h+='<div class="sumactions">'+
-     '<button class="pbtn solid" onclick="window.print()">列印 / 存成 PDF</button>'+
+     '<button class="pbtn solid" id="sendBtn" onclick="submitToStudio()">送出給菩語</button>'+
+     '<button class="pbtn ghost" onclick="window.print()">列印 / 存成 PDF</button>'+
      '<button class="pbtn ghost" onclick="backToEdit()">← 回去修改</button></div>'+
-     '<div class="tip">存成 PDF 回傳給菩語，或列印在場勘時一起討論。</div>';
+     '<div class="tip" id="sendTip">按「送出給菩語」把需求直接傳給我們；也可以另存 PDF 留底。</div>';
 
   el('sumBody').innerHTML=h;
   el('s-form').classList.remove('on'); el('s-sum').classList.add('on'); window.scrollTo(0,0);
@@ -396,6 +399,33 @@ function buildSummary(){
 function row2(l,v){ return '<div class="sumrow"><div class="sq">'+l+'</div><div class="sa'+(v?'':' empty')+'">'+(v?escHtml(v):'—')+'</div></div>'; }
 function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function backToEdit(){ el('s-sum').classList.remove('on'); el('s-form').classList.add('on'); render(); }
+
+/* ============ 送出給菩語（POST 到 Apps Script） ============ */
+function summaryText(){
+  const c=A.client; let t='【菩語 · 居家深度需求摘要】\n';
+  t+='客戶：'+(c.name||'—')+'　電話：'+(c.phone||'—')+'　Email：'+(c.email||'—')+'\n';
+  t+='案名：'+(c.proj||'—')+'　地址：'+(c.addr||'—')+'\n\n';
+  t+='◆ 最優先三件事：'+(A.prio.map((i,k)=>(k+1)+'. '+TITLES[i]).join('　')||'—')+'\n\n';
+  BRIEF.forEach((s,si)=>{
+    t+='【0'+(si+1)+' '+s.title+'】\n';
+    s.qs.forEach(q=>{ const v=A.ans[q.id]; const a=Array.isArray(v)?v.join('、'):(v||''); t+='· '+q.q+'\n   → '+(a||'—')+'\n'; });
+    t+='\n';
+  });
+  t+='【理想與取捨】\n· 取捨傾向：'+(A.tradeoff||'—')+'\n· 理想的家 / 最不希望發生：'+(A.story||'—')+'\n';
+  return t;
+}
+function submitToStudio(){
+  const btn=el('sendBtn'), tip=el('sendTip');
+  if(!CONFIG.SUBMIT_URL){ tip.textContent='（自動寄送尚未設定，請先用「列印 / 存成 PDF」回傳）'; return; }
+  btn.disabled=true; btn.textContent='送出中…';
+  const body=new URLSearchParams();
+  body.set('summary', summaryText());
+  body.set('client', JSON.stringify(A.client));
+  body.set('data', JSON.stringify({ans:A.ans, prio:A.prio.map(i=>TITLES[i]), tradeoff:A.tradeoff, story:A.story}));
+  fetch(CONFIG.SUBMIT_URL, {method:'POST', mode:'no-cors', body})
+    .then(()=>{ btn.textContent='✓ 已送出'; tip.textContent='已送給菩語，我們會盡快與你聯繫 — 感謝你這麼用心填寫。你也可以另存 PDF 留底。'; try{localStorage.removeItem(KEY);}catch(e){} })
+    .catch(()=>{ btn.disabled=false; btn.textContent='送出給菩語'; tip.textContent='送出失敗，請改用「列印 / 存成 PDF」回傳，或稍後再試。'; });
+}
 
 /* ============ 啟動 ============ */
 load();
