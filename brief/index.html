@@ -9,9 +9,10 @@
 <style>
 :root{--ink:#1A1A1A;--cream:#F5F2EC;--gold:#B08D57;--gold-soft:#D9C4A3;--gold-txt:#7A5C2E;--paper:#FBFAF6;--line:#E3DDD1;--muted:#7A756B;--sel:#FBF6EC}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-weight:300}
-#app{max-width:1080px;margin:0 auto;min-height:100vh}
-.screen{display:none}.screen.on{display:block;animation:fade .35s ease}
+html{height:100%}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-weight:300;height:100%;overflow:hidden}
+#app{max-width:1080px;margin:0 auto;height:100%}
+.screen{display:none}.screen.on{display:block;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 a{color:var(--gold-txt)}
 
@@ -298,7 +299,8 @@ function isAns(it){const v=A.ans[it.id];
   return !!v;}
 function answered(){return allQs().filter(isAns).length;}
 
-function start(){el('s-intro').classList.remove('on');el('s-form').classList.add('on');render();window.scrollTo(0,0);}
+function scrollTop0(){const s=document.querySelector('.screen.on');if(s)s.scrollTop=0;try{window.scrollTo(0,0);}catch(e){}}
+function start(){el('s-intro').classList.remove('on');el('s-form').classList.add('on');render();scrollTop0();}
 
 function progress(){
   const tot=allQs().length,ans=answered(),pct=Math.round(ans/tot*100);
@@ -331,7 +333,7 @@ function render(){
     h+=field(it);
     h+='</div>';
   });
-  el('body').innerHTML=h;progress();window.scrollTo(0,0);
+  el('body').innerHTML=h;progress();scrollTop0();
 }
 function field(it){
   const v=A.ans[it.id];
@@ -404,7 +406,7 @@ function buildSummary(){
     '<button class="pbtn ghost" onclick="window.print()">列印 / 存成 PDF</button>'+
     '<button class="pbtn ghost" onclick="backToEdit()">← 回去修改</button></div>'+
     '<div class="tip" id="sendTip" style="text-align:center">按「送出給菩語」把需求直接傳給我們；也可以另存 PDF 留底。</div>';
-  el('sumBody').innerHTML=h;el('s-form').classList.remove('on');el('s-sum').classList.add('on');window.scrollTo(0,0);
+  el('sumBody').innerHTML=h;el('s-form').classList.remove('on');el('s-sum').classList.add('on');scrollTop0();
 }
 function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function backToEdit(){el('s-sum').classList.remove('on');el('s-form').classList.add('on');cur=LAST;render();}
