@@ -513,22 +513,32 @@ function setSt(i,v){
   el('doneBtn').disabled=st.some(x=>x===0);
 }
 
-/* ===== 居家傾向分析：12值雷達 + 4傾向軸（資料吃 norm，16型自動套用）===== */
+/* ===== 居家傾向分析：6維度雷達 + 4傾向軸（12值兩兩聚合成6維，較不畸形；資料吃 norm，16型自動套用）===== */
+const RDIMS=[
+  {name:'格調', v:['秩序','地位']},
+  {name:'工藝', v:['工藝','傳承']},
+  {name:'沉靜', v:['安定','私密']},
+  {name:'自然', v:['自然','本真']},
+  {name:'探索', v:['自由','好奇']},
+  {name:'社交', v:['慶祝','表達']}
+];
 function radarSVG(norm, dom){
-  const ORDER=['工藝','本真','安定','秩序','地位','傳承','私密','自然','自由','好奇','表達','慶祝'];
-  const maxN=Math.max.apply(null, ORDER.map(function(v){return norm[v]||0;}))||1;
-  const cx=160, cy=162, R=118, n=ORDER.length;
+  function dscore(d){ return ((norm[d.v[0]]||0)+(norm[d.v[1]]||0))/2; }
+  function isDom(i){ return RDIMS[i].v.some(function(v){return dom.indexOf(v)>=0;}); }
+  const vals=RDIMS.map(dscore);
+  const maxN=Math.max.apply(null, vals)||1;
+  const cx=160, cy=158, R=106, n=RDIMS.length;
   function pt(i,rad){ var a=-Math.PI/2 + i*2*Math.PI/n; return [cx+rad*Math.cos(a), cy+rad*Math.sin(a)]; }
-  var s='<svg class="radar" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" aria-label="居家傾向雷達圖">';
+  var s='<svg class="radar" viewBox="0 0 320 312" xmlns="http://www.w3.org/2000/svg" aria-label="居家傾向雷達圖">';
   [0.25,0.5,0.75,1].forEach(function(f){ var d=''; for(var i=0;i<n;i++){ var p=pt(i,R*f); d+=(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1);} d+='Z'; s+='<path d="'+d+'" fill="none" stroke="#E3DDD1" stroke-width="1"/>'; });
   for(var i=0;i<n;i++){
     var e=pt(i,R); s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#EAE4D8" stroke-width="1"/>';
-    var l=pt(i,R+16), domv=dom.indexOf(ORDER[i])>=0, anc=l[0]<cx-6?'end':(l[0]>cx+6?'start':'middle');
-    s+='<text x="'+l[0].toFixed(1)+'" y="'+(l[1]+4).toFixed(1)+'" text-anchor="'+anc+'" font-family="&quot;Noto Serif TC&quot;,serif" font-size="12.5" fill="'+(domv?'#7A5C2E':'#9a938a')+'" font-weight="'+(domv?'600':'400')+'">'+ORDER[i]+'</text>';
+    var l=pt(i,R+18), domv=isDom(i), anc=l[0]<cx-6?'end':(l[0]>cx+6?'start':'middle');
+    s+='<text x="'+l[0].toFixed(1)+'" y="'+(l[1]+4).toFixed(1)+'" text-anchor="'+anc+'" font-family="&quot;Noto Serif TC&quot;,serif" font-size="13" fill="'+(domv?'#7A5C2E':'#9a938a')+'" font-weight="'+(domv?'600':'400')+'">'+RDIMS[i].name+'</text>';
   }
-  var dd=''; for(var j=0;j<n;j++){ var pp=pt(j, R*((norm[ORDER[j]]||0)/maxN)); dd+=(j?'L':'M')+pp[0].toFixed(1)+' '+pp[1].toFixed(1);} dd+='Z';
+  var dd=''; for(var j=0;j<n;j++){ var pp=pt(j, R*(vals[j]/maxN)); dd+=(j?'L':'M')+pp[0].toFixed(1)+' '+pp[1].toFixed(1);} dd+='Z';
   s+='<path d="'+dd+'" fill="rgba(176,141,87,.24)" stroke="#B08D57" stroke-width="1.8" stroke-linejoin="round"/>';
-  dom.forEach(function(k){ var i=ORDER.indexOf(k); if(i<0)return; var p=pt(i,R*((norm[k]||0)/maxN)); s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="#B08D57" stroke="#fff" stroke-width="1.5"/>'; });
+  for(var k=0;k<n;k++){ if(isDom(k)){ var p=pt(k,R*(vals[k]/maxN)); s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="#B08D57" stroke="#fff" stroke-width="1.5"/>'; } }
   return s+'</svg>';
 }
 const AXREAD={'秩序':'家要有一套不用思考就能運作的邏輯，各安其位。','自由':'家可以隨時改變心意，多留一點能重新安排的彈性。','私密':'家是你的內在空間，最好的自己留給自己與最親的人。','社交':'家是你的舞台，被填滿、被看見時最有意義。','自然質樸':'你要材質誠實、有生命感，把光與風請進家裡。','精緻工藝':'你追求被做出來的質感，願意為手感與耐久多等、多花。','傳承':'你偏愛經得起時間的東西，經典比流行走得遠。','創新':'你要別人家沒有的，家是一件持續創作的作品。'};
