@@ -40,6 +40,20 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 .btn:active{transform:scale(.97)}
 .btn.ghost{background:transparent;color:var(--ink)}
 .note{font-size:11.5px;color:var(--muted);margin-top:18px;letter-spacing:.03em}
+/* 手機縮字：開場標題/logo/副標整體縮一階，避免在手機被撐太大 */
+@media (max-width:480px){
+  .intro{padding:34px 24px}
+  .emb .intro{padding:40px 24px 34px}
+  .frame{width:88px;height:88px;margin:0 auto 22px}
+  .eyebrow{font-size:10.5px;letter-spacing:.28em;margin-bottom:14px}
+  .intro h1{font-size:24px;line-height:1.42}
+  .intro p{font-size:13px;line-height:1.85;max-width:300px;margin-top:15px}
+  .layers{font-size:13px;letter-spacing:.24em;margin:22px 0 28px}
+  .btn{font-size:15px;padding:14px 40px}
+  .note{font-size:11px;margin-top:15px}
+  .qtitle{font-size:19px}
+  .card .top h2{font-size:26px}
+}
 
 /* progress */
 .topbar{position:sticky;top:0;z-index:10;background:var(--cream);padding:20px 0 14px}
