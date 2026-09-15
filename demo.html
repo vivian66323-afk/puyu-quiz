@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>菩語生活測驗｜分析區 demo</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1A1A;--cream:#F5F2EC;--gold:#B08D57;--gold-soft:#D9C4A3;--gold-txt:#7A5C2E;--paper:#FBFAF6;--line:#E3DDD1;--muted:#7A756B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-weight:300}
+.wrap{max-width:480px;margin:0 auto;padding:26px 22px 60px}
+.demoflag{background:var(--ink);color:var(--gold-soft);font-size:11px;letter-spacing:.2em;text-align:center;padding:7px;border-radius:6px;margin-bottom:20px}
+
+/* 原型頭（精簡，示意既有結果頁的頂端） */
+.card{background:#fff;border:1px solid var(--gold-soft);border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(26,26,26,.1)}
+.card .top{background:var(--ink);color:var(--cream);padding:28px 24px 24px;text-align:center}
+.card .top .k{font-size:11px;letter-spacing:.3em;color:var(--gold);margin-bottom:10px}
+.card .top h2{font-family:"Noto Serif TC";font-size:30px;font-weight:600;letter-spacing:.04em}
+.card .top .en{font-size:11px;letter-spacing:.2em;color:#9a9488;margin-top:5px}
+.card .top .tag{display:inline-block;margin-top:15px;border:1px solid var(--gold);color:var(--gold-soft);border-radius:100px;font-size:12.5px;padding:5px 16px}
+
+/* 分析區 */
+.sec{padding:24px 24px 4px}
+.sec .lbl{font-size:11px;letter-spacing:.18em;color:var(--gold-txt);font-weight:500;margin-bottom:4px}
+.sec .h{font-family:"Noto Serif TC";font-size:19px;font-weight:600;margin-bottom:4px}
+.sec .sub{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:14px}
+.radar{display:block;margin:6px auto 4px;width:100%;max-width:360px}
+.legend{display:flex;justify-content:center;gap:16px;font-size:12px;color:var(--muted);margin:2px 0 8px}
+.legend b{color:var(--gold-txt)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin-right:4px}
+
+/* 傾向軸 */
+.axes{padding:8px 24px 24px}
+.axis{margin:18px 0}
+.axis .row{display:flex;justify-content:space-between;font-size:13px;color:#3d3a35;margin-bottom:6px}
+.axis .row .l,.axis .row .r{font-family:"Noto Serif TC";font-weight:600}
+.axis .row .l.on,.axis .row .r.on{color:var(--gold-txt)}
+.axis .row .l.off,.axis .row .r.off{color:#c2bbae;font-weight:400}
+.axis .bar{position:relative;height:8px;background:var(--line);border-radius:5px}
+.axis .bar .fill{position:absolute;top:0;height:8px;background:linear-gradient(90deg,var(--gold-soft),var(--gold));border-radius:5px}
+.axis .bar .dot{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--gold);transform:translateX(-50%);box-shadow:0 2px 6px rgba(26,26,26,.15)}
+.axis .read{font-size:13px;color:#3d3a35;line-height:1.8;margin-top:9px;padding-left:2px}
+.axis .read b{color:var(--gold-txt);font-weight:500}
+
+.note{font-size:12px;color:var(--muted);line-height:1.8;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:20px 24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="demoflag">分析區 DEMO · 拿「靜奢職人派」示範 · 資料用測驗現成的 12 值分數</div>
+
+  <div class="card">
+    <div class="top">
+      <div class="k">你的居家原型</div>
+      <h2>靜奢職人派</h2>
+      <div class="en">QUIET LUXURIST</div>
+      <div class="tag">品質，是你唯一的標準</div>
+    </div>
+
+    <!-- 既有厚結論（深度描述/場景/為什麼是你…）在這裡，demo 省略，只示範新增的分析區 ↓ -->
+
+    <div class="sec">
+      <div class="lbl">你的居家傾向分析</div>
+      <div class="h">把你，切開來看</div>
+      <div class="sub">同一份作答，除了指向一個原型，也能攤成一張你的「居家傾向圖」——每個面向你偏向哪裡，一眼看懂。</div>
+      <svg class="radar" id="radar" viewBox="0 0 320 320" aria-label="居家傾向雷達圖"></svg>
+      <div class="legend"><span><i style="background:rgba(176,141,87,.28);border:1px solid var(--gold)"></i>你的傾向輪廓</span><span><b>●</b> 主導價值</span></div>
+    </div>
+
+    <div class="axes">
+      <div id="axesBox"></div>
+    </div>
+  </div>
+
+  <div class="note"><b>這是新增的「分析區」概念</b>——雷達圖 + 4 條傾向軸的切分解讀，接在原本的原型結果下面。<br>原型（靜奢職人派）＝情感的臉；這一區＝把你這個人在各面向切開的分析憑據。資料全用測驗<b>現成算好的 12 值分數</b>，不用重做計分。</div>
+</div>
+
+<script>
+/* ===== 12 核心價值分數（0–100，示範用；實際由測驗 norm[value] 正規化而來）===== */
+const V = { 工藝:92, 本真:85, 安定:70, 秩序:62, 地位:40, 傳承:55, 私密:48, 自然:45, 自由:32, 好奇:18, 表達:20, 慶祝:22 };
+const DOMINANT = ['工藝','本真']; // 這型的主導×次要
+const ORDER = ['工藝','本真','安定','秩序','地位','傳承','私密','自然','自由','好奇','表達','慶祝'];
+
+/* ===== 畫雷達 ===== */
+(function(){
+  const cx=160, cy=162, R=118, n=ORDER.length;
+  const NS='http://www.w3.org/2000/svg';
+  const svg=document.getElementById('radar');
+  function pt(i,rad){ const a=-Math.PI/2 + i*2*Math.PI/n; return [cx+rad*Math.cos(a), cy+rad*Math.sin(a)]; }
+  // 格線環
+  [0.25,0.5,0.75,1].forEach(f=>{
+    let d=''; for(let i=0;i<n;i++){ const[x,y]=pt(i,R*f); d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1); } d+='Z';
+    const p=document.createElementNS(NS,'path'); p.setAttribute('d',d); p.setAttribute('fill','none'); p.setAttribute('stroke','#E3DDD1'); p.setAttribute('stroke-width','1'); svg.appendChild(p);
+  });
+  // 軸線 + 標籤
+  for(let i=0;i<n;i++){
+    const[ex,ey]=pt(i,R);
+    const ln=document.createElementNS(NS,'line'); ln.setAttribute('x1',cx); ln.setAttribute('y1',cy); ln.setAttribute('x2',ex); ln.setAttribute('y2',ey); ln.setAttribute('stroke','#EAE4D8'); ln.setAttribute('stroke-width','1'); svg.appendChild(ln);
+    const[lx,ly]=pt(i,R+16);
+    const t=document.createElementNS(NS,'text'); t.setAttribute('x',lx); t.setAttribute('y',ly+4); t.setAttribute('text-anchor', lx<cx-6?'end':lx>cx+6?'start':'middle');
+    t.setAttribute('font-family','"Noto Serif TC",serif'); t.setAttribute('font-size','12.5');
+    const dom=DOMINANT.indexOf(ORDER[i])>=0;
+    t.setAttribute('fill', dom?'#7A5C2E':'#9a938a'); t.setAttribute('font-weight', dom?'600':'400');
+    t.textContent=ORDER[i]; svg.appendChild(t);
+  }
+  // 輪廓多邊形
+  let d='';
+  for(let i=0;i<n;i++){ const[x,y]=pt(i, R*(V[ORDER[i]]||0)/100); d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1); } d+='Z';
+  const poly=document.createElementNS(NS,'path'); poly.setAttribute('d',d); poly.setAttribute('fill','rgba(176,141,87,.24)'); poly.setAttribute('stroke','#B08D57'); poly.setAttribute('stroke-width','1.8'); poly.setAttribute('stroke-linejoin','round'); svg.appendChild(poly);
+  // 主導點
+  DOMINANT.forEach(k=>{ const i=ORDER.indexOf(k); const[x,y]=pt(i, R*(V[k]||0)/100); const c=document.createElementNS(NS,'circle'); c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','4.5'); c.setAttribute('fill','#B08D57'); c.setAttribute('stroke','#fff'); c.setAttribute('stroke-width','1.5'); svg.appendChild(c); });
+})();
+
+/* ===== 4 條傾向軸（兩極，用 12 值算落點）===== */
+const AXES = [
+  {L:'秩序', R:'自由', lv:V.秩序, rv:V.自由, read:{L:'你要的是可預期的清晰——家要有一套<b>不用思考就能運作</b>的邏輯。',R:'你要的是隨時能重新安排的<b>彈性</b>，家不必遵守規格。'}},
+  {L:'私密', R:'社交', lv:V.私密, rv:V.慶祝, read:{L:'家是你的內在空間，<b>最好的自己留給自己</b>與最親的人。',R:'家是你的舞台，<b>被填滿、被看見</b>時最有意義。'}},
+  {L:'自然質樸', R:'精緻工藝', lv:(V.自然+V.本真)/2, rv:(V.工藝+V.地位)/2, read:{L:'你要材質<b>誠實、有生命感</b>，模糊室內外的界線。',R:'你追求<b>被做出來的質感</b>，願意為手感與耐久多等、多花。'}},
+  {L:'傳承', R:'創新', lv:V.傳承, rv:(V.好奇+V.表達)/2, read:{L:'你偏愛<b>經得起時間</b>的東西，經典比流行走得遠。',R:'你要<b>別人家沒有的</b>，家是一件持續創作的作品。'}},
+];
+document.getElementById('axesBox').innerHTML = AXES.map(a=>{
+  const tot=a.lv+a.rv||1; const rp=Math.round(a.rv/tot*100); const lean=rp<50?'L':'R'; const pct=lean==='L'?100-rp:rp;
+  return '<div class="axis">'+
+    '<div class="row"><span class="l '+(lean==='L'?'on':'off')+'">'+a.L+'</span><span class="r '+(lean==='R'?'on':'off')+'">'+a.R+'</span></div>'+
+    '<div class="bar"><div class="fill" style="left:0;width:'+rp+'%"></div><div class="dot" style="left:'+rp+'%"></div></div>'+
+    '<div class="read">偏 <b>'+(lean==='L'?a.L:a.R)+'</b>（約 '+pct+'%）— '+(lean==='L'?a.read.L:a.read.R)+'</div>'+
+  '</div>';
+}).join('');
+</script>
+</body>
+</html>
