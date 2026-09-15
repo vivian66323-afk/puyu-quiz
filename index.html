@@ -28,6 +28,8 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 
 /* intro */
 .intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:40px 30px}
+/* 嵌入官網 iframe 時：intro 不用整頁高（改自然高），配合外層自動撐高＝手機不被切、iOS 可捲 */
+.emb .intro{min-height:auto;padding:52px 30px 44px}
 .frame{width:120px;height:120px;margin:0 auto 28px;border-radius:2px;background:var(--ink);position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(26,26,26,.2)}
 .frame::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 35% 32%,var(--gold-soft) 0 10%,transparent 11%),radial-gradient(circle at 68% 64%,var(--gold) 0 8%,transparent 9%),linear-gradient(135deg,#2a2723,#141210)}
 .eyebrow{font-size:12px;letter-spacing:.4em;color:var(--gold-txt);font-weight:500;margin-bottom:16px}
@@ -762,6 +764,19 @@ function lineMsg(){
 }
 /* ---- iframe 安全跳轉：Wix 等嵌入環境會擋掉 iframe 內的 top-level 導頁 ---- */
 const INFRAME = (function(){ try{ return window.self!==window.top; }catch(e){ return true; } })();
+/* ---- 嵌入官網時：回報內容高度給外層，讓外層把 iframe 自動撐到內容高（手機不被切、iOS 可捲）---- */
+if(INFRAME){
+  try{ document.body.classList.add('emb'); }catch(e){}
+  var _lastH=0;
+  function postHeight(){
+    try{ var h=Math.ceil(document.documentElement.scrollHeight);
+      if(h && Math.abs(h-_lastH)>4){ _lastH=h; window.parent.postMessage({puyuQuiz:'h', h:h}, '*'); } }catch(e){}
+  }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  if(window.ResizeObserver){ try{ new ResizeObserver(postHeight).observe(document.body); }catch(e){} }
+  setTimeout(postHeight, 400); setTimeout(postHeight, 1200);
+}
 function goOut(url){
   const w=window.open(url,'_blank','noopener');
   if(w) return true;
