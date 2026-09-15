@@ -166,6 +166,23 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 .dt .dtrow:last-child{border-bottom:none}
 .dt .dtk{flex-shrink:0;min-width:56px;font-family:"Noto Serif TC";font-size:14px;color:var(--gold-txt);font-weight:600}
 .dt .dtd{font-size:13.5px;line-height:1.68;color:#3d3a35}
+/* v2.3 居家傾向分析：12值雷達 + 4傾向軸 */
+.anlead{font-size:13px;color:var(--muted);line-height:1.8;margin:2px 0 8px}
+.radar{display:block;margin:4px auto 2px;width:100%;max-width:340px}
+.rlegend{display:flex;justify-content:center;gap:16px;font-size:12px;color:var(--muted);margin:2px 0 10px}
+.rlegend b{color:var(--gold-txt)}
+.rlegend .ri{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin-right:4px;background:rgba(176,141,87,.28);border:1px solid var(--gold)}
+.axes{margin-top:6px}
+.axis{margin:16px 0}
+.axis .arow{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.axis .arow .l,.axis .arow .r{font-family:"Noto Serif TC";font-weight:600}
+.axis .arow .on{color:var(--gold-txt)}
+.axis .arow .off{color:#c2bbae;font-weight:400}
+.axis .abar{position:relative;height:8px;background:var(--line);border-radius:5px}
+.axis .abar .afill{position:absolute;top:0;left:0;height:8px;background:linear-gradient(90deg,var(--gold-soft),var(--gold));border-radius:5px}
+.axis .abar .adot{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--gold);transform:translateX(-50%);box-shadow:0 2px 6px rgba(26,26,26,.15)}
+.axis .aread{font-size:13px;color:#3d3a35;line-height:1.8;margin-top:9px}
+.axis .aread b{color:var(--gold-txt);font-weight:500}
 </style>
 </head>
 <body>
@@ -469,6 +486,40 @@ function setSt(i,v){
   el('doneBtn').disabled=st.some(x=>x===0);
 }
 
+/* ===== 居家傾向分析：12值雷達 + 4傾向軸（資料吃 norm，16型自動套用）===== */
+function radarSVG(norm, dom){
+  const ORDER=['工藝','本真','安定','秩序','地位','傳承','私密','自然','自由','好奇','表達','慶祝'];
+  const maxN=Math.max.apply(null, ORDER.map(function(v){return norm[v]||0;}))||1;
+  const cx=160, cy=162, R=118, n=ORDER.length;
+  function pt(i,rad){ var a=-Math.PI/2 + i*2*Math.PI/n; return [cx+rad*Math.cos(a), cy+rad*Math.sin(a)]; }
+  var s='<svg class="radar" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" aria-label="居家傾向雷達圖">';
+  [0.25,0.5,0.75,1].forEach(function(f){ var d=''; for(var i=0;i<n;i++){ var p=pt(i,R*f); d+=(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1);} d+='Z'; s+='<path d="'+d+'" fill="none" stroke="#E3DDD1" stroke-width="1"/>'; });
+  for(var i=0;i<n;i++){
+    var e=pt(i,R); s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#EAE4D8" stroke-width="1"/>';
+    var l=pt(i,R+16), domv=dom.indexOf(ORDER[i])>=0, anc=l[0]<cx-6?'end':(l[0]>cx+6?'start':'middle');
+    s+='<text x="'+l[0].toFixed(1)+'" y="'+(l[1]+4).toFixed(1)+'" text-anchor="'+anc+'" font-family="&quot;Noto Serif TC&quot;,serif" font-size="12.5" fill="'+(domv?'#7A5C2E':'#9a938a')+'" font-weight="'+(domv?'600':'400')+'">'+ORDER[i]+'</text>';
+  }
+  var dd=''; for(var j=0;j<n;j++){ var pp=pt(j, R*((norm[ORDER[j]]||0)/maxN)); dd+=(j?'L':'M')+pp[0].toFixed(1)+' '+pp[1].toFixed(1);} dd+='Z';
+  s+='<path d="'+dd+'" fill="rgba(176,141,87,.24)" stroke="#B08D57" stroke-width="1.8" stroke-linejoin="round"/>';
+  dom.forEach(function(k){ var i=ORDER.indexOf(k); if(i<0)return; var p=pt(i,R*((norm[k]||0)/maxN)); s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="#B08D57" stroke="#fff" stroke-width="1.5"/>'; });
+  return s+'</svg>';
+}
+const AXREAD={'秩序':'家要有一套不用思考就能運作的邏輯，各安其位。','自由':'家可以隨時改變心意，多留一點能重新安排的彈性。','私密':'家是你的內在空間，最好的自己留給自己與最親的人。','社交':'家是你的舞台，被填滿、被看見時最有意義。','自然質樸':'你要材質誠實、有生命感，把光與風請進家裡。','精緻工藝':'你追求被做出來的質感，願意為手感與耐久多等、多花。','傳承':'你偏愛經得起時間的東西，經典比流行走得遠。','創新':'你要別人家沒有的，家是一件持續創作的作品。'};
+function axesHTML(norm){
+  const AX=[
+    {L:'秩序',R:'自由',lv:norm.秩序||0,rv:norm.自由||0},
+    {L:'私密',R:'社交',lv:norm.私密||0,rv:norm.慶祝||0},
+    {L:'自然質樸',R:'精緻工藝',lv:((norm.自然||0)+(norm.本真||0))/2,rv:((norm.工藝||0)+(norm.地位||0))/2},
+    {L:'傳承',R:'創新',lv:norm.傳承||0,rv:((norm.好奇||0)+(norm.表達||0))/2}
+  ];
+  return '<div class="axes">'+AX.map(function(a){
+    var tot=a.lv+a.rv||1, rp=Math.round(a.rv/tot*100), lean=rp<50?'L':'R', pole=lean==='L'?a.L:a.R, pct=lean==='L'?100-rp:rp;
+    return '<div class="axis"><div class="arow"><span class="l '+(lean==='L'?'on':'off')+'">'+a.L+'</span><span class="r '+(lean==='R'?'on':'off')+'">'+a.R+'</span></div>'+
+      '<div class="abar"><div class="afill" style="width:'+rp+'%"></div><div class="adot" style="left:'+rp+'%"></div></div>'+
+      '<div class="aread">偏 <b>'+pole+'</b>（約 '+pct+'%）— '+AXREAD[pole]+'</div></div>';
+  }).join('')+'</div>';
+}
+
 function finish(){
   const sum=st.reduce((a,b)=>a+b,0);
   const band=BANDS.find(b=>sum<=b.max);
@@ -498,6 +549,12 @@ function finish(){
       '<div class="state"><div class="h">你現在的狀態</div><p>'+band.d+'</p></div>'+
       (X.insight&&X.insight.length?'<div class="sec"><div class="h">為什麼測出你是這一型</div><div class="why">'+X.insight.map(function(s){var p=s.split('→');return '<div class="wi"><span class="o">'+p[0].trim()+'</span><span class="arw">→</span><span class="f">'+(p[1]||'').trim()+'</span></div>';}).join('')+'</div></div>':'')+
       '<div class="sec"><div class="h">驅動你的核心價值</div><div class="cv">'+[[best.v[0],'主導'],[best.v[1],'次要']].map(function(pr){return '<div class="cvrow"><div class="cvk"><b>'+pr[0]+'</b><span>'+pr[1]+'</span></div><div class="cvd">'+(VALDEF[pr[0]]||'')+'</div></div>';}).join('')+'</div></div>'+
+      '<div class="sec"><div class="h">你的居家傾向分析</div>'+
+        '<p class="anlead">同一份作答，也攤成一張你的「居家傾向圖」——每個面向你偏向哪裡，一眼看懂。</p>'+
+        radarSVG(norm,best.v)+
+        '<div class="rlegend"><span><i class="ri"></i>你的傾向輪廓</span><span><b>●</b> 主導值</span></div>'+
+        axesHTML(norm)+
+      '</div>'+
       '<div class="sec"><div class="h">你的三個居家特質</div><ul>'+best.traits.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>'+
       '<div class="sec"><div class="h">你的空間關鍵字</div><div class="kwrow">'+best.kw.map(k=>'<span>'+k+'</span>').join('')+'</div></div>'+
       '<div class="sec"><div class="h">適合你的材質與色調</div><p class="t">'+best.mat+'</p></div>'+
