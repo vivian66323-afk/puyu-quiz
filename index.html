@@ -148,6 +148,16 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 .act .r:last-child{border-bottom:none}
 .act .r b{font-family:"Noto Serif TC";color:var(--gold-txt);min-width:50px;font-size:14.5px;flex-shrink:0}
 .act .r span{font-size:13.5px;line-height:1.78;color:#3d3a35}
+.finder{margin-top:20px;text-align:left;background:var(--paper);border:1px solid var(--gold-soft);border-radius:12px;padding:18px 18px 16px}
+.finder .fh{font-family:"Noto Serif TC";font-size:16px;font-weight:600;color:var(--gold-txt);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.finder .fh::before{content:"◆";font-size:11px;color:var(--gold-soft)}
+.finder .ftype{font-size:14.5px;line-height:1.9;color:#3d3a35;margin-bottom:14px}
+.finder .fl-h{font-size:11px;letter-spacing:.16em;color:var(--gold-txt);font-weight:500;margin-bottom:4px}
+.finder ul{list-style:none}
+.finder li{font-size:13.5px;line-height:1.7;padding:8px 0 8px 22px;position:relative;border-bottom:1px solid var(--line);color:#3d3a35}
+.finder li:last-child{border-bottom:none}
+.finder li::before{content:"✓";position:absolute;left:2px;top:8px;color:var(--gold-soft);font-size:12px;font-weight:700}
+.finder .fnote{font-size:12.5px;line-height:1.78;color:var(--muted);margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
 .cta2{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 20px;margin:18px 0 12px;text-align:center}
 .cta2 h4{font-family:"Noto Serif TC";font-size:16.5px;font-weight:600;margin-bottom:7px}
 .cta2 p{font-size:13px;color:var(--muted);margin-bottom:17px;line-height:1.75}
@@ -556,6 +566,26 @@ function axesHTML(norm){
       '<div class="aread">偏 <b>'+pole+'</b>（約 '+pct+'%）— '+AXREAD[pole]+'</div></div>';
   }).join('')+'</div>';
 }
+/* ===== 適合你的設計師 · 尋找方向（16 型，依原型量身）===== */
+const DESIGNER={
+  1:{type:'你適合「重材質、懂工法」的職人型設計師——把預算花在每天摸得到的地方，而不是效果圖上的華麗。',look:['看他過去完工案的收邊、選材與五金等級，而不是只看渲染圖','願意帶你摸樣品、講清楚工序與材質差別','敢把錢集中在把手／檯面／地板這些天天會碰到的地方']},
+  2:{type:'你適合懂「減法」的設計師——敢留白、能克制，不會把空間塞滿。',look:['提案裡敢留空，而不是處處做滿','重視光影、動線與空間的「氣」，而非堆材料','能說清楚「為什麼這裡什麼都不放」']},
+  3:{type:'你適合擅長「精品酒店語彙」的設計師——對稱、俐落，連燈光場景都預先調好。',look:['圖面精準，對稱軸線與隱藏收納規劃到位','懂情境燈光與飯店級的精緻度','專案管理嚴謹、施工品質可被檢驗']},
+  4:{type:'你適合講邏輯、重精度的設計師——美，藏在看不見的地方。',look:['擅長隱藏式設備、無把手門片、線性燈光','對縫、退縮、尺寸有邏輯可循','願意在收納整合等看不見處下工夫']},
+  5:{type:'你適合務實、溝通透明的設計師——先講「為什麼需要」，再談美感。',look:['重動線、機能與好清潔耐用的材質','報價透明、不硬塞裝飾預算','能把需求排出優先序，不做無用的華麗']},
+  6:{type:'你適合擅長「款待型空間」的設計師——讓家成為會發光的舞台。',look:['會規劃中島吧台、入場序列與宴客動線','懂多層次情境燈光與戲劇效果','公領域敢放大、敢做記憶點']},
+  7:{type:'你適合懂「低調精緻」的設計師——把最好的留在私領域。',look:['擅長主臥套房化與獨處角落','細節收邊講究、貴氣內斂不外顯','懂得把預算放在只有你會用到的地方']},
+  8:{type:'你適合懂古典語彙、尊重出處的設計師——替回憶與收藏留位置。',look:['能規劃展示與藏品照明、老件混新作','熟悉古典／新古典的線板與工法','願意先替有故事的物件定位，再設計其他']},
+  9:{type:'你適合重氛圍、懂生活節奏的設計師——把時間慢慢醒開。',look:['會規劃長桌、酒櫃與可調暗的燈光','材質有表情、光影有層次','不趕圖不趕工，願意陪你把情境想清楚']},
+  10:{type:'你適合有作者性、敢玩的設計師——給你別人家沒有的作品，而不是樣品屋。',look:['敢做視覺焦點、訂製孤品、藝廊式陳列','有自己的設計語言、能與你共創','不套公式、不怕跳出安全牌']},
+  11:{type:'你適合細膩、懂情緒的設計師——讓家能承接你一天的心情。',look:['重柔光層次與觸感材質','會替你留閱讀角、浴缸這類充電空間','聽得懂你的感受，而不只是需求清單']},
+  12:{type:'你適合懂「把自然帶進室內」的設計師——讓家能呼吸。',look:['重窗景、採光、通風與綠植計畫','偏好木、石、藤、亞麻等有生命感的材質','把身心舒適放在視覺效果之前']},
+  13:{type:'你適合給你留餘裕、重生活感的設計師——家可以被弄亂，然後還是好看。',look:['規劃可變動佈局與開放層架','用自然、輕鬆、不嬌貴的材質','不會把家設計得太緊、太完美主義']},
+  14:{type:'你適合擅長「有機形體與空間流動」的設計師——順著你的身體長出空間。',look:['會做弧形牆、曲面與無主燈','懂人體尺度與動線順不順','重感受更勝於對稱與規則']},
+  15:{type:'你適合把「安心感」放第一的設計師——回家能放心把重量交出去。',look:['重舒適包覆、圓角傢俱與間接光','懂織品層疊與觸感','把家庭關係與生活習慣放進規劃']},
+  16:{type:'你適合活潑、敢玩色彩的設計師——家要好玩才行。',look:['敢用亮色點綴與造型燈具','會留遊戲角落與互動空間','有童心，能陪你把趣味放進日常']}
+};
+const DESIGNER_NOTE='重點不是名氣大小，而是他懂不懂你這一型——把你最在意的地方，交給真的也在意的人。';
 
 function finish(){
   const sum=st.reduce((a,b)=>a+b,0);
@@ -599,6 +629,7 @@ function finish(){
       (X.anchors&&X.anchors.length?'<div class="sec"><div class="h">你的生活風格錨點</div><ul class="anc">'+X.anchors.map(function(a){var p=a.split('｜');return '<li>'+(p.length>1?'<b>'+p[0]+'</b>'+p.slice(1).join('｜'):a)+'</li>';}).join('')+'</ul></div>':'')+
       (CAUT[best.no]?'<div class="caution"><div class="ch">一個溫柔的提醒</div><p>'+CAUT[best.no]+'</p></div>':'')+
       '<div class="dir"><div class="h">給你的設計方向</div><p>'+best.dir+'</p></div>'+
+      (DESIGNER[best.no]?'<div class="finder"><div class="fh">適合你的設計師</div><p class="ftype">'+DESIGNER[best.no].type+'</p><div class="fl-h">找設計師時，看這幾點</div><ul>'+DESIGNER[best.no].look.map(function(l){return '<li>'+l+'</li>';}).join('')+'</ul><p class="fnote">'+DESIGNER_NOTE+'</p></div>':'')+
       '<div class="act"><div class="hd">你的「留 · 捨 · 投資」行動卡</div>'+
         '<div class="r"><b>該留</b><span>'+act.k+'</span></div>'+
         '<div class="r"><b>該捨</b><span>'+act.d+'</span></div>'+
