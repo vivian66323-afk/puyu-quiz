@@ -786,9 +786,11 @@ async function buildCard(){
   c.fillStyle='#B08D57'; c.font=F(500,20);
   c.fillText('P U R E L Y   I N T E R I O R   D E S I G N',CW/2,FY+92);
   c.fillStyle='#7A756B'; c.font=F(300,23);
-  c.fillText('聽 · 譯 · 顯 · 留 · 陪',CW/2,FY+130);
+  c.fillText('聽 · 譯 · 顯 · 留 · 陪',CW/2,FY+122);
   c.fillStyle='#3d3a35'; c.font=F(400,24);
-  c.fillText('LINE @mtz3778c　│　0960-558-533　│　purely2006.com',CW/2,FY+172);
+  c.fillText('LINE @mtz3778c　│　0960-558-533',CW/2,FY+156);
+  c.fillStyle='#B08D57'; c.font=F(500,24);
+  c.fillText('👉 來測你家是哪一型　purely2006.com/生活測驗',CW/2,FY+190);
   return cv;
 }
 /* ---- 加 LINE，把測驗結果當開場白帶過去 ---- */
@@ -832,27 +834,42 @@ function shareText(){
   const r=window._result,b=window._band;
   return '我的居家原型是【'+r.zh+'・'+r.en+'】——'+r.tag+'。\n目前狀態：'+b.name+'。\n你呢？來測你的居家 Lifestyle DNA！\n#菩語生活測驗 #PURELY';
 }
-/* ==== 分享到 LINE / Facebook / Instagram ==== */
+/* ==== 分享「結果」到 LINE / Facebook / Instagram（分享的是結果卡片＋帶測驗連結，不是只丟連結）==== */
 const SHARE_URL='https://www.purely2006.com/生活測驗';
-function shareLine(){
-  const t=shareText()+'\n'+SHARE_URL;
-  goOut('https://line.me/R/msg/text/?'+encodeURIComponent(t));
+/* 分享文案＝我的結果 + 邀請對方來測（可點連結） */
+function shareCaption(){
+  const r=window._result,b=window._band;
+  return '我的居家原型是【'+r.zh+'・'+r.en+'】——'+r.tag+'。\n目前狀態：'+b.name+'。\n\n想知道你家是哪一型？來測你的居家 Lifestyle DNA 👉 '+SHARE_URL+'\n#菩語生活測驗 #PURELY';
 }
-function shareFB(){
-  goOut('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SHARE_URL));
-}
-async function shareIG(){
-  /* IG 沒有網頁分享連結：手機用系統分享把「卡片圖」丟給 IG 限動；桌機則存圖再手動貼 */
+/* 首選：把「結果卡片圖 + 含連結文案」交給系統分享（手機可直接選 LINE/FB/IG，圖=結果、文案含可點測驗連結）*/
+async function shareResultNative(){
   try{
     const cv=await buildCard();
     const blob=await canvasBlob(cv);
     const file=new File([blob],'菩語居家原型.png',{type:'image/png'});
     if(navigator.canShare&&navigator.canShare({files:[file]})){
-      await navigator.share({files:[file],text:shareText()});
-      return;
+      await navigator.share({files:[file],text:shareCaption()});
+      return true;
     }
   }catch(e){}
-  toast('IG 要用圖片發限動——正在幫你把卡片存下來，打開 IG 貼上就好');
+  return false;
+}
+async function shareLine(){
+  if(await shareResultNative()) return;
+  /* 桌機退路：LINE 文字分享（結果敘述＋可點測驗連結）*/
+  goOut('https://line.me/R/msg/text/?'+encodeURIComponent(shareCaption()));
+}
+async function shareFB(){
+  if(await shareResultNative()) return;
+  /* 桌機退路：存下結果卡片＋複製文案，讓使用者到 FB 貼上（FB 貼文會把連結自動變可點）*/
+  try{ if(navigator.clipboard) navigator.clipboard.writeText(shareCaption()); }catch(e){}
+  toast('已複製結果文案並存下卡片——到 FB 發文貼上、附上卡片即可');
+  saveCard();
+}
+async function shareIG(){
+  if(await shareResultNative()) return;
+  /* 桌機退路：IG 只能用圖，存下結果卡片（卡片上已印測驗網址）*/
+  toast('IG 用圖片發限動——已存下結果卡片（卡片上已有測驗網址），限動可再加連結貼紙');
   saveCard();
 }
 function canvasBlob(cv){return new Promise(res=>cv.toBlob(res,'image/png'));}
