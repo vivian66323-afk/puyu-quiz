@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>菩語預約諮詢｜PURELY</title>
+<meta name="description" content="在 LINE 裡直接填寫，讓菩語知道你家現在的狀況，我們會盡快與你聯繫。">
+<!-- LINE LIFF SDK（v2）-->
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<style>
+:root{
+  --bg:#F4F2EF;
+  --ink:#2E2B28;
+  --gold:#A88B5C;
+  --gold-soft:#D9C8AE;
+  --paper:#FFFFFF;
+  --line:#E4DDD1;
+  --muted:#8B8477;
+  --err:#A6474A;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.75;
+  font-weight:400;
+}
+.serif,h1,h2{font-family:Georgia,"Noto Serif TC","PingFang TC",serif}
+#app{max-width:520px;margin:0 auto;min-height:100vh;padding:0 22px 56px}
+.screen{display:none}
+.screen.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* 頭部 */
+.top{padding:30px 0 16px}
+.eyebrow{font-size:11px;letter-spacing:.35em;color:var(--gold);font-weight:600;margin-bottom:10px}
+h1{font-size:26px;font-weight:600;letter-spacing:.02em;line-height:1.5}
+.intro p{color:var(--muted);font-size:14px;margin-top:12px;line-height:1.9}
+.promise{margin:20px 0 6px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.promise div{font-size:13px;color:#4a463f;padding:4px 0 4px 20px;position:relative}
+.promise div::before{content:"";position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+
+/* 表單區塊 */
+.form{margin-top:26px}
+.q{margin-bottom:22px}
+.lab{font-size:14.5px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+.lab b{color:var(--err);font-weight:400;margin-left:3px}
+.hint{font-size:12.5px;color:var(--muted);margin-bottom:9px;line-height:1.7}
+
+input[type=text],input[type=tel],textarea{
+  width:100%;font-family:inherit;font-size:15px;font-weight:400;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line);border-radius:8px;
+  padding:13px 15px;outline:none;transition:.15s;
+}
+input:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:96px;resize:vertical;line-height:1.8}
+input.err,textarea.err{border-color:var(--err)}
+.errmsg{color:var(--err);font-size:12.5px;margin-top:6px;display:none}
+.errmsg.on{display:block}
+
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{
+  border:1px solid var(--line);border-radius:8px;background:var(--paper);
+  padding:13px 6px;cursor:pointer;font-size:14px;text-align:center;
+  transition:.15s;line-height:1.5;
+}
+.opt:active{transform:scale(.98)}
+.opt.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 按鈕 */
+.nav{margin-top:30px}
+.btn{
+  width:100%;font-family:inherit;font-size:16px;font-weight:600;padding:16px;
+  border-radius:100px;border:none;cursor:pointer;letter-spacing:.05em;
+  transition:.2s;
+}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.6;cursor:default;transform:none}
+.btn-gold{background:var(--gold);color:#fff}
+.notice{
+  margin-top:14px;font-size:13px;line-height:1.85;color:var(--err);
+  background:#FBF2F0;border:1px solid #EBC9C6;border-radius:8px;padding:13px 15px;
+  display:none;
+}
+.notice.on{display:block}
+
+/* 完成畫面 */
+.done{padding-top:60px;text-align:center}
+.tick{width:58px;height:58px;border-radius:50%;background:var(--gold);margin:0 auto 22px;position:relative}
+.tick::after{content:"";position:absolute;left:19px;top:15px;width:15px;height:24px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg)}
+.done h2{font-size:23px;font-weight:600;margin-bottom:12px}
+.done p{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:26px}
+.btn-ghost{background:none;color:var(--ink);border:1px solid var(--ink)}
+
+.foot{text-align:center;font-size:11px;color:var(--muted);letter-spacing:.06em;margin-top:34px;line-height:2}
+
+.toast{
+  position:fixed;left:50%;bottom:34px;transform:translateX(-50%);
+  background:var(--ink);color:#fff;padding:12px 22px;border-radius:100px;
+  font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:50;
+  max-width:86vw;text-align:center;
+}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <section class="screen on" id="s-form">
+    <div class="top">
+      <div class="eyebrow">PURELY · 預約諮詢</div>
+      <div class="intro">
+        <h1>菩語預約單</h1>
+        <p>大約一分鐘。先讓菩語知道你家現在的狀況，我們會盡快與你聯繫。</p>
+        <div class="promise">
+          <div>你填的每一句，設計師本人都會看</div>
+          <div>送出後直接進到菩語的 LINE 對話，不必再重講一次</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form">
+      <div class="q" id="field-name">
+        <div class="lab">怎麼稱呼你？<b>*</b></div>
+        <input type="text" id="f-name" placeholder="例：陳小姐">
+        <div class="errmsg" id="err-name">請填一下怎麼稱呼你</div>
+      </div>
+
+      <div class="q" id="field-area">
+        <div class="lab">房子的區域／地點<b>*</b></div>
+        <input type="text" id="f-area" placeholder="例：桃園市桃園區">
+        <div class="errmsg" id="err-area">請填房子的區域／地點</div>
+      </div>
+
+      <div class="q" id="field-ping">
+        <div class="lab">大約幾坪？<b>*</b></div>
+        <input type="text" id="f-ping" placeholder="例：35 坪">
+        <div class="errmsg" id="err-ping">請填大概坪數</div>
+      </div>
+
+      <div class="q" id="field-condition">
+        <div class="lab">屋況<b>*</b></div>
+        <div class="opts" id="condition-opts">
+          <div class="opt" data-group="condition" data-value="新成屋">新成屋</div>
+          <div class="opt" data-group="condition" data-value="中古屋">中古屋</div>
+          <div class="opt" data-group="condition" data-value="老屋翻新">老屋翻新</div>
+          <div class="opt" data-group="condition" data-value="其他">其他</div>
+        </div>
+        <div class="errmsg" id="err-condition">請選一個屋況</div>
+      </div>
+
+      <div class="q" id="field-time">
+        <div class="lab">方便聯絡的時段<b>*</b></div>
+        <div class="opts" id="time-opts">
+          <div class="opt" data-group="time" data-value="上午">上午</div>
+          <div class="opt" data-group="time" data-value="下午">下午</div>
+          <div class="opt" data-group="time" data-value="晚上">晚上</div>
+          <div class="opt" data-group="time" data-value="其他">其他（自填）</div>
+        </div>
+        <input type="text" id="f-time-other" placeholder="例：平日晚上 7 點後，或週末皆可" style="display:none;margin-top:10px">
+        <div class="errmsg" id="err-time">請選（或填）方便聯絡的時段</div>
+      </div>
+
+      <div class="q" id="field-issue">
+        <div class="lab">最想解決的一件事<b>*</b></div>
+        <div class="hint">越具體，菩語越能先幫你想。</div>
+        <textarea id="f-issue" placeholder="例：客廳整天都很暗／收納永遠不夠／想要一個自己的角落…"></textarea>
+        <div class="errmsg" id="err-issue">請填最想解決的一件事</div>
+      </div>
+
+      <div class="q" id="field-phone">
+        <div class="lab">聯絡電話</div>
+        <input type="tel" id="f-phone" placeholder="選填，例：0912-345-678">
+      </div>
+
+      <div class="nav">
+        <button class="btn btn-gold" id="submitBtn" onclick="onSubmit()">送出預約</button>
+        <div class="notice" id="notice"></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      菩語國際設計 PURELY<br>
+      LINE @nkt7460n　│　0960-558-533
+    </div>
+  </section>
+
+  <section class="screen" id="s-done">
+    <div class="done">
+      <div class="tick"></div>
+      <h2>已送出</h2>
+      <p>我們會盡快與您聯繫。<br>這份內容已經進到菩語的 LINE 對話裡了。</p>
+      <button class="btn btn-ghost" onclick="closeOrReset()">關閉視窗</button>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   LIFF 設定 —— 這個常數之後要換成真的 LIFF ID（LINE Developers 建立 channel 後才有）
+   ============================================================ */
+const LIFF_ID = "2011689768-LQWydmVc";
+
+let liffReady = false;   // liff.init 成功 且 liff.isInClient() 為 true，才代表可以送訊息
+let liffProfile = null;  // { displayName, userId, ... }
+
+const el = id => document.getElementById(id);
+
+/* ---- 初始化 LIFF：全程 try/catch，任何一步失敗都不能讓表單消失或整頁報錯 ---- */
+async function initLiff(){
+  try{
+    if(typeof liff === 'undefined') return; // SDK 沒載入成功，表單照常顯示，只是送出時會走友善提示
+    await liff.init({ liffId: LIFF_ID });
+    if(liff.isInClient && liff.isInClient()){
+      liffReady = true;
+      try{
+        liffProfile = await liff.getProfile();
+        if(liffProfile && liffProfile.displayName){
+          const nameInput = el('f-name');
+          if(nameInput && !nameInput.value) nameInput.value = liffProfile.displayName;
+        }
+      }catch(e){
+        liffProfile = null; // 取不到 profile 沒關係，稱呼欄留給使用者自己填
+      }
+    }
+  }catch(e){
+    /* liff.init 失敗：LIFF_ID 還是預留值、或不在 LINE 環境內都會走到這裡。
+       liffReady 維持 false，表單依然完整可填，只有送出那一刻會提示改用 LINE 開啟。 */
+    liffReady = false;
+  }
+}
+initLiff();
+
+/* ---- 單選按鈕群組（屋況 / 時段）---- */
+document.querySelectorAll('.opt[data-group]').forEach(function(o){
+  o.addEventListener('click', function(){
+    const g = o.dataset.group;
+    document.querySelectorAll('.opt[data-group="'+g+'"]').forEach(function(x){ x.classList.remove('sel'); });
+    o.classList.add('sel');
+    clearErr(g);
+    if(g === 'time'){
+      const other = el('f-time-other');
+      if(o.dataset.value === '其他'){ other.style.display = 'block'; other.focus(); }
+      else{ other.style.display = 'none'; other.value = ''; }
+    }
+  });
+});
+
+function selectedRadio(group){
+  const b = document.querySelector('.opt[data-group="'+group+'"].sel');
+  return b ? b.dataset.value : '';
+}
+function setErr(key, msg){
+  const m = el('err-'+key); if(m){ m.textContent = msg; m.classList.add('on'); }
+  const i = el('f-'+key); if(i && (i.tagName==='INPUT'||i.tagName==='TEXTAREA')) i.classList.add('err');
+}
+function clearErr(key){
+  const m = el('err-'+key); if(m) m.classList.remove('on');
+  const i = el('f-'+key); if(i) i.classList.remove('err');
+}
+
+/* ---- 驗證：稱呼／區域／坪數／屋況／時段／想解決的事 必填，電話選填 ---- */
+function validate(){
+  let ok = true, firstKey = null;
+  function fail(key, msg){ ok = false; if(!firstKey) firstKey = key; setErr(key, msg); }
+
+  ['name','area','ping','condition','time','issue'].forEach(clearErr);
+
+  if(!el('f-name').value.trim()) fail('name','請填一下怎麼稱呼你');
+  if(!el('f-area').value.trim()) fail('area','請填房子的區域／地點');
+  if(!el('f-ping').value.trim()) fail('ping','請填大概坪數');
+  if(!selectedRadio('condition')) fail('condition','請選一個屋況');
+  const t = selectedRadio('time');
+  if(!t) fail('time','請選方便聯絡的時段');
+  else if(t === '其他' && !el('f-time-other').value.trim()) fail('time','選了「其他」的話，請簡單填一下方便的時段');
+  if(!el('f-issue').value.trim()) fail('issue','請填最想解決的一件事');
+
+  if(!ok && firstKey){
+    const target = el('field-'+firstKey);
+    if(target && target.scrollIntoView) target.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  return ok;
+}
+
+/* ---- 組成要送進 LINE 聊天室的摘要文字 ---- */
+function buildSummary(){
+  const name = el('f-name').value.trim() || '（未填）';
+  const displayName = (liffProfile && liffProfile.displayName) ? liffProfile.displayName : '';
+  const nameLine = (displayName && displayName !== name) ? (name + '（LINE：' + displayName + '）') : name;
+  const area = el('f-area').value.trim() || '（未填）';
+  const ping = el('f-ping').value.trim() || '（未填）';
+  const condition = selectedRadio('condition') || '（未填）';
+  let time = selectedRadio('time');
+  if(time === '其他'){
+    const custom = el('f-time-other').value.trim();
+    time = custom || '其他';
+  }
+  if(!time) time = '（未填）';
+  const issue = el('f-issue').value.trim() || '（未填）';
+  const phone = el('f-phone').value.trim() || '（未填）';
+
+  return '🏠 菩語預約諮詢\n'
+    + '稱呼：' + nameLine + '\n'
+    + '區域：' + area + '\n'
+    + '坪數：' + ping + '\n'
+    + '屋況：' + condition + '\n'
+    + '方便聯絡時段：' + time + '\n'
+    + '想解決：' + issue + '\n'
+    + '電話：' + phone + '\n'
+    + '—— 由 LINE 預約單送出';
+}
+
+function showNotice(msg){
+  const n = el('notice');
+  n.textContent = msg;
+  n.classList.add('on');
+}
+function hideNotice(){ el('notice').classList.remove('on'); }
+
+/* ---- 送出：優先用 liff.sendMessages 把摘要送進使用者跟菩語 OA 的聊天室 ---- */
+async function onSubmit(){
+  if(!validate()) return;
+  hideNotice();
+
+  const summary = buildSummary();
+
+  if(!liffReady){
+    showNotice('請從 LINE 官方帳號開啟此頁，才能把預約內容直接送出給菩語；您填寫的內容目前還保留在畫面上。');
+    return;
+  }
+
+  const btn = el('submitBtn');
+  const oldText = btn.textContent;
+  btn.disabled = true; btn.textContent = '送出中…';
+
+  try{
+    await liff.sendMessages([{ type:'text', text: summary }]);
+    show('s-done');
+  }catch(e){
+    console.error(e);
+    showNotice('送出時發生問題，請稍後再試一次；您填寫的內容還保留在畫面上。');
+  }finally{
+    btn.disabled = false; btn.textContent = oldText;
+  }
+}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  el(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+function closeOrReset(){
+  try{
+    if(typeof liff !== 'undefined' && liffReady && liff.closeWindow){ liff.closeWindow(); return; }
+  }catch(e){}
+  /* 不在 LINE 環境內關不掉視窗，退回顯示表單畫面 */
+  show('s-form');
+}
+
+</script>
+</body>
+</html>
