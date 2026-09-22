@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>邱伊嫻 Vivian｜菩語國際設計 電子名片</title>
+<meta name="description" content="菩語國際設計 設計總監 邱伊嫻 Vivian 的數位名片。撥打電話、加 LINE、看作品、預約諮詢，一鍵搞定。">
+<meta name="theme-color" content="#F4F2EF">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="菩語國際設計">
+<meta property="og:title" content="邱伊嫻 Vivian｜菩語國際設計 設計總監">
+<meta property="og:description" content="讓空間知道自己是誰 — 菩語國際設計 邱伊嫻 Vivian 的電子名片">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2E2B28;
+  --cream:#F4F2EF;
+  --paper:#FFFFFF;
+  --gold:#A88B5C;
+  --gold-light:#D9C6A5;
+  --gold-dark:#8A6F45;
+  --line:#E3DDD1;
+  --muted:#6E6A63;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;min-height:100vh;background:var(--cream)}
+body{
+  font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+#card{
+  width:100%;
+  min-height:100vh;
+  padding:calc(16px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+@media (min-width:640px){
+  body{background:linear-gradient(180deg,var(--cream),#EDEAE3)}
+  #card{max-width:520px;margin:0 auto;padding-top:calc(36px + env(safe-area-inset-top));padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+}
+
+/* ---- header / logo badge ---- */
+.badge{
+  width:64px;height:64px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#2E2B28,#1E1C1A);
+  border:1px solid var(--gold-light);
+  box-shadow:0 10px 24px rgba(46,43,40,.18);
+  margin-bottom:14px;
+}
+.badge span{
+  font-family:Georgia,"Noto Serif TC",serif;
+  font-weight:700;
+  font-size:22px;
+  background:linear-gradient(135deg,#8A6F45,#D9C6A5 45%,#A88B5C 65%,#8A6F45);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.wordmark{
+  font-family:Georgia,"Noto Serif TC",serif;
+  font-weight:700;
+  letter-spacing:.14em;
+  font-size:clamp(13px,3.6vw,15px);
+  background:linear-gradient(135deg,#8A6F45,#D9C6A5 45%,#A88B5C 65%,#8A6F45);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-align:center;
+}
+.wordmark-cn{
+  font-size:clamp(11px,3vw,12.5px);
+  letter-spacing:.32em;
+  color:var(--muted);
+  margin-top:4px;
+  text-align:center;
+}
+
+/* ---- name / title ---- */
+.namebox{
+  text-align:center;
+  margin-top:22px;
+}
+.namebox h1{
+  font-family:"Noto Serif TC",serif;
+  font-weight:700;
+  font-size:clamp(30px,9vw,42px);
+  letter-spacing:.02em;
+  color:var(--ink);
+  line-height:1.25;
+}
+.namebox .role{
+  margin-top:8px;
+  font-size:clamp(16px,4.2vw,19px);
+  font-weight:600;
+  letter-spacing:.18em;
+  color:var(--gold-dark);
+}
+
+/* ---- tagline ---- */
+.tagline{
+  margin-top:20px;
+  text-align:center;
+  font-family:"Noto Serif TC",serif;
+  font-weight:600;
+  font-size:clamp(17px,4.6vw,20px);
+  color:var(--ink);
+  position:relative;
+  padding:0 6px;
+}
+.tagline::before,.tagline::after{
+  content:"";
+  display:block;
+  width:34px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:14px auto;
+}
+
+/* ---- award ---- */
+.award{
+  margin-top:2px;
+  text-align:center;
+  font-size:clamp(10.5px,2.9vw,12px);
+  letter-spacing:.05em;
+  color:var(--gold-dark);
+  background:var(--paper);
+  border:1px solid var(--gold-light);
+  padding:7px 14px;
+  border-radius:100px;
+  font-weight:500;
+}
+
+/* ---- section divider ---- */
+.hr{width:100%;height:1px;background:var(--line);margin:26px 0}
+
+/* ---- primary CTA row ---- */
+.primary-row{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.cta{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:16px 10px;
+  border-radius:14px;
+  font-weight:700;
+  font-size:clamp(14.5px,3.8vw,16px);
+  letter-spacing:.02em;
+  transition:transform .12s ease,opacity .12s ease;
+}
+.cta:active{transform:scale(.96);opacity:.9}
+.cta.solid{
+  background:linear-gradient(145deg,#2E2B28,#1E1C1A);
+  color:#F4F2EF;
+  border:1px solid #1E1C1A;
+}
+.cta.solid svg{stroke:var(--gold-light)}
+.cta.outline{
+  background:var(--paper);
+  color:var(--ink);
+  border:1.5px solid var(--gold);
+}
+.cta.outline svg{stroke:var(--gold-dark)}
+
+/* ---- action list ---- */
+.list{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+.row{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:15px 16px;
+  border-radius:14px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  font-size:clamp(15px,4vw,16.5px);
+  font-weight:500;
+  color:var(--ink);
+  transition:transform .12s ease,background .12s ease;
+}
+.row:active{transform:scale(.98);background:#F8F6F2}
+.row .icon-ring{
+  width:38px;height:38px;
+  min-width:38px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#F4EFE6,#FFFFFF);
+  border:1px solid var(--gold-light);
+}
+.row .icon-ring svg{stroke:var(--gold-dark)}
+.row .label{flex:1;text-align:left}
+.row .chev{color:var(--gold);font-size:18px;font-weight:700}
+
+/* ---- share ---- */
+.share-wrap{
+  width:100%;
+  margin-top:26px;
+  display:flex;
+  justify-content:center;
+}
+.share-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:13px 30px;
+  border-radius:100px;
+  border:1.5px solid var(--gold);
+  color:var(--gold-dark);
+  font-weight:700;
+  font-size:clamp(14px,3.8vw,15.5px);
+  letter-spacing:.06em;
+  background:var(--paper);
+}
+.share-btn:active{transform:scale(.96)}
+.share-btn svg{stroke:var(--gold-dark)}
+
+/* ---- footer ---- */
+footer{
+  margin-top:28px;
+  text-align:center;
+}
+footer .region{
+  font-size:12.5px;
+  color:var(--muted);
+  letter-spacing:.08em;
+}
+footer .email{
+  margin-top:8px;
+  font-size:12.5px;
+  color:var(--gold-dark);
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+
+/* ---- toast ---- */
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:calc(24px + env(safe-area-inset-bottom));
+  transform:translate(-50%,20px);
+  background:var(--ink);
+  color:var(--cream);
+  padding:12px 22px;
+  border-radius:100px;
+  font-size:13.5px;
+  font-weight:500;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease;
+  z-index:50;
+  white-space:nowrap;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<div id="card">
+
+  <!-- 品牌 logo 區 -->
+  <div class="badge"><span>菩</span></div>
+  <div class="wordmark">PURELY&nbsp;DESIGN</div>
+  <div class="wordmark-cn">菩語國際設計</div>
+
+  <!-- 姓名 / 職稱 -->
+  <div class="namebox">
+    <h1>邱伊嫻 Vivian</h1>
+    <div class="role">設計總監</div>
+  </div>
+
+  <!-- 標語 -->
+  <div class="tagline">讓空間知道自己是誰</div>
+
+  <!-- 獲獎背書 -->
+  <div class="award">iF Design Award 2023 ・ MUSE Design Award 2023 三金</div>
+
+  <div class="hr"></div>
+
+  <!-- 主要動作：撥打電話 / 加 LINE -->
+  <div class="primary-row">
+    <a class="cta solid" href="tel:0960558533">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8a15.9 15.9 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1z"/></svg>
+      撥打電話
+    </a>
+    <a class="cta outline" href="https://line.me/R/ti/p/@nkt7460n" target="_blank" rel="noopener">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+      加 LINE 好友
+    </a>
+  </div>
+
+  <!-- 次要動作清單 -->
+  <div class="list">
+
+    <a class="row" href="https://www.purely2006.com/design-works" target="_blank" rel="noopener">
+      <span class="icon-ring">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg>
+      </span>
+      <span class="label">看作品</span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="row" href="https://liff.line.me/2011689768-LQWydmVc" target="_blank" rel="noopener">
+      <span class="icon-ring">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      </span>
+      <span class="label">預約諮詢</span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="row" href="https://www.instagram.com/pure_interiordesign" target="_blank" rel="noopener">
+      <span class="icon-ring">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
+      </span>
+      <span class="label">Instagram</span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="row" href="https://www.facebook.com/BaroqueStyle" target="_blank" rel="noopener">
+      <span class="icon-ring">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8h3V4h-3a5 5 0 0 0-5 5v3H6v4h3v8h4v-8h3l1-4h-4V9a1 1 0 0 1 1-1z"/></svg>
+      </span>
+      <span class="label">Facebook</span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="row" href="https://www.purely2006.com" target="_blank" rel="noopener">
+      <span class="icon-ring">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+      </span>
+      <span class="label">逛官網</span>
+      <span class="chev">›</span>
+    </a>
+
+    <button class="row" id="saveContactBtn" type="button">
+      <span class="icon-ring">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11.5" r="2"/><path d="M6 16c.5-1.5 1.8-2.3 2.5-2.3s2 .8 2.5 2.3M14 10h5M14 14h5"/></svg>
+      </span>
+      <span class="label">存到通訊錄</span>
+      <span class="chev">›</span>
+    </button>
+
+  </div>
+
+  <!-- 分享 -->
+  <div class="share-wrap">
+    <button class="share-btn" id="shareBtn" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M8 10.8l8-3.4M8 13.2l8 3.4"/></svg>
+      分享名片
+    </button>
+  </div>
+
+  <footer>
+    <div class="region">服務地區｜桃園</div>
+    <a class="email" href="mailto:vivian66323@gmail.com">vivian66323@gmail.com</a>
+  </footer>
+
+</div>
+
+<div id="toast"></div>
+
+<!-- LIFF SDK：純加分項，讀不到也完全不影響本頁其他功能 -->
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var LIFF_ID = "REPLACE_WITH_CARD_LIFF_ID";
+
+  // ---- LIFF 初始化（選配，失敗不影響頁面）----
+  try {
+    if (typeof liff !== "undefined" && LIFF_ID && LIFF_ID.indexOf("REPLACE_WITH") !== 0) {
+      liff.init({ liffId: LIFF_ID }).catch(function (err) {
+        console.warn("[card] liff.init failed:", err);
+      });
+    }
+  } catch (err) {
+    console.warn("[card] liff not available:", err);
+  }
+
+  // ---- toast ----
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+  function showToast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove("show");
+    }, 2200);
+  }
+
+  // ---- 存到通訊錄（vCard）----
+  function buildVCard() {
+    var lines = [
+      "BEGIN:VCARD",
+      "VERSION:3.0",
+      "FN:邱伊嫻 Vivian",
+      "N:邱;伊嫻;;;",
+      "ORG:菩語國際設計",
+      "TITLE:設計總監",
+      "TEL;TYPE=CELL:0960558533",
+      "EMAIL:vivian66323@gmail.com",
+      "URL:https://www.purely2006.com",
+      "NOTE:讓空間知道自己是誰",
+      "END:VCARD"
+    ];
+    return lines.join("\r\n");
+  }
+
+  function saveContact() {
+    try {
+      var vcard = buildVCard();
+      var blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "Vivian_菩語.vcf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () {
+        URL.revokeObjectURL(url);
+      }, 2000);
+      showToast("已下載聯絡人檔案");
+    } catch (err) {
+      console.warn("[card] saveContact failed:", err);
+      showToast("下載失敗，請稍後再試");
+    }
+  }
+
+  var saveBtn = document.getElementById("saveContactBtn");
+  if (saveBtn) {
+    saveBtn.addEventListener("click", saveContact);
+  }
+
+  // ---- 分享名片 ----
+  function currentShareData() {
+    return {
+      title: "菩語國際設計｜邱伊嫻 Vivian",
+      text: "讓空間知道自己是誰 — 菩語國際設計 設計總監 邱伊嫻 Vivian",
+      url: window.location.href
+    };
+  }
+
+  function fallbackCopyLink(url) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(url)
+        .then(function () {
+          showToast("已複製名片連結");
+        })
+        .catch(function () {
+          window.prompt("複製這個連結分享：", url);
+        });
+    } else {
+      window.prompt("複製這個連結分享：", url);
+    }
+  }
+
+  async function shareCard() {
+    var data = currentShareData();
+
+    // 1. LINE 內建瀏覽器：優先用 LIFF shareTargetPicker
+    try {
+      if (typeof liff !== "undefined" && liff.isInClient && liff.isInClient()) {
+        await liff.shareTargetPicker([
+          { type: "text", text: data.text + "\n" + data.url }
+        ]);
+        return;
+      }
+    } catch (err) {
+      console.warn("[card] liff share failed:", err);
+    }
+
+    // 2. Web Share API（手機瀏覽器多支援）
+    try {
+      if (navigator.share) {
+        await navigator.share(data);
+        return;
+      }
+    } catch (err) {
+      console.warn("[card] navigator.share failed:", err);
+    }
+
+    // 3. Fallback：複製連結
+    fallbackCopyLink(data.url);
+  }
+
+  var shareBtn = document.getElementById("shareBtn");
+  if (shareBtn) {
+    shareBtn.addEventListener("click", function () {
+      shareCard();
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

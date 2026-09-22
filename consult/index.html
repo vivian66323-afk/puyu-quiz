@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>菩語｜洽詢單</title>
+<meta name="robots" content="noindex">
+<!--
+  這個 LIFF 頁在 LINE Developers 建立 LIFF app 時，Size 要設為「Full」，
+  手機端才會真正滿版全螢幕顯示（這是 LINE 平台設定，程式碼無法覆寫）。
+-->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F2EF;--ink:#2E2B28;--gold:#A88B5C;--gold-soft:#D8C7AE;--line:#E1DBD1;--muted:#6E6A63;--white:#FFFFFF}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);min-height:100vh}
+body{font-family:"Noto Sans TC",sans-serif;color:var(--ink);line-height:1.7;-webkit-text-size-adjust:100%}
+/* 滿版容器：不做窄卡片置中，內容貼齊手機寬度，只留小安全邊距 */
+#app{width:100%;min-height:100vh;background:var(--bg);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+.wrap{width:100%;max-width:640px;margin:0 auto;padding:0 16px 48px}
+.hd{padding:28px 0 18px}
+.eyebrow{font-size:clamp(11px,3.4vw,14px);letter-spacing:.32em;color:var(--gold);font-weight:700;margin-bottom:10px}
+.hd h1{font-family:Georgia,"Noto Serif TC",serif;font-weight:700;font-size:clamp(22px,7vw,30px);line-height:1.35;color:var(--ink)}
+.hd p{font-size:3.8vw;color:var(--muted);margin-top:10px;line-height:1.85}
+@media(min-width:640px){.eyebrow{font-size:13px}.hd h1{font-size:28px}.hd p{font-size:14.5px}}
+
+.field{margin-top:26px}
+.field .lbl{font-family:Georgia,"Noto Serif TC",serif;font-weight:700;font-size:4.6vw;color:var(--ink);margin-bottom:10px;line-height:1.4}
+.field .req{color:var(--gold);margin-left:4px;font-size:3.6vw}
+.field .hint{font-size:3.3vw;color:var(--muted);margin-top:-4px;margin-bottom:10px}
+@media(min-width:640px){.field .lbl{font-size:17px}.field .req{font-size:14px}.field .hint{font-size:12.5px}}
+
+input[type=text].inp,textarea.inp{
+  width:100%;border:1.5px solid var(--line);border-radius:12px;background:var(--white);
+  padding:15px 16px;font-family:inherit;font-size:4.2vw;color:var(--ink);line-height:1.7;
+}
+@media(min-width:640px){input[type=text].inp,textarea.inp{font-size:16px}}
+textarea.inp{min-height:120px;resize:vertical}
+input[type=text].inp::placeholder,textarea.inp::placeholder{color:#B4AEA2}
+input[type=text].inp:focus,textarea.inp:focus{outline:none;border-color:var(--gold)}
+
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{
+  border:1.5px solid var(--line);border-radius:100px;background:var(--white);
+  padding:12px 18px;font-size:3.9vw;color:var(--ink);cursor:pointer;user-select:none;
+  transition:all .12s;display:inline-flex;align-items:center;gap:6px;font-weight:500;
+}
+@media(min-width:640px){.opt{font-size:14.5px}}
+.opt:active{transform:scale(.97)}
+.opt.sel{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.opt.sel::before{content:"✓";color:var(--gold-soft);font-weight:700}
+
+.submitBtn{
+  display:block;width:100%;border:none;border-radius:100px;background:var(--ink);color:var(--bg);
+  font-family:inherit;font-weight:700;font-size:4.6vw;padding:18px;margin-top:36px;cursor:pointer;
+  letter-spacing:.06em;
+}
+@media(min-width:640px){.submitBtn{font-size:17px}}
+.submitBtn:active{transform:scale(.98)}
+.submitBtn:disabled{background:#C7C1B4;cursor:default}
+
+.notice{
+  margin-top:14px;background:var(--white);border:1px solid var(--gold-soft);border-radius:12px;
+  padding:13px 15px;font-size:3.6vw;color:var(--muted);line-height:1.8;text-align:center;display:none;
+}
+@media(min-width:640px){.notice{font-size:13px}}
+.notice.on{display:block}
+
+/* 成功畫面 */
+.done{display:none;text-align:center;padding:22vh 0 40px}
+.done.on{display:block}
+.done .mark{width:22vw;max-width:88px;height:22vw;max-height:88px;margin:0 auto 22px;border-radius:50%;background:var(--gold);
+  display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:clamp(22px,9vw,36px);}
+.done h2{font-family:Georgia,"Noto Serif TC",serif;font-weight:700;font-size:clamp(19px,6vw,24px);color:var(--ink);margin-bottom:12px}
+.done p{font-size:4vw;color:var(--muted);line-height:1.9;padding:0 16px}
+@media(min-width:640px){.done h2{font-size:22px}.done p{font-size:14.5px}}
+.closeBtn{
+  display:inline-block;margin-top:30px;border:1.5px solid var(--ink);border-radius:100px;background:transparent;
+  color:var(--ink);font-family:inherit;font-weight:700;font-size:4.2vw;padding:14px 40px;cursor:pointer;
+}
+@media(min-width:640px){.closeBtn{font-size:15px}}
+
+.toast{position:fixed;left:50%;bottom:calc(32px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);
+  padding:12px 22px;border-radius:100px;font-size:3.6vw;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50;max-width:88vw;text-align:center}
+@media(min-width:640px){.toast{font-size:13.5px}}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="wrap" id="formScreen">
+    <div class="hd">
+      <div class="eyebrow">PURELY · 洽詢單</div>
+      <h1>先讓我們知道，<br>您現在最需要的是什麼。</h1>
+      <p>填完這張洽詢單，菩語會盡快與您聯繫，約下一步的討論。</p>
+    </div>
+
+    <div class="field">
+      <div class="lbl">稱呼<span class="req">＊</span></div>
+      <input type="text" class="inp" id="nameInput" placeholder="怎麼稱呼您">
+    </div>
+
+    <div class="field">
+      <div class="lbl">需要的服務<span class="req">＊</span></div>
+      <div class="hint">可複選</div>
+      <div class="opts" id="serviceOpts"></div>
+    </div>
+
+    <div class="field">
+      <div class="lbl">最想解決的問題</div>
+      <textarea class="inp" id="problemInput" placeholder="例如：格局不好用、收納不夠、想重新規劃廚房……"></textarea>
+    </div>
+
+    <div class="field">
+      <div class="lbl">預算範圍<span class="req">＊</span></div>
+      <div class="opts" id="budgetOpts"></div>
+    </div>
+
+    <div class="field">
+      <div class="lbl">怎麼認識菩語的<span class="req">＊</span></div>
+      <div class="opts" id="channelOpts"></div>
+    </div>
+
+    <button class="submitBtn" id="submitBtn" onclick="submitConsult()">送出洽詢</button>
+    <div class="notice" id="notice"></div>
+  </div>
+
+  <div class="wrap done" id="doneScreen">
+    <div class="mark">✓</div>
+    <h2>已送出</h2>
+    <p>菩語會盡快與你聯繫。<br>謝謝您花時間讓我們認識您的需求。</p>
+    <div><button class="closeBtn" id="closeBtn" onclick="closeLiffWindow()">關閉視窗</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- LINE LIFF SDK（v2）：只在 LINE App 內生效，一般瀏覽器完全不受影響 -->
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+/* ============================================================
+   LINE LIFF 加值（非破壞式）—— 這個常數之後要換成真的 LIFF ID
+   （LINE Developers 建立 channel 後才有）。一般瀏覽器開這頁，
+   下面 initLiffSafely() 一定會失敗或直接跳過，表單仍會正常顯示。
+   ============================================================ */
+const LIFF_ID = "2011689768-pIMbHWCL";
+let LIFF_READY = false;   // liff.init 成功 且 liff.isInClient() 為 true 才算 ready
+let LIFF_PROFILE = null;  // { displayName, userId, ... }
+let liffInitDone = false; // liff.init 是否已經 settle（成功或失敗都算），避免送出時誤判 LIFF_READY
+const liffInitPromise = (async function initLiffSafely(){
+  try{
+    if(typeof liff === 'undefined') return; // SDK 沒載入成功，表單完全不受影響
+    await liff.init({ liffId: LIFF_ID });
+    if(liff.isInClient && liff.isInClient()){
+      LIFF_READY = true;
+      try{
+        LIFF_PROFILE = await liff.getProfile();
+        const nameInput = document.getElementById('nameInput');
+        if(nameInput && !nameInput.value && LIFF_PROFILE && LIFF_PROFILE.displayName){
+          nameInput.value = LIFF_PROFILE.displayName;
+        }
+      }catch(e){ LIFF_PROFILE = null; } // 拿不到 profile 也沒關係，稱呼欄位留空讓客戶自己填
+    }
+  }catch(e){
+    /* liff.init 失敗（LIFF_ID 還沒換成真值、或不在 LINE 環境內）——
+       LIFF_READY 維持 false，後面任何地方都不會呼叫 liff API，表單仍正常顯示與可填寫。 */
+    LIFF_READY = false;
+  }finally{
+    liffInitDone = true;
+  }
+})();
+
+const SERVICE_OPTS = ['全室設計','局部翻新','老屋翻新','商業空間','軟裝','其他'];
+const BUDGET_OPTS = ['100萬以下','100-200萬','200-300萬','300萬以上','未定'];
+const CHANNEL_OPTS = ['Google','FB','IG','朋友介紹','AI 推薦','其他'];
+
+const state = { services: [], budget: '', channel: '' };
+const el = id => document.getElementById(id);
+
+function renderOpts(containerId, opts, multi, key){
+  el(containerId).innerHTML = opts.map(o=>{
+    const sel = multi ? state[key].indexOf(o) >= 0 : state[key] === o;
+    return '<div class="opt'+(sel?' sel':'')+'" data-v="'+esc(o)+'" onclick="pickOpt(\''+key+'\',\''+esc(o)+'\','+multi+',\''+containerId+'\')">'+o+'</div>';
+  }).join('');
+}
+function esc(s){ return String(s).replace(/'/g,"\\'"); }
+function pickOpt(key, val, multi, containerId){
+  if(multi){
+    const i = state[key].indexOf(val);
+    if(i >= 0) state[key].splice(i,1); else state[key].push(val);
+  } else {
+    state[key] = (state[key] === val) ? '' : val;
+  }
+  const opts = containerId==='serviceOpts' ? SERVICE_OPTS : containerId==='budgetOpts' ? BUDGET_OPTS : CHANNEL_OPTS;
+  renderOpts(containerId, opts, multi, key);
+}
+renderOpts('serviceOpts', SERVICE_OPTS, true, 'services');
+renderOpts('budgetOpts', BUDGET_OPTS, false, 'budget');
+renderOpts('channelOpts', CHANNEL_OPTS, false, 'channel');
+
+let toastTimer=null;
+function toast(msg){
+  const t = el('toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('on'), 2600);
+}
+
+function buildSummaryText(name, problem){
+  let t = '【菩語 · 官網洽詢單】\n';
+  t += '稱呼：'+(name||'—')+'\n';
+  t += '需要的服務：'+(state.services.length ? state.services.join('、') : '—')+'\n';
+  t += '最想解決的問題：'+(problem || '—')+'\n';
+  t += '預算範圍：'+(state.budget || '—')+'\n';
+  t += '怎麼認識菩語的：'+(state.channel || '—')+'\n';
+  return t;
+}
+
+async function submitConsult(){
+  const name = el('nameInput').value.trim();
+  const problem = el('problemInput').value.trim();
+  const notice = el('notice');
+  notice.classList.remove('on');
+
+  if(!name){ toast('請填寫稱呼'); return; }
+  if(!state.services.length){ toast('請選擇需要的服務'); return; }
+  if(!state.budget){ toast('請選擇預算範圍'); return; }
+  if(!state.channel){ toast('請選擇怎麼認識菩語的'); return; }
+
+  /* 使用者若搶在 liff.init 完成前按送出，先等 init 結果 settle，
+     避免 LIFF_READY 還沒被賦值就被誤判成「不在 LINE 環境」 */
+  if(typeof liff !== 'undefined' && !liffInitDone){
+    const waitBtn = el('submitBtn'); const waitOld = waitBtn.textContent;
+    waitBtn.disabled = true; waitBtn.textContent = '準備中…';
+    try{ await liffInitPromise; }catch(e){}
+    waitBtn.disabled = false; waitBtn.textContent = waitOld;
+  }
+
+  if(typeof liff === 'undefined' || !LIFF_READY){
+    notice.textContent = '請從 LINE 官方帳號開啟此頁，才能直接送出洽詢單。';
+    notice.classList.add('on');
+    return;
+  }
+
+  const btn = el('submitBtn'); const old = btn.textContent;
+  try{
+    btn.disabled = true; btn.textContent = '送出中…';
+    await liff.sendMessages([{ type:'text', text: buildSummaryText(name, problem) }]);
+    el('formScreen').style.display = 'none';
+    el('doneScreen').classList.add('on');
+  }catch(e){
+    btn.disabled = false; btn.textContent = old;
+    notice.textContent = '送出失敗，請稍後再試，或直接在 LINE 對話框留言給我們。';
+    notice.classList.add('on');
+  }
+}
+
+function closeLiffWindow(){
+  try{
+    if(typeof liff !== 'undefined' && LIFF_READY && liff.closeWindow){ liff.closeWindow(); return; }
+  }catch(e){}
+  toast('您可以直接關閉這個分頁');
+}
+</script>
+</body>
+</html>

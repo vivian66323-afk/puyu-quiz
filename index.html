@@ -673,17 +673,37 @@ function finish(){
       '<button class="btn-sub" onclick="toLine()">加菩語官方 LINE・聊聊你家的可能 →</button>'+
       '<button class="btn-sub" onclick="bookConsult()">預約菩語設計諮詢 →</button>'+
       '<button class="btn-sub" id="liffSendBtn" style="display:none" onclick="sendResultToLine()">把結果傳給菩語設計師 →</button>'+
+      '<button class="btn-sub" id="liffShareBtn" style="display:none" onclick="shareResultToLineFriends()">分享給朋友 →</button>'+
     '</div>';
   show('s-result');
   updateLiffSendButton();
 }
 
-/* ===== LINE LIFF 加值：只在 LINE App 內顯示這顆按鈕，一般瀏覽器完全看不到、也不受影響 ===== */
+/* ===== LINE LIFF 加值：只在 LINE App 內顯示這兩顆按鈕，一般瀏覽器完全看不到、也不受影響 ===== */
 function updateLiffSendButton(){
   try{
     const btn=el('liffSendBtn');
     if(btn) btn.style.display = LIFF_READY ? 'block' : 'none';
+    const shareBtn=el('liffShareBtn');
+    if(shareBtn) shareBtn.style.display = LIFF_READY ? 'block' : 'none';
   }catch(e){}
+}
+/* 只在 LINE 內、結果畫面才會被呼叫（按鈕本身也只在 LIFF_READY 時顯示）。
+   liff.shareTargetPicker 若裝置或版本不支援，靜默略過，不影響其他分享按鈕。 */
+async function shareResultToLineFriends(){
+  if(!LIFF_READY) return;
+  const btn=el('liffShareBtn'); const old=btn?btn.textContent:'';
+  try{
+    if(!liff.shareTargetPicker) return; // 不支援就靜默略過
+    const r=window._result;
+    if(btn){ btn.textContent='開啟中…'; btn.disabled=true; }
+    const text='我的居家風格是【'+(r?r.zh:'')+'】✨ 你家是哪種放下盔甲的家？來測測看 👉 https://liff.line.me/'+LIFF_ID;
+    await liff.shareTargetPicker([{type:'text', text:text}]);
+  }catch(e){
+    /* 使用者取消或不支援，靜默略過 */
+  }finally{
+    if(btn){ btn.textContent=old; btn.disabled=false; }
+  }
 }
 async function sendResultToLine(){
   if(!LIFF_READY){ toast('請從 LINE 官方帳號開啟此頁，才能直接傳送結果'); return; }

@@ -148,6 +148,33 @@ table.mx .cell.sel .dot::after{content:"";position:absolute;left:4px;top:4px;wid
   <section class="screen" id="s-sum"><div class="main" style="max-width:820px;margin:0 auto"><div id="sumBody"></div></div></section>
 </div>
 
+<!-- LINE LIFF SDK（v2）：只在 LINE App 內生效，一般瀏覽器完全不受影響 -->
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+/* ============================================================
+   LINE LIFF 加值（非破壞式）—— 這個常數之後要換成真的 LIFF ID
+   （LINE Developers 建立 channel 後才有）。一般瀏覽器開這頁，
+   下面 initLiffSafely() 一定會失敗或直接跳過，表單流程完全不受影響。
+   ============================================================ */
+const LIFF_ID = "2011689768-RluurbVQ";
+let LIFF_READY = false;   // liff.init 成功 且 liff.isInClient() 為 true 才算 ready
+let LIFF_PROFILE = null;  // { displayName, userId, ... }
+(async function initLiffSafely(){
+  try{
+    if(typeof liff === 'undefined') return; // SDK 沒載入成功，原本表單邏輯完全不受影響
+    await liff.init({ liffId: LIFF_ID });
+    if(liff.isInClient && liff.isInClient()){
+      LIFF_READY = true;
+      try{ LIFF_PROFILE = await liff.getProfile(); }
+      catch(e){ LIFF_PROFILE = null; } // 拿不到 profile 也沒關係，只是按鈕上不會帶名字
+    }
+  }catch(e){
+    /* liff.init 失敗（LIFF_ID 還沒換成真值、或不在 LINE 環境內）——
+       LIFF_READY 維持 false，後面任何地方都不會呼叫 liff API，表單照原本邏輯跑。 */
+    LIFF_READY = false;
+  }
+})();
+</script>
 <script>
 /* ========= 題庫：菩語客戶生活需求調查表（A–G 七段，82 題）＝資料，好增刪 ========= */
 const BRIEF = [
@@ -389,7 +416,7 @@ function ansText(it){const v=A.ans[it.id];
 function buildSummary(){
   save();const c=clientObj();
   let h='<div class="sumhead"><div class="k">菩語國際設計 · 客戶生活需求調查表</div><h1>需求摘要</h1>'+
-    '<p>'+(c.name?c.name:'')+(A.ans['b3']&&A.ans['b3'].ping?'　·　'+A.ans['b3'].ping:'')+(c.phone?'　·　'+c.phone:'')+'</p></div>';
+    '<p>'+(c.name?escH(c.name):'')+(A.ans['b3']&&A.ans['b3'].ping?'　·　'+escH(A.ans['b3'].ping):'')+(c.phone?'　·　'+escH(c.phone):'')+'</p></div>';
   const prio=featVal('prio'),trade=featVal('trade'),story=featVal('story');
   if((prio&&prio.length)||trade){
     h+='<div class="hl">';
@@ -401,7 +428,7 @@ function buildSummary(){
     let rows='';
     s.items.forEach(it=>{ if(!it.id)return; const a=ansText(it);
       rows+='<div class="sumrow"><div class="sq">'+it.q+'</div>'+
-        (a?(it.feature==='story'?'<div class="sa free">'+escH(a)+'</div>':'<div class="sa">'+(Array.isArray(A.ans[it.id])?A.ans[it.id].map(x=>'<span class="chip">'+x+'</span>').join(''):(it.t==='single'?'<span class="chip">'+a+'</span>':escH(a)))+'</div>')
+        (a?(it.feature==='story'?'<div class="sa free">'+escH(a)+'</div>':'<div class="sa">'+(Array.isArray(A.ans[it.id])?A.ans[it.id].map(x=>'<span class="chip">'+escH(x)+'</span>').join(''):(it.t==='single'?'<span class="chip">'+escH(a)+'</span>':escH(a)))+'</div>')
              :'<div class="sa empty">—</div>')+'</div>';
     });
     h+='<div class="sumsec"><div class="st">'+s.title+'</div><div class="sb">'+rows+'</div></div>';
@@ -409,13 +436,57 @@ function buildSummary(){
   h+='<div class="sumactions">'+
     '<button class="pbtn solid" id="sendBtn" onclick="submitToStudio()">送出給菩語</button>'+
     '<button class="pbtn ghost" onclick="window.print()">列印 / 存成 PDF</button>'+
+    (LIFF_READY?'<button class="pbtn ghost" id="liffBriefBtn" onclick="sendBriefToLine()">把需求單傳給菩語設計師</button>':'')+
     '<button class="pbtn ghost" onclick="backToEdit()">← 回去修改</button></div>'+
     '<div class="tip" id="sendTip" style="text-align:center">按「送出給菩語」把需求直接傳給我們；也可以另存 PDF 留底。</div>';
   el('sumBody').innerHTML=h;el('s-form').classList.remove('on');el('s-sum').classList.add('on');scrollTop0();
 }
+
+/* ===== LINE LIFF 加值：這顆按鈕只在 buildSummary() 判斷 LIFF_READY 為 true 時才會被產出，
+   非 LINE 環境（LIFF_READY 恆為 false）從來不會出現在 DOM 裡，也不會呼叫任何 liff API ===== */
+async function sendBriefToLine(){
+  if(typeof liff==='undefined' || !LIFF_READY) return;
+  const btn=el('liffBriefBtn'); const old=btn?btn.textContent:'';
+  try{
+    if(btn){ btn.textContent='傳送中…'; btn.disabled=true; }
+    let name='';
+    try{ const p=LIFF_PROFILE||await liff.getProfile(); name=(p&&p.displayName)?p.displayName:''; }catch(e){}
+    let text=(name?('【'+name+' 的需求單】\n'):'')+lineBriefSummaryText();
+    if(text.length>4800){ text = text.slice(0,4800)+'\n……（完整內容請見 PDF）'; }
+    await liff.sendMessages([{type:'text',text:text}]);
+    if(btn) btn.textContent='✓ 已傳送給菩語';
+    const tip=el('sendTip'); if(tip) tip.textContent='已把需求摘要傳給菩語，我們會盡快與您聯繫。';
+  }catch(e){
+    if(btn){ btn.textContent=old; btn.disabled=false; }
+    const tip=el('sendTip'); if(tip) tip.textContent='傳送失敗，請改用「送出給菩語」或「列印 / 存成 PDF」。';
+  }
+}
 function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function backToEdit(){el('s-sum').classList.remove('on');el('s-form').classList.add('on');cur=LAST;render();scrollTop0();}
 
+/* LINE 只送精簡摘要（避免全文超過 LINE 單則 text 5000 字上限導致送出失敗）；
+   完整內容仍走 submitToStudio()／summaryText() 既有路徑（PDF／表單送出） */
+function lineBriefSummaryText(){
+  const c=clientObj();
+  const prio=featVal('prio'),trade=featVal('trade'),story=featVal('story');
+  const houseType=A.ans['b1'];
+  const style=A.ans['f1'];
+  let t='【菩語 · 需求單精簡摘要】\n';
+  t+='客戶：'+(c.name||'—')+'\n';
+  const contacts=[];
+  if(c.phone)contacts.push('電話 '+c.phone);
+  if(c.email)contacts.push('Email '+c.email);
+  t+='聯絡方式：'+(contacts.length?contacts.join('　'):'—')+'\n';
+  if(houseType)t+='需要的服務類型：'+houseType+'\n';
+  t+='最想解決的一件事：'+((story&&(Array.isArray(story)?story.join('、'):story))||'—')+'\n';
+  t+='最優先：'+((prio&&prio.length&&prio.join('、'))||'—')+'\n';
+  const focus=[];
+  if(trade)focus.push('取捨傾向 '+trade);
+  if(style&&style.length)focus.push('風格重點 '+(Array.isArray(style)?style.join('、'):style));
+  t+='關鍵取捨／風格重點：'+(focus.length?focus.join('；'):'—')+'\n';
+  t+='\n📋 完整深度需求單已透過原本的送出方式／PDF 提供。';
+  return t;
+}
 function summaryText(){
   const c=clientObj();let t='【菩語 · 客戶生活需求摘要】\n';
   t+='客戶：'+(c.name||'—')+'　電話：'+(c.phone||'—')+'　Email：'+(c.email||'—')+'\n';
