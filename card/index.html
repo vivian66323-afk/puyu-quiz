@@ -406,11 +406,12 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   "use strict";
 
   var LIFF_ID = "2011689768-hDorDrUd";
+  var liffReady = null; // liff.init 的 Promise，分享前先 await
 
   // ---- LIFF 初始化（選配，失敗不影響頁面）----
   try {
     if (typeof liff !== "undefined" && LIFF_ID && LIFF_ID.indexOf("REPLACE_WITH") !== 0) {
-      liff.init({ liffId: LIFF_ID }).catch(function (err) {
+      liffReady = liff.init({ liffId: LIFF_ID }).catch(function (err) {
         console.warn("[card] liff.init failed:", err);
       });
     }
@@ -565,10 +566,11 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   async function shareCard() {
     var data = currentShareData();
 
-    // 1. LINE 內建瀏覽器：用 shareTargetPicker 送出原生名片卡（Flex）
+    // 1. LINE 內：先等 LIFF init 完成，再用 shareTargetPicker 送出原生名片卡（Flex）
     try {
+      if (liffReady) { await liffReady; }
       if (typeof liff !== "undefined" && liff.isInClient && liff.isInClient() &&
-          typeof liff.shareTargetPicker === "function") {
+          liff.isApiAvailable && liff.isApiAvailable("shareTargetPicker")) {
         await liff.shareTargetPicker([ flexCardMessage() ]);
         return;
       }
