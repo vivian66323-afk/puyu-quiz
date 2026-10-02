@@ -566,29 +566,31 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   async function shareCard() {
     var data = currentShareData();
 
-    // 1. LINE 內：先等 LIFF init 完成，再用 shareTargetPicker 送出原生名片卡（Flex）
-    try {
-      if (liffReady) { await liffReady; }
-      if (typeof liff !== "undefined" && liff.isInClient && liff.isInClient() &&
-          liff.isApiAvailable && liff.isApiAvailable("shareTargetPicker")) {
+    // 先等 LIFF init 完成
+    try { if (liffReady) { await liffReady; } } catch (e) {}
+
+    var inClient = (typeof liff !== "undefined" && liff.isInClient && liff.isInClient());
+
+    // 在 LINE 內：直接送原生名片卡（Flex）。出錯就顯示原因，不默默退回複製連結。
+    if (inClient) {
+      try {
         await liff.shareTargetPicker([ flexCardMessage() ]);
-        return;
+      } catch (err) {
+        var api = (liff.isApiAvailable ? String(liff.isApiAvailable("shareTargetPicker")) : "?");
+        showToast("分享卡失敗 api=" + api + "：" + (err && err.message ? err.message : err));
+        console.warn("[card] shareTargetPicker failed:", err);
       }
-    } catch (err) {
-      console.warn("[card] liff flex share failed:", err);
+      return;
     }
 
-    // 2. Web Share API（手機瀏覽器多支援）
+    // 非 LINE 環境：Web Share API
     try {
-      if (navigator.share) {
-        await navigator.share(data);
-        return;
-      }
+      if (navigator.share) { await navigator.share(data); return; }
     } catch (err) {
       console.warn("[card] navigator.share failed:", err);
     }
 
-    // 3. Fallback：複製連結
+    // 最後退路：複製連結
     fallbackCopyLink(data.url);
   }
 
