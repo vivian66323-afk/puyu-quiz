@@ -54,8 +54,8 @@
               "spacing": "sm",
               "contents": [
                 { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "官網", "uri": "https://www.purely2006.com" }, "contents": [ { "type": "text", "text": "官網", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
-                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "預約", "uri": "https://liff.line.me/2011689768-LQWydmVc" }, "contents": [ { "type": "text", "text": "預約", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
-                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "作品", "uri": "https://www.purely2006.com/design-works" }, "contents": [ { "type": "text", "text": "作品", "align": "center", "size": "xs", "color": "#D9C6A5" } ] }
+                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "FB", "uri": "https://www.facebook.com/BaroqueStyle" }, "contents": [ { "type": "text", "text": "FB", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
+                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "IG", "uri": "https://www.instagram.com/pure_interiordesign" }, "contents": [ { "type": "text", "text": "IG", "align": "center", "size": "xs", "color": "#D9C6A5" } ] }
               ]
             },
             {
