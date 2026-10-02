@@ -577,7 +577,12 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
         await liff.shareTargetPicker([ flexCardMessage() ]);
       } catch (err) {
         var api = (liff.isApiAvailable ? String(liff.isApiAvailable("shareTargetPicker")) : "?");
-        showToast("分享卡失敗 api=" + api + "：" + (err && err.message ? err.message : err));
+        var msg = (err && err.message) ? err.message : String(err);
+        var code = (err && err.code) ? err.code : "";
+        window.alert("【分享診斷】\nshareTargetPicker 可用=" + api +
+                     "\n錯誤碼=" + code + "\n訊息=" + msg +
+                     "\nLINE版本=" + (liff.getLineVersion ? liff.getLineVersion() : "?") +
+                     "\n已登入=" + (liff.isLoggedIn ? liff.isLoggedIn() : "?"));
         console.warn("[card] shareTargetPicker failed:", err);
       }
       return;
