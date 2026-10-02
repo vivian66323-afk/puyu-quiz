@@ -1,0 +1,76 @@
+{
+  "type": "flex",
+  "altText": "菩語國際設計｜邱伊嫻 Vivian 設計總監　電子名片",
+  "contents": {
+    "type": "bubble",
+    "size": "mega",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "paddingAll": "0px",
+      "backgroundColor": "#16140F",
+      "contents": [
+        {
+          "type": "image",
+          "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png",
+          "size": "full",
+          "aspectRatio": "1040:400",
+          "aspectMode": "cover"
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "backgroundColor": "#16140F",
+          "paddingStart": "20px",
+          "paddingEnd": "20px",
+          "paddingTop": "16px",
+          "paddingBottom": "20px",
+          "spacing": "lg",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "電話　", "color": "#C9A96A" }, { "type": "span", "text": "0960-558-533", "color": "#F3EFE8" } ] },
+                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "官網　", "color": "#C9A96A" }, { "type": "span", "text": "purely2006.com", "color": "#F3EFE8" } ] },
+                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "服務　", "color": "#C9A96A" }, { "type": "span", "text": "大桃園・雙北", "color": "#F3EFE8" } ] },
+                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "獲獎　", "color": "#C9A96A" }, { "type": "span", "text": "iF 2023・MUSE 2023 三金", "color": "#F3EFE8" } ] }
+              ]
+            },
+            { "type": "separator", "color": "#3A352C" },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "spacing": "sm",
+              "contents": [
+                { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#C9A96A", "cornerRadius": "8px", "paddingTop": "11px", "paddingBottom": "11px", "action": { "type": "uri", "label": "致電", "uri": "tel:0960558533" }, "contents": [ { "type": "text", "text": "致電", "align": "center", "size": "sm", "weight": "bold", "color": "#241F16" } ] },
+                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "8px", "paddingTop": "11px", "paddingBottom": "11px", "action": { "type": "uri", "label": "加LINE好友", "uri": "https://line.me/R/ti/p/@nkt7460n" }, "contents": [ { "type": "text", "text": "加 LINE 好友", "align": "center", "size": "sm", "weight": "bold", "color": "#E7D7B4" } ] }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "spacing": "sm",
+              "contents": [
+                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "官網", "uri": "https://www.purely2006.com" }, "contents": [ { "type": "text", "text": "官網", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
+                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "預約", "uri": "https://liff.line.me/2011689768-LQWydmVc" }, "contents": [ { "type": "text", "text": "預約", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
+                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "作品", "uri": "https://www.purely2006.com/design-works" }, "contents": [ { "type": "text", "text": "作品", "align": "center", "size": "xs", "color": "#D9C6A5" } ] }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "backgroundColor": "#C9A96A",
+              "cornerRadius": "8px",
+              "paddingTop": "12px",
+              "paddingBottom": "12px",
+              "action": { "type": "uri", "label": "完整電子名片", "uri": "https://vivian66323-afk.github.io/puyu-quiz/card/" },
+              "contents": [ { "type": "text", "text": "查看完整電子名片", "align": "center", "size": "sm", "weight": "bold", "color": "#241F16" } ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
