@@ -40,10 +40,10 @@
                   "justifyContent": "center",
                   "spacing": "md",
                   "contents": [
-                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "電話\n", "color": "#C9A96A" }, { "type": "span", "text": "0960-558-533", "color": "#F3EFE8" } ] },
-                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "官網\n", "color": "#C9A96A" }, { "type": "span", "text": "purely2006.com", "color": "#F3EFE8" } ] },
-                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "服務\n", "color": "#C9A96A" }, { "type": "span", "text": "大桃園・雙北", "color": "#F3EFE8" } ] },
-                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "獲獎\n", "color": "#C9A96A" }, { "type": "span", "text": "iF 2023・MUSE 2023 三金", "color": "#F3EFE8" } ] }
+                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "電話", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "0960-558-533", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "官網", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "purely2006.com", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "服務", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "大桃園・雙北", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "獲獎", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "iF 2023・MUSE 2023 三金", "size": "sm", "color": "#F3EFE8", "wrap": true } ] }
                   ]
                 }
               ]

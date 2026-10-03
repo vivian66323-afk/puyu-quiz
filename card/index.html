@@ -506,9 +506,10 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
     return box;
   }
   function infoRow(label, value) {
-    return { type: "text", size: "sm", wrap: true, contents: [
-      { type: "span", text: label + "\n", color: "#C9A96A" },
-      { type: "span", text: value, color: "#F3EFE8" }
+    // 用上下兩個獨立 text 堆疊（span 不允許換行字元 \n，會讓整張 Flex 失效）
+    return { type: "box", layout: "vertical", spacing: "none", contents: [
+      { type: "text", text: label, size: "xs", color: "#C9A96A" },
+      { type: "text", text: value, size: "sm", color: "#F3EFE8", wrap: true }
     ]};
   }
   function flexCardMessage() {
