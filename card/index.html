@@ -592,7 +592,9 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
     // 在 LINE 內：直接送原生名片卡（Flex）。出錯就顯示原因，不默默退回複製連結。
     if (inClient) {
       try {
-        await liff.shareTargetPicker([ flexCardMessage() ]);
+        var res = await liff.shareTargetPicker([ flexCardMessage() ]);  // v11
+        window.alert("【分享回傳 v11】" + JSON.stringify(res) +
+          "\n（顯示 {\"status\":\"success\"} = 有真的送出；顯示 undefined/null = 在選人畫面被取消、沒送出）");
       } catch (err) {
         var api = (liff.isApiAvailable ? String(liff.isApiAvailable("shareTargetPicker")) : "?");
         var msg = (err && err.message) ? err.message : String(err);
