@@ -12,9 +12,9 @@
       "contents": [
         {
           "type": "image",
-          "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png?v=2",
+          "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png?v=3",
           "size": "full",
-          "aspectRatio": "1040:680",
+          "aspectRatio": "1040:400",
           "aspectMode": "cover"
         },
         {
@@ -23,19 +23,29 @@
           "backgroundColor": "#16140F",
           "paddingStart": "20px",
           "paddingEnd": "20px",
-          "paddingTop": "16px",
+          "paddingTop": "4px",
           "paddingBottom": "20px",
           "spacing": "lg",
           "contents": [
             {
               "type": "box",
-              "layout": "vertical",
-              "spacing": "sm",
+              "layout": "horizontal",
+              "spacing": "lg",
               "contents": [
-                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "電話　", "color": "#C9A96A" }, { "type": "span", "text": "0960-558-533", "color": "#F3EFE8" } ] },
-                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "官網　", "color": "#C9A96A" }, { "type": "span", "text": "purely2006.com", "color": "#F3EFE8" } ] },
-                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "服務　", "color": "#C9A96A" }, { "type": "span", "text": "大桃園・雙北", "color": "#F3EFE8" } ] },
-                { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "獲獎　", "color": "#C9A96A" }, { "type": "span", "text": "iF 2023・MUSE 2023 三金", "color": "#F3EFE8" } ] }
+                { "type": "image", "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=1", "flex": 4, "size": "full", "aspectMode": "cover", "aspectRatio": "3:4", "cornerRadius": "10px", "gravity": "center" },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "flex": 5,
+                  "justifyContent": "center",
+                  "spacing": "md",
+                  "contents": [
+                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "電話\n", "color": "#C9A96A" }, { "type": "span", "text": "0960-558-533", "color": "#F3EFE8" } ] },
+                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "官網\n", "color": "#C9A96A" }, { "type": "span", "text": "purely2006.com", "color": "#F3EFE8" } ] },
+                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "服務\n", "color": "#C9A96A" }, { "type": "span", "text": "大桃園・雙北", "color": "#F3EFE8" } ] },
+                    { "type": "text", "size": "sm", "wrap": true, "contents": [ { "type": "span", "text": "獲獎\n", "color": "#C9A96A" }, { "type": "span", "text": "iF 2023・MUSE 2023 三金", "color": "#F3EFE8" } ] }
+                  ]
+                }
               ]
             },
             { "type": "separator", "color": "#3A352C" },

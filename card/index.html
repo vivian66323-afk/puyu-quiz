@@ -478,7 +478,8 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
 
   // ---- 分享名片 ----
   var CARD_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/";
-  var HERO_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png?v=2";
+  var HERO_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png?v=3";
+  var PORTRAIT_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=1";
 
   function currentShareData() {
     return {
@@ -506,7 +507,7 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   }
   function infoRow(label, value) {
     return { type: "text", size: "sm", wrap: true, contents: [
-      { type: "span", text: label + "　", color: "#C9A96A" },
+      { type: "span", text: label + "\n", color: "#C9A96A" },
       { type: "span", text: value, color: "#F3EFE8" }
     ]};
   }
@@ -519,15 +520,18 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
         body: {
           type: "box", layout: "vertical", paddingAll: "0px", backgroundColor: "#16140F",
           contents: [
-            { type: "image", url: HERO_URL, size: "full", aspectRatio: "1040:680", aspectMode: "cover" },
+            { type: "image", url: HERO_URL, size: "full", aspectRatio: "1040:400", aspectMode: "cover" },
             { type: "box", layout: "vertical", backgroundColor: "#16140F",
-              paddingStart: "20px", paddingEnd: "20px", paddingTop: "16px", paddingBottom: "20px", spacing: "lg",
+              paddingStart: "20px", paddingEnd: "20px", paddingTop: "4px", paddingBottom: "20px", spacing: "lg",
               contents: [
-                { type: "box", layout: "vertical", spacing: "sm", contents: [
-                  infoRow("電話", "0960-558-533"),
-                  infoRow("官網", "purely2006.com"),
-                  infoRow("服務", "大桃園・雙北"),
-                  infoRow("獲獎", "iF 2023・MUSE 2023 三金")
+                { type: "box", layout: "horizontal", spacing: "lg", contents: [
+                  { type: "image", url: PORTRAIT_URL, flex: 4, size: "full", aspectMode: "cover", aspectRatio: "3:4", cornerRadius: "10px", gravity: "center" },
+                  { type: "box", layout: "vertical", flex: 5, justifyContent: "center", spacing: "md", contents: [
+                    infoRow("電話", "0960-558-533"),
+                    infoRow("官網", "purely2006.com"),
+                    infoRow("服務", "大桃園・雙北"),
+                    infoRow("獲獎", "iF 2023・MUSE 2023 三金")
+                  ]}
                 ]},
                 { type: "separator", color: "#3A352C" },
                 { type: "box", layout: "horizontal", spacing: "sm", contents: [
