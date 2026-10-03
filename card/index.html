@@ -480,6 +480,8 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   var CARD_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/";
   var HERO_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png?v=3";
   var PORTRAIT_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=1";
+  var CARD_IMG = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.png?v=1";
+  var CARD_IMG_PREVIEW = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.jpg?v=1";
 
   function currentShareData() {
     return {
@@ -573,21 +575,16 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
 
     var inClient = (typeof liff !== "undefined" && liff.isInClient && liff.isInClient());
 
-    // 在 LINE 內：直接送原生名片卡（Flex）。出錯就顯示原因，不默默退回複製連結。
+    // 在 LINE 內：送出「整張名片圖 + 一行完整名片連結」（圖片訊息最穩，必顯示）
     if (inClient) {
       try {
-        var res = await liff.shareTargetPicker([ flexCardMessage() ]);  // v11
-        window.alert("【分享回傳 v11】" + JSON.stringify(res) +
-          "\n（顯示 {\"status\":\"success\"} = 有真的送出；顯示 undefined/null = 在選人畫面被取消、沒送出）");
+        await liff.shareTargetPicker([
+          { type: "image", originalContentUrl: CARD_IMG, previewImageUrl: CARD_IMG_PREVIEW },
+          { type: "text", text: "菩語國際設計｜邱伊嫻 Vivian 設計總監\n完整名片（撥號・加LINE・預約・看作品）：\n" + CARD_URL }
+        ]);
       } catch (err) {
-        var api = (liff.isApiAvailable ? String(liff.isApiAvailable("shareTargetPicker")) : "?");
-        var msg = (err && err.message) ? err.message : String(err);
-        var code = (err && err.code) ? err.code : "";
-        window.alert("【分享診斷】\nshareTargetPicker 可用=" + api +
-                     "\n錯誤碼=" + code + "\n訊息=" + msg +
-                     "\nLINE版本=" + (liff.getLineVersion ? liff.getLineVersion() : "?") +
-                     "\n已登入=" + (liff.isLoggedIn ? liff.isLoggedIn() : "?"));
         console.warn("[card] shareTargetPicker failed:", err);
+        showToast("分享未完成，可用下方按鈕聯絡");
       }
       return;
     }
