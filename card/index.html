@@ -506,62 +506,46 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
     return box;
   }
   function infoRow(label, value) {
-    // 用上下兩個獨立 text 堆疊（span 不允許換行字元 \n，會讓整張 Flex 失效）
-    return { type: "box", layout: "vertical", spacing: "none", contents: [
+    // 上下兩個獨立 text 堆疊（span 不允許換行字元 \n）
+    return { type: "box", layout: "vertical", contents: [
       { type: "text", text: label, size: "xs", color: "#C9A96A" },
       { type: "text", text: value, size: "sm", color: "#F3EFE8", wrap: true }
     ]};
   }
   function flexCardMessage() {
-    // 【診斷 v10】先用最簡純文字卡測試能否送達；成功後移除此 return 改回完整卡
-    return {
-      type: "flex",
-      altText: "菩語國際設計｜邱伊嫻 Vivian 名片",
-      contents: {
-        type: "bubble",
-        body: { type: "box", layout: "vertical", spacing: "md", contents: [
-          { type: "text", text: "菩語國際設計", weight: "bold", size: "lg", align: "center" },
-          { type: "text", text: "邱伊嫻 Vivian｜設計總監", size: "sm", align: "center", color: "#8A6F45" },
-          { type: "text", text: "0960-558-533", size: "sm", align: "center", wrap: true }
-        ]}
-      }
-    };
+    // 標準結構：hero 放主視覺圖、body 放照片+資訊+按鈕、styles 設深色底
     return {
       type: "flex",
       altText: "菩語國際設計｜邱伊嫻 Vivian 設計總監　電子名片",
       contents: {
         type: "bubble", size: "mega",
+        hero: { type: "image", url: HERO_URL, size: "full", aspectRatio: "1040:400", aspectMode: "cover" },
         body: {
-          type: "box", layout: "vertical", paddingAll: "0px", backgroundColor: "#16140F",
+          type: "box", layout: "vertical", spacing: "lg",
           contents: [
-            { type: "image", url: HERO_URL, size: "full", aspectRatio: "1040:400", aspectMode: "cover" },
-            { type: "box", layout: "vertical", backgroundColor: "#16140F",
-              paddingStart: "20px", paddingEnd: "20px", paddingTop: "4px", paddingBottom: "20px", spacing: "lg",
-              contents: [
-                { type: "box", layout: "horizontal", spacing: "lg", contents: [
-                  { type: "image", url: PORTRAIT_URL, flex: 4, size: "full", aspectMode: "cover", aspectRatio: "3:4", cornerRadius: "10px", gravity: "center" },
-                  { type: "box", layout: "vertical", flex: 5, justifyContent: "center", spacing: "md", contents: [
-                    infoRow("電話", "0960-558-533"),
-                    infoRow("官網", "purely2006.com"),
-                    infoRow("服務", "大桃園・雙北"),
-                    infoRow("獲獎", "iF 2023・MUSE 2023 三金")
-                  ]}
-                ]},
-                { type: "separator", color: "#3A352C" },
-                { type: "box", layout: "horizontal", spacing: "sm", contents: [
-                  goldBtn("致電", "tel:0960558533", true, false),
-                  goldBtn("加 LINE 好友", "https://line.me/R/ti/p/@nkt7460n", false, false)
-                ]},
-                { type: "box", layout: "horizontal", spacing: "sm", contents: [
-                  goldBtn("官網", "https://www.purely2006.com", false, true),
-                  goldBtn("FB", "https://www.facebook.com/BaroqueStyle", false, true),
-                  goldBtn("IG", "https://www.instagram.com/pure_interiordesign", false, true)
-                ]},
-                goldBtn("查看完整電子名片", CARD_URL, true, false)
-              ]
-            }
+            { type: "box", layout: "horizontal", spacing: "lg", contents: [
+              { type: "image", url: PORTRAIT_URL, flex: 4, size: "full", aspectMode: "cover", aspectRatio: "3:4", cornerRadius: "8px" },
+              { type: "box", layout: "vertical", flex: 5, justifyContent: "center", spacing: "md", contents: [
+                infoRow("電話", "0960-558-533"),
+                infoRow("官網", "purely2006.com"),
+                infoRow("服務", "桃園・雙北・台中・台南"),
+                infoRow("獲獎", "iF 2023・MUSE 2023 三金")
+              ]}
+            ]},
+            { type: "separator", color: "#3A352C" },
+            { type: "box", layout: "horizontal", spacing: "sm", contents: [
+              goldBtn("致電", "tel:0960558533", true, false),
+              goldBtn("加 LINE 好友", "https://line.me/R/ti/p/@nkt7460n", false, false)
+            ]},
+            { type: "box", layout: "horizontal", spacing: "sm", contents: [
+              goldBtn("官網", "https://www.purely2006.com", false, true),
+              goldBtn("FB", "https://www.facebook.com/BaroqueStyle", false, true),
+              goldBtn("IG", "https://www.instagram.com/pure_interiordesign", false, true)
+            ]},
+            goldBtn("查看完整電子名片", CARD_URL, true, false)
           ]
-        }
+        },
+        styles: { hero: { backgroundColor: "#16140F" }, body: { backgroundColor: "#16140F" } }
       }
     };
   }

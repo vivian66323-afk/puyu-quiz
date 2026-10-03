@@ -4,83 +4,58 @@
   "contents": {
     "type": "bubble",
     "size": "mega",
+    "hero": {
+      "type": "image",
+      "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png?v=3",
+      "size": "full",
+      "aspectRatio": "1040:400",
+      "aspectMode": "cover"
+    },
     "body": {
       "type": "box",
       "layout": "vertical",
-      "paddingAll": "0px",
-      "backgroundColor": "#16140F",
+      "spacing": "lg",
       "contents": [
         {
-          "type": "image",
-          "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-hero.png?v=3",
-          "size": "full",
-          "aspectRatio": "1040:400",
-          "aspectMode": "cover"
-        },
-        {
           "type": "box",
-          "layout": "vertical",
-          "backgroundColor": "#16140F",
-          "paddingStart": "20px",
-          "paddingEnd": "20px",
-          "paddingTop": "4px",
-          "paddingBottom": "20px",
+          "layout": "horizontal",
           "spacing": "lg",
           "contents": [
-            {
-              "type": "box",
-              "layout": "horizontal",
-              "spacing": "lg",
-              "contents": [
-                { "type": "image", "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=1", "flex": 4, "size": "full", "aspectMode": "cover", "aspectRatio": "3:4", "cornerRadius": "10px", "gravity": "center" },
-                {
-                  "type": "box",
-                  "layout": "vertical",
-                  "flex": 5,
-                  "justifyContent": "center",
-                  "spacing": "md",
-                  "contents": [
-                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "電話", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "0960-558-533", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "官網", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "purely2006.com", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "服務", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "大桃園・雙北", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-                    { "type": "box", "layout": "vertical", "spacing": "none", "contents": [ { "type": "text", "text": "獲獎", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "iF 2023・MUSE 2023 三金", "size": "sm", "color": "#F3EFE8", "wrap": true } ] }
-                  ]
-                }
-              ]
-            },
-            { "type": "separator", "color": "#3A352C" },
-            {
-              "type": "box",
-              "layout": "horizontal",
-              "spacing": "sm",
-              "contents": [
-                { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#C9A96A", "cornerRadius": "8px", "paddingTop": "11px", "paddingBottom": "11px", "action": { "type": "uri", "label": "致電", "uri": "tel:0960558533" }, "contents": [ { "type": "text", "text": "致電", "align": "center", "size": "sm", "weight": "bold", "color": "#241F16" } ] },
-                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "8px", "paddingTop": "11px", "paddingBottom": "11px", "action": { "type": "uri", "label": "加LINE好友", "uri": "https://line.me/R/ti/p/@nkt7460n" }, "contents": [ { "type": "text", "text": "加 LINE 好友", "align": "center", "size": "sm", "weight": "bold", "color": "#E7D7B4" } ] }
-              ]
-            },
-            {
-              "type": "box",
-              "layout": "horizontal",
-              "spacing": "sm",
-              "contents": [
-                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "官網", "uri": "https://www.purely2006.com" }, "contents": [ { "type": "text", "text": "官網", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
-                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "FB", "uri": "https://www.facebook.com/BaroqueStyle" }, "contents": [ { "type": "text", "text": "FB", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
-                { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "IG", "uri": "https://www.instagram.com/pure_interiordesign" }, "contents": [ { "type": "text", "text": "IG", "align": "center", "size": "xs", "color": "#D9C6A5" } ] }
-              ]
-            },
+            { "type": "image", "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=1", "flex": 4, "size": "full", "aspectMode": "cover", "aspectRatio": "3:4", "cornerRadius": "8px" },
             {
               "type": "box",
               "layout": "vertical",
-              "backgroundColor": "#C9A96A",
-              "cornerRadius": "8px",
-              "paddingTop": "12px",
-              "paddingBottom": "12px",
-              "action": { "type": "uri", "label": "完整電子名片", "uri": "https://vivian66323-afk.github.io/puyu-quiz/card/" },
-              "contents": [ { "type": "text", "text": "查看完整電子名片", "align": "center", "size": "sm", "weight": "bold", "color": "#241F16" } ]
+              "flex": 5,
+              "justifyContent": "center",
+              "spacing": "md",
+              "contents": [
+                { "type": "box", "layout": "vertical", "contents": [ { "type": "text", "text": "電話", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "0960-558-533", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+                { "type": "box", "layout": "vertical", "contents": [ { "type": "text", "text": "官網", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "purely2006.com", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+                { "type": "box", "layout": "vertical", "contents": [ { "type": "text", "text": "服務", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "桃園・雙北・台中・台南", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+                { "type": "box", "layout": "vertical", "contents": [ { "type": "text", "text": "獲獎", "size": "xs", "color": "#C9A96A" }, { "type": "text", "text": "iF 2023・MUSE 2023 三金", "size": "sm", "color": "#F3EFE8", "wrap": true } ] }
+              ]
             }
           ]
-        }
+        },
+        { "type": "separator", "color": "#3A352C" },
+        {
+          "type": "box", "layout": "horizontal", "spacing": "sm",
+          "contents": [
+            { "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#C9A96A", "cornerRadius": "8px", "paddingTop": "11px", "paddingBottom": "11px", "action": { "type": "uri", "label": "致電", "uri": "tel:0960558533" }, "contents": [ { "type": "text", "text": "致電", "align": "center", "size": "sm", "weight": "bold", "color": "#241F16" } ] },
+            { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "8px", "paddingTop": "11px", "paddingBottom": "11px", "action": { "type": "uri", "label": "加LINE好友", "uri": "https://line.me/R/ti/p/@nkt7460n" }, "contents": [ { "type": "text", "text": "加 LINE 好友", "align": "center", "size": "sm", "weight": "bold", "color": "#E7D7B4" } ] }
+          ]
+        },
+        {
+          "type": "box", "layout": "horizontal", "spacing": "sm",
+          "contents": [
+            { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "官網", "uri": "https://www.purely2006.com" }, "contents": [ { "type": "text", "text": "官網", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
+            { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "FB", "uri": "https://www.facebook.com/BaroqueStyle" }, "contents": [ { "type": "text", "text": "FB", "align": "center", "size": "xs", "color": "#D9C6A5" } ] },
+            { "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#6E5B38", "cornerRadius": "8px", "paddingTop": "9px", "paddingBottom": "9px", "action": { "type": "uri", "label": "IG", "uri": "https://www.instagram.com/pure_interiordesign" }, "contents": [ { "type": "text", "text": "IG", "align": "center", "size": "xs", "color": "#D9C6A5" } ] }
+          ]
+        },
+        { "type": "box", "layout": "vertical", "backgroundColor": "#C9A96A", "cornerRadius": "8px", "paddingTop": "12px", "paddingBottom": "12px", "action": { "type": "uri", "label": "完整電子名片", "uri": "https://vivian66323-afk.github.io/puyu-quiz/card/" }, "contents": [ { "type": "text", "text": "查看完整電子名片", "align": "center", "size": "sm", "weight": "bold", "color": "#241F16" } ] }
       ]
-    }
+    },
+    "styles": { "hero": { "backgroundColor": "#16140F" }, "body": { "backgroundColor": "#16140F" } }
   }
 }
