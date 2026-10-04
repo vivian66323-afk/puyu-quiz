@@ -943,7 +943,10 @@ function goOut(url){
   return false;
 }
 const DESIGN_FLOW_URL='https://www.purely2006.com/design-flow';
-function bookConsult(){ goOut(DESIGN_FLOW_URL); }
+/* 測驗結果頁「預約」直接接 LINE 預約單（LIFF booking/，送出會進菩語 OA 聊天室）；
+   在 LINE 內開＝直接填單，一般瀏覽器點了會引導開啟 LINE。官網表單改為退路。 */
+const BOOKING_LIFF_URL='https://liff.line.me/2011689768-LQWydmVc';
+function bookConsult(){ if(!goOut(BOOKING_LIFF_URL)) goOut(DESIGN_FLOW_URL); }
 function toLine(){
   const msg=lineMsg();
   try{ if(navigator.clipboard) navigator.clipboard.writeText(msg); }catch(e){}
