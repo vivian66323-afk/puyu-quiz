@@ -579,8 +579,7 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
     if (inClient) {
       try {
         await liff.shareTargetPicker([
-          { type: "image", originalContentUrl: CARD_IMG, previewImageUrl: CARD_IMG_PREVIEW },
-          { type: "text", text: "菩語國際設計｜邱伊嫻 Vivian 設計總監\n完整名片（撥號・加LINE・預約・看作品）：\n" + CARD_URL }
+          { type: "image", originalContentUrl: CARD_IMG, previewImageUrl: CARD_IMG_PREVIEW }
         ]);
       } catch (err) {
         console.warn("[card] shareTargetPicker failed:", err);
