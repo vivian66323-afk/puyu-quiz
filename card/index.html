@@ -482,6 +482,7 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   var PORTRAIT_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=1";
   var CARD_IMG = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.png?v=1";
   var CARD_IMG_PREVIEW = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.jpg?v=1";
+  var VISUAL_IMG = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-visual.png?v=1";
 
   function currentShareData() {
     return {
@@ -515,36 +516,29 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
     ]};
   }
   function flexCardMessage() {
-    // 標準結構：hero 放主視覺圖、body 放照片+資訊+按鈕、styles 設深色底
+    // hero = 名片主視覺圖（品牌+照片+資訊，不含按鈕）；body = 原生「可各自點」的按鈕
     return {
       type: "flex",
       altText: "菩語國際設計｜邱伊嫻 Vivian 設計總監　電子名片",
       contents: {
         type: "bubble", size: "mega",
-        hero: { type: "image", url: HERO_URL, size: "full", aspectRatio: "1040:400", aspectMode: "cover" },
+        hero: { type: "image", url: VISUAL_IMG, size: "full", aspectRatio: "1040:860", aspectMode: "cover",
+                action: { type: "uri", uri: CARD_URL } },
         body: {
-          type: "box", layout: "vertical", spacing: "lg",
+          type: "box", layout: "vertical", spacing: "sm",
           contents: [
-            { type: "box", layout: "horizontal", spacing: "lg", contents: [
-              { type: "image", url: PORTRAIT_URL, flex: 4, size: "full", aspectMode: "cover", aspectRatio: "3:4", cornerRadius: "8px" },
-              { type: "box", layout: "vertical", flex: 5, justifyContent: "center", spacing: "md", contents: [
-                infoRow("電話", "0960-558-533"),
-                infoRow("官網", "purely2006.com"),
-                infoRow("服務", "桃園・雙北・台中・台南"),
-                infoRow("獲獎", "iF 2023・MUSE 2023 三金")
-              ]}
-            ]},
-            { type: "separator", color: "#3A352C" },
             { type: "box", layout: "horizontal", spacing: "sm", contents: [
               goldBtn("致電", "tel:0960558533", true, false),
               goldBtn("加 LINE 好友", "https://line.me/R/ti/p/@nkt7460n", false, false)
             ]},
             { type: "box", layout: "horizontal", spacing: "sm", contents: [
               goldBtn("官網", "https://www.purely2006.com", false, true),
-              goldBtn("FB", "https://www.facebook.com/BaroqueStyle", false, true),
-              goldBtn("IG", "https://www.instagram.com/pure_interiordesign", false, true)
+              goldBtn("作品", "https://www.purely2006.com/design-works", false, true)
             ]},
-            goldBtn("查看完整電子名片", CARD_URL, true, false)
+            { type: "box", layout: "horizontal", spacing: "sm", contents: [
+              goldBtn("Instagram", "https://www.instagram.com/pure_interiordesign", false, true),
+              goldBtn("Facebook", "https://www.facebook.com/BaroqueStyle", false, true)
+            ]}
           ]
         },
         styles: { hero: { backgroundColor: "#16140F" }, body: { backgroundColor: "#16140F" } }
@@ -578,17 +572,7 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
     // 在 LINE 內：送出「整張名片圖 + 一行完整名片連結」（圖片訊息最穩，必顯示）
     if (inClient) {
       try {
-        await liff.shareTargetPicker([{
-          type: "flex",
-          altText: "菩語國際設計｜邱伊嫻 Vivian 電子名片",
-          contents: {
-            type: "bubble", size: "mega",
-            body: { type: "box", layout: "vertical", contents: [
-              { type: "image", url: CARD_IMG, size: "full",
-                action: { type: "uri", uri: CARD_URL } }
-            ]}
-          }
-        }]);
+        await liff.shareTargetPicker([ flexCardMessage() ]);
       } catch (err) {
         console.warn("[card] shareTargetPicker failed:", err);
         showToast("分享未完成，可用下方按鈕聯絡");
