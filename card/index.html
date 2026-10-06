@@ -543,6 +543,7 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   var CARD_IMG = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.png?v=1";
   var CARD_IMG_PREVIEW = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.jpg?v=1";
   var VISUAL_IMG = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-visual.png?v=1";
+  var SPACE_HERO_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-space-hero.png?v=1";
 
   function currentShareData() {
     return {
@@ -575,33 +576,48 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
       { type: "text", text: value, size: "sm", color: "#F3EFE8", wrap: true }
     ]};
   }
+  // 淺色卡按鈕：ink=墨色實心(主)、line=白底燙金框
+  function lightBtn(text, uri, ink, small) {
+    var box = {
+      type: "box", layout: "vertical", flex: 1, cornerRadius: "8px",
+      paddingTop: small ? "10px" : "13px", paddingBottom: small ? "10px" : "13px",
+      action: { type: "uri", label: text.slice(0, 20), uri: uri },
+      contents: [{ type: "text", text: text, align: "center",
+        size: small ? "sm" : "md", weight: "bold",
+        color: ink ? "#F3EEDF" : "#8A6F45" }]
+    };
+    if (ink) { box.backgroundColor = "#2E2B28"; }
+    else { box.backgroundColor = "#FFFFFF"; box.borderWidth = "1px"; box.borderColor = "#A88B5C"; }
+    return box;
+  }
   function flexCardMessage() {
-    // hero = 名片主視覺圖（品牌+照片+資訊，不含按鈕）；body = 原生「可各自點」的按鈕
+    // hero = 空間照+logo+資訊（不含按鈕）；body = 淺色原生「各自可點」按鈕
     return {
       type: "flex",
       altText: "菩語國際設計｜邱伊嫻 Vivian 設計總監　電子名片",
       contents: {
         type: "bubble", size: "mega",
-        hero: { type: "image", url: VISUAL_IMG, size: "full", aspectRatio: "1040:860", aspectMode: "cover",
+        hero: { type: "image", url: SPACE_HERO_URL, size: "full", aspectRatio: "1040:1579", aspectMode: "cover",
                 action: { type: "uri", uri: CARD_URL } },
         body: {
           type: "box", layout: "vertical", spacing: "sm",
           contents: [
             { type: "box", layout: "horizontal", spacing: "sm", contents: [
-              goldBtn("致電", "tel:0960558533", true, false),
-              goldBtn("加 LINE 好友", "https://line.me/R/ti/p/@nkt7460n", false, false)
+              lightBtn("致電", "tel:0960558533", true, false),
+              lightBtn("加 LINE 好友", "https://line.me/R/ti/p/@nkt7460n", false, false)
             ]},
             { type: "box", layout: "horizontal", spacing: "sm", contents: [
-              goldBtn("官網", "https://www.purely2006.com", false, true),
-              goldBtn("作品", "https://www.purely2006.com/design-works", false, true)
+              lightBtn("作品集", "https://www.purely2006.com/design-works", false, false),
+              lightBtn("空間性格測驗", "https://vivian66323-afk.github.io/puyu-quiz/", false, true)
             ]},
             { type: "box", layout: "horizontal", spacing: "sm", contents: [
-              goldBtn("Instagram", "https://www.instagram.com/pure_interiordesign", false, true),
-              goldBtn("Facebook", "https://www.facebook.com/BaroqueStyle", false, true)
+              lightBtn("Instagram", "https://www.instagram.com/pure_interiordesign", false, true),
+              lightBtn("脆", "https://www.threads.net/@pure_interiordesign", false, true),
+              lightBtn("Facebook", "https://www.facebook.com/BaroqueStyle", false, true)
             ]}
           ]
         },
-        styles: { hero: { backgroundColor: "#16140F" }, body: { backgroundColor: "#16140F" } }
+        styles: { hero: { backgroundColor: "#F4F2EF" }, body: { backgroundColor: "#F4F2EF" } }
       }
     };
   }
