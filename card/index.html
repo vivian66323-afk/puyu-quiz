@@ -114,9 +114,21 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   font-family:Georgia,"Noto Serif TC",serif;
   font-weight:700;
   font-size:22px;
-  background:linear-gradient(135deg,#8A6F45,#D9C6A5 45%,#A88B5C 65%,#8A6F45);
+  background:linear-gradient(115deg,#8A6F45 0%,#D9C6A5 38%,#FFF4DE 50%,#C9A96A 62%,#8A6F45 100%);
+  background-size:220% auto;
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
+/* 燙金光澤：金色反光定期掃過菩字 */
+@keyframes goldShine{0%{background-position:170% center}55%,100%{background-position:0% center}}
+@media (prefers-reduced-motion:no-preference){
+  html.js .badge span{animation:goldShine 5.5s ease-in-out infinite}
+}
+/* 點按金色漣漪 */
+.ripple-host{position:relative;overflow:hidden}
+.gold-ripple{position:absolute;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%) scale(0);
+  background:radial-gradient(circle,rgba(201,169,106,.55),rgba(201,169,106,0) 70%);
+  animation:goldRipple .6s ease-out forwards}
+@keyframes goldRipple{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
 .wordmark{
   font-family:Georgia,"Noto Serif TC",serif;
   font-weight:700;
@@ -544,6 +556,9 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
   var CARD_IMG_PREVIEW = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.jpg?v=1";
   var VISUAL_IMG = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-visual.png?v=1";
   var SPACE_HERO_URL = "https://vivian66323-afk.github.io/puyu-quiz/card/flex-space-hero.png?v=1";
+  var IC_IG = "https://vivian66323-afk.github.io/puyu-quiz/card/ic-ig.png?v=1";
+  var IC_THREADS = "https://vivian66323-afk.github.io/puyu-quiz/card/ic-threads.png?v=1";
+  var IC_FB = "https://vivian66323-afk.github.io/puyu-quiz/card/ic-fb.png?v=1";
 
   function currentShareData() {
     return {
@@ -590,6 +605,12 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
     else { box.backgroundColor = "#FFFFFF"; box.borderWidth = "1px"; box.borderColor = "#A88B5C"; }
     return box;
   }
+  // 社群 icon 按鈕（圓形金色 icon 圖）
+  function iconBtn(iconUrl, uri) {
+    return { type: "box", layout: "vertical", flex: 1, paddingTop: "4px", paddingBottom: "4px",
+      action: { type: "uri", uri: uri },
+      contents: [{ type: "image", url: iconUrl, size: "48px", aspectMode: "fit", align: "center" }] };
+  }
   function flexCardMessage() {
     // hero = 空間照+logo+資訊（不含按鈕）；body = 淺色原生「各自可點」按鈕
     return {
@@ -610,10 +631,10 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
               lightBtn("作品集", "https://www.purely2006.com/design-works", false, false),
               lightBtn("空間性格測驗", "https://vivian66323-afk.github.io/puyu-quiz/", false, true)
             ]},
-            { type: "box", layout: "horizontal", spacing: "sm", contents: [
-              lightBtn("Instagram", "https://www.instagram.com/pure_interiordesign", false, true),
-              lightBtn("脆", "https://www.threads.net/@pure_interiordesign", false, true),
-              lightBtn("Facebook", "https://www.facebook.com/BaroqueStyle", false, true)
+            { type: "box", layout: "horizontal", spacing: "md", paddingTop: "6px", contents: [
+              iconBtn(IC_IG, "https://www.instagram.com/pure_interiordesign"),
+              iconBtn(IC_THREADS, "https://www.threads.net/@pure_interiordesign"),
+              iconBtn(IC_FB, "https://www.facebook.com/BaroqueStyle")
             ]}
           ]
         },
@@ -696,6 +717,34 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
       try { localStorage.setItem("puyu-card-theme", next); } catch (e) {}
     });
   }
+
+  // ---- 點按金色漣漪 ----
+  function addRipple(el) {
+    el.classList.add("ripple-host");
+    el.addEventListener("pointerdown", function (e) {
+      var rect = el.getBoundingClientRect();
+      var size = Math.max(rect.width, rect.height) * 2;
+      var sp = document.createElement("span");
+      sp.className = "gold-ripple";
+      sp.style.width = sp.style.height = size + "px";
+      sp.style.left = ((e.clientX || rect.left + rect.width / 2) - rect.left) + "px";
+      sp.style.top = ((e.clientY || rect.top + rect.height / 2) - rect.top) + "px";
+      el.appendChild(sp);
+      setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 650);
+    }, { passive: true });
+  }
+
+  // ---- 按鈕點擊進 Meta Pixel（行銷數據）----
+  function trackTap(el) {
+    el.addEventListener("click", function () {
+      var lbl = ((el.querySelector(".label") || el).textContent || "").trim().replace(/\s+/g, " ").slice(0, 40);
+      try { if (window.fbq) fbq("trackCustom", "CardTap", { item: lbl }); } catch (e) {}
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".cta, .row, .share-btn"), function (el) {
+    addRipple(el); trackTap(el);
+  });
 })();
 </script>
 
