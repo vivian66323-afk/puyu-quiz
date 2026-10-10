@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>智慧家庭・生活情境｜菩語國際設計</title>
+<meta name="description" content="好的智慧家庭，不是堆滿開關，而是讓家懂你的生活。挑出你嚮往的情境，菩語在水電、毛胚階段就為你預先規劃。">
+<meta name="theme-color" content="#F4F2EF">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2E2B28; --cream:#F4F2EF; --paper:#FFFFFF;
+  --gold:#A88B5C; --gold-light:#D9C6A5; --gold-dark:#8A6F45;
+  --line:#E3DDD1; --muted:#6E6A63;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;min-height:100vh;background:var(--cream)}
+body{font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+.serif{font-family:"Noto Serif TC",serif}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+#wrap{width:100%;max-width:560px;margin:0 auto;padding:calc(26px + env(safe-area-inset-top)) 18px calc(140px + env(safe-area-inset-bottom))}
+@media(min-width:640px){body{background:linear-gradient(180deg,var(--cream),#EDEAE3)}}
+
+/* header */
+.logo{display:block;width:150px;height:auto;margin:0 auto 18px}
+.kicker{text-align:center;font-size:12px;letter-spacing:.42em;color:var(--gold-dark);font-weight:600;padding-left:.42em}
+h1{text-align:center;margin-top:10px;font-weight:700;font-size:clamp(26px,7vw,34px);letter-spacing:.06em;color:var(--ink)}
+.lead{text-align:center;margin:16px auto 4px;max-width:30em;font-size:15px;color:var(--muted)}
+.lead b{color:var(--gold-dark);font-weight:600}
+.hint{text-align:center;margin:18px 0 22px;font-size:13px;color:var(--gold-dark);letter-spacing:.04em}
+
+/* scenario cards */
+.cards{display:flex;flex-direction:column;gap:12px}
+.card{position:relative;display:flex;gap:14px;align-items:flex-start;padding:16px 16px 16px 15px;border-radius:16px;background:var(--paper);border:1.5px solid var(--line);transition:border-color .18s,box-shadow .18s,transform .1s}
+.card:active{transform:scale(.99)}
+.card.on{border-color:var(--gold);box-shadow:0 8px 22px rgba(168,139,92,.16)}
+.card .ic{flex:none;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#F4EFE6,#FFFFFF);border:1px solid var(--gold-light)}
+.card .ic svg{width:24px;height:24px;stroke:var(--gold-dark);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card.on .ic{background:linear-gradient(145deg,#C9A96A,#A88B5C)}
+.card.on .ic svg{stroke:#fff}
+.card .tx{flex:1;min-width:0}
+.card .nm{font-weight:700;font-size:16.5px;letter-spacing:.02em}
+.card .nm .en{font-size:12px;color:var(--gold-dark);letter-spacing:.14em;margin-left:6px;font-weight:600}
+.card .ds{margin-top:5px;font-size:13.5px;color:var(--muted);line-height:1.65}
+.card .chk{position:absolute;top:14px;right:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--gold-light);display:flex;align-items:center;justify-content:center}
+.card .chk svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.4;opacity:0}
+.card.on .chk{background:var(--gold);border-color:var(--gold)}
+.card.on .chk svg{opacity:1}
+
+/* ending */
+.ending{margin-top:28px;padding:22px 20px;border-radius:16px;background:linear-gradient(160deg,#2E2B28,#1E1C1A);color:#F3EFE8;text-align:center}
+.ending .t{font-weight:700;font-size:17px;letter-spacing:.04em;color:#E7D7B4}
+.ending .p{margin-top:12px;font-size:14px;line-height:1.8;color:#D8D2C6}
+
+/* sticky CTA */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 18px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(244,242,239,0),var(--cream) 34%)}
+.bar-inner{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.sel{text-align:center;font-size:12.5px;color:var(--gold-dark);min-height:18px}
+.cta{width:100%;padding:16px;border-radius:14px;font-weight:700;font-size:16px;letter-spacing:.06em;background:linear-gradient(145deg,#2E2B28,#1E1C1A);color:#F4EEDF;border:1px solid #1E1C1A;transition:transform .1s,opacity .15s}
+.cta:active{transform:scale(.98)}
+.cta .arw{color:var(--gold-light)}
+
+footer{text-align:center;margin-top:26px;font-size:12px;color:var(--muted);letter-spacing:.06em}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,16px);background:var(--ink);color:var(--cream);padding:11px 20px;border-radius:100px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:50;white-space:nowrap;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+
+<div id="wrap">
+  <img class="logo" src="https://vivian66323-afk.github.io/puyu-quiz/card/puyu-logo.png" alt="菩語國際設計">
+  <div class="kicker">SMART LIVING</div>
+  <h1 class="serif">智慧家庭・生活情境</h1>
+  <p class="lead">好的智慧家庭，不是堆滿開關與面板，<br>而是<b>讓家，懂你的生活</b>。</p>
+  <p class="hint">挑出你嚮往的生活情境 ↓（可複選）</p>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="ending">
+    <div class="t serif">這些美，藏在看不見的地方</div>
+    <div class="p">窗簾盒、管線、設備位置、電源與訊號，<br>都要在<b style="color:#E7D7B4">水電、毛胚階段</b>就預先規劃，<br>才能藏得乾淨、用得順手。<br>所以——越早聊越好。現在，剛好。</div>
+  </div>
+
+  <footer>菩語國際設計 PURELY DESIGN　｜　讓空間知道自己是誰</footer>
+</div>
+
+<div class="bar">
+  <div class="bar-inner">
+    <div class="sel" id="sel">　</div>
+    <button class="cta" id="cta" type="button">預約・聊聊你家的可能　<span class="arw">→</span></button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var LIFF_ID = "REPLACE_WITH_SCENE_LIFF_ID"; // 之後建 LIFF app 再填（用來把選擇送進聊天室）
+  var BOOKING_LIFF = "https://liff.line.me/2011689768-LQWydmVc";
+  var OA_LINE = "https://line.me/R/ti/p/@nkt7460n";
+
+  var SCENES = [
+    { key:"welcome", name:"回家・迎賓", en:"WELCOME",
+      desc:"推開門，窗簾緩緩拉開、熟悉的音樂流瀉，玄關燈亮起、溫度也剛好——家，替你把一切都備好了。",
+      icon:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9h14v-9"/><path d="M10 19v-5h4v5"/>' },
+    { key:"leave", name:"離家・外出", en:"AWAY",
+      desc:"出門前一句話，全室安靜落幕——燈滅、空調歇、窗簾闔上，門一關，安心就交給家。",
+      icon:'<path d="M14 3h5v18h-5"/><path d="M3 12h11"/><path d="M10 8l-4 4 4 4"/>' },
+    { key:"sleep", name:"睡前・晚安", en:"GOODNIGHT",
+      desc:"躺上床說聲晚安，全室漸暗、溫度轉柔、窗簾輕闔，不必再為了關燈起身。",
+      icon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>' },
+    { key:"cinema", name:"觀影・放鬆", en:"CINEMA",
+      desc:"客廳一秒變劇院——燈光沉下、畫面亮起、窗簾闔上，世界只剩你和這部電影。",
+      icon:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>' },
+    { key:"party", name:"宴客・聚會", en:"GATHER",
+      desc:"客人按鈴那一刻，氛圍燈、背景音樂、適溫早已就位，你只管從容開門。",
+      icon:'<path d="M6 3h12l-1 7a5 5 0 0 1-10 0z"/><path d="M12 15v4"/><path d="M8 21h8"/>' },
+    { key:"elder", name:"銀齡・安心", en:"CARE",
+      desc:"夜裡起身，腳邊的光自動亮起；久沒動靜，家會悄悄提醒遠方的你。",
+      icon:'<circle cx="12" cy="7" r="3"/><path d="M6 21c0-4 2.5-7 6-7s6 3 6 7"/><path d="M12 11v3"/>' },
+    { key:"pet", name:"毛孩・看顧", en:"PET",
+      desc:"定時餵食、恆溫守候，出門在外，也像一直陪在牠身邊。",
+      icon:'<circle cx="6.5" cy="10" r="1.6"/><circle cx="17.5" cy="10" r="1.6"/><circle cx="9.5" cy="6.5" r="1.6"/><circle cx="14.5" cy="6.5" r="1.6"/><path d="M12 12c-3 0-5 2.2-5 4.6C7 18.6 9 19 12 19s5-.4 5-2.4C17 14.2 15 12 12 12z"/>' }
+  ];
+
+  var picked = {};
+  var cardsEl = document.getElementById("cards");
+  var selEl = document.getElementById("sel");
+
+  SCENES.forEach(function(s){
+    var c = document.createElement("div");
+    c.className = "card"; c.setAttribute("data-k", s.key);
+    c.innerHTML =
+      '<div class="ic"><svg viewBox="0 0 24 24">'+s.icon+'</svg></div>'+
+      '<div class="tx"><div class="nm serif">'+s.name+'<span class="en">'+s.en+'</span></div>'+
+      '<div class="ds">'+s.desc+'</div></div>'+
+      '<div class="chk"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></div>';
+    c.addEventListener("click", function(){
+      if(picked[s.key]){ delete picked[s.key]; c.classList.remove("on"); }
+      else { picked[s.key] = s.name; c.classList.add("on"); }
+      updateSel();
+    });
+    cardsEl.appendChild(c);
+  });
+
+  function pickedList(){ return SCENES.filter(function(s){return picked[s.key];}).map(function(s){return s.name;}); }
+  function updateSel(){
+    var n = pickedList().length;
+    selEl.textContent = n ? ("已選 "+n+" 種情境　·　點下方預約，我們一起把它實現") : "　";
+  }
+
+  function showToast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2200);}
+
+  // ---- LIFF（選配）：在 LINE 內把選擇送進聊天室 ----
+  var liffReady=null;
+  try{
+    if(typeof liff!=="undefined" && LIFF_ID.indexOf("REPLACE_WITH")!==0){
+      liffReady = liff.init({liffId:LIFF_ID}).catch(function(e){console.warn("[scene] liff.init",e);});
+    }
+  }catch(e){}
+
+  function summaryText(){
+    var list = pickedList();
+    var body = list.length ? ("・"+list.join("\n・")) : "（還沒特別挑，想先聊聊）";
+    return "【智慧家庭・想要的生活情境】\n"+body+"\n\n想請菩語在規劃階段幫我預留，想約時間聊聊。";
+  }
+
+  document.getElementById("cta").addEventListener("click", async function(){
+    // 在 LINE 內且 LIFF 可用：把選擇送進聊天室，再開預約
+    try{
+      if(liffReady){ await liffReady; }
+      if(typeof liff!=="undefined" && liff.isInClient && liff.isInClient() && liff.sendMessages){
+        await liff.sendMessages([{ type:"text", text: summaryText() }]);
+        showToast("已把你的情境送給菩語 ✦");
+        setTimeout(function(){ try{ liff.openWindow({url:BOOKING_LIFF, external:false}); }catch(e){ location.href=BOOKING_LIFF; } }, 900);
+        return;
+      }
+    }catch(e){ console.warn("[scene] send",e); }
+    // 非 LINE 或無法送訊息：直接開預約
+    location.href = BOOKING_LIFF;
+  });
+
+  updateSel();
+})();
+</script>
+</body>
+</html>
