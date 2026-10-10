@@ -630,6 +630,24 @@ const DESIGNER={
 };
 const DESIGNER_NOTE='重點不是名氣大小，而是他懂不懂你這一型——把你最在意的地方，交給真的也在意的人。';
 
+/* ===== 匿名結果記錄（存 Google 試算表，不收個資）=====
+   部署 Apps Script 後，把 /exec 網址填進 LOG_URL 即啟用；留空＝不記錄。 */
+const LOG_URL='';
+function logResult(best, ctxObj, band, sum, alt){
+  if(!LOG_URL) return;
+  try{
+    var payload=JSON.stringify({
+      type: best.zh, no: best.no, en: best.en,
+      stage: (ctxObj&&ctxObj.n)||'', band: (band&&band.name)||'',
+      score: sum, alt: (alt&&alt.zh)||'',
+      src: (window.self!==window.top)?'官網嵌入':'直接開啟'
+    });
+    var blob=new Blob([payload],{type:'text/plain;charset=UTF-8'});
+    if(navigator.sendBeacon){ navigator.sendBeacon(LOG_URL, blob); }
+    else{ fetch(LOG_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:payload}); }
+  }catch(e){}
+}
+
 function finish(){
   const sum=st.reduce((a,b)=>a+b,0);
   const band=BANDS.find(b=>sum<=b.max);
@@ -643,6 +661,7 @@ function finish(){
   const act=ACT[best.no];
   const X=ARCHX[best.no]||{deep:best.desc,scene:'',insight:[],anchors:[]};
   window._result=best; window._band=band; window._ctx=ctx; window._sum=sum; window._alt=alt;
+  logResult(best, ctx, band, sum, alt);
 
   el('card').innerHTML=
     '<div class="top">'+
