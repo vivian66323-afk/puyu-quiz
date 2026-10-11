@@ -158,6 +158,11 @@ body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--i
 .finder li:last-child{border-bottom:none}
 .finder li::before{content:"✓";position:absolute;left:2px;top:8px;color:var(--gold-soft);font-size:12px;font-weight:700}
 .finder .fnote{font-size:12.5px;line-height:1.78;color:var(--muted);margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+.midcta{margin-top:14px;text-align:center;background:var(--ink);border-radius:14px;padding:22px 20px}
+.midcta p{font-family:"Noto Serif TC";font-size:16px;font-weight:600;color:var(--cream);margin-bottom:14px;letter-spacing:.02em}
+.midcta-btn{display:inline-block;background:#06C755;color:#fff;border:none;font-family:inherit;font-size:15.5px;font-weight:600;padding:14px 30px;border-radius:100px;cursor:pointer;letter-spacing:.03em;transition:transform .15s}
+.midcta-btn:active{transform:scale(.96)}
+.midcta-sub{font-size:12px;color:rgba(245,242,236,.6);margin-top:11px;letter-spacing:.03em}
 .cta2{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 20px;margin:18px 0 12px;text-align:center}
 .cta2 h4{font-family:"Noto Serif TC";font-size:16.5px;font-weight:600;margin-bottom:7px}
 .cta2 p{font-size:13px;color:var(--muted);margin-bottom:17px;line-height:1.75}
@@ -633,13 +638,16 @@ const DESIGNER_NOTE='重點不是名氣大小，而是他懂不懂你這一型�
 /* ===== 匿名結果記錄（存 Google 試算表，不收個資）=====
    部署 Apps Script 後，把 /exec 網址填進 LOG_URL 即啟用；留空＝不記錄。 */
 const LOG_URL='';
-function logResult(best, ctxObj, band, sum, alt){
+/* 記一個事件（完成測驗 / 點LINE / 點預約…），都帶上當前結果脈絡，用來看漏斗斷點 */
+function logEvent(ev, pos){
   if(!LOG_URL) return;
   try{
+    var r=window._result||{}, b=window._band||{}, cx=window._ctx||{};
     var payload=JSON.stringify({
-      type: best.zh, no: best.no, en: best.en,
-      stage: (ctxObj&&ctxObj.n)||'', band: (band&&band.name)||'',
-      score: sum, alt: (alt&&alt.zh)||'',
+      ev: ev||'', pos: pos||'',
+      type: r.zh||'', no: r.no||'', en: r.en||'',
+      stage: cx.n||'', band: b.name||'', score: window._sum||'',
+      alt: (window._alt&&window._alt.zh)||'',
       src: (window.self!==window.top)?'官網嵌入':'直接開啟'
     });
     var blob=new Blob([payload],{type:'text/plain;charset=UTF-8'});
@@ -661,7 +669,7 @@ function finish(){
   const act=ACT[best.no];
   const X=ARCHX[best.no]||{deep:best.desc,scene:'',insight:[],anchors:[]};
   window._result=best; window._band=band; window._ctx=ctx; window._sum=sum; window._alt=alt;
-  logResult(best, ctx, band, sum, alt);
+  logEvent('完成測驗');
 
   el('card').innerHTML=
     '<div class="top">'+
@@ -692,6 +700,7 @@ function finish(){
       (CAUT[best.no]?'<div class="caution"><div class="ch">一個溫柔的提醒</div><p>'+CAUT[best.no]+'</p></div>':'')+
       '<div class="dir"><div class="h">給你的設計方向</div><p>'+best.dir+'</p></div>'+
       (DESIGNER[best.no]?'<div class="finder"><div class="fh">適合你的設計師</div><p class="ftype">'+DESIGNER[best.no].type+'</p><div class="fl-h">找設計師時，看這幾點</div><ul>'+DESIGNER[best.no].look.map(function(l){return '<li>'+l+'</li>';}).join('')+'</ul><p class="fnote">'+DESIGNER_NOTE+'</p></div>':'')+
+      '<div class="midcta"><p>想找這樣的設計師嗎？</p><button class="midcta-btn" onclick="toLine(\'上段\')">來 LINE 聊聊你家的可能 →</button><div class="midcta-sub">把你的測驗結果帶著聊，不用從頭說起</div></div>'+
       '<div class="act"><div class="hd">你的「留 · 捨 · 投資」行動卡</div>'+
         '<div class="r"><b>該留</b><span>'+act.k+'</span></div>'+
         '<div class="r"><b>該捨</b><span>'+act.d+'</span></div>'+
@@ -706,7 +715,7 @@ function finish(){
       '<h4>把「'+best.zh+'」留下來</h4>'+
       '<p>存成一張卡片發限動；或者直接跟菩語聊聊——你的測驗結果會自動帶過去，不用重講一次。</p>'+
       '<button class="btn-main" id="saveBtn" onclick="saveCard()">把這張卡存下來</button>'+
-      '<button class="btn-sub" onclick="toLine()">加菩語官方 LINE・聊聊你家的可能 →</button>'+
+      '<button class="btn-sub" onclick="toLine(\'底部\')">加菩語官方 LINE・聊聊你家的可能 →</button>'+
       '<button class="btn-sub" onclick="bookConsult()">預約菩語設計諮詢 →</button>'+
       '<button class="btn-sub" id="liffSendBtn" style="display:none" onclick="sendResultToLine()">把結果傳給菩語設計師 →</button>'+
       '<button class="btn-sub" id="liffShareBtn" style="display:none" onclick="shareResultToLineFriends()">分享給朋友 →</button>'+
@@ -965,8 +974,9 @@ const DESIGN_FLOW_URL='https://www.purely2006.com/design-flow';
 /* 測驗結果頁「預約」直接接 LINE 預約單（LIFF booking/，送出會進菩語 OA 聊天室）；
    在 LINE 內開＝直接填單，一般瀏覽器點了會引導開啟 LINE。官網表單改為退路。 */
 const BOOKING_LIFF_URL='https://liff.line.me/2011689768-LQWydmVc';
-function bookConsult(){ if(!goOut(BOOKING_LIFF_URL)) goOut(DESIGN_FLOW_URL); }
-function toLine(){
+function bookConsult(){ logEvent('點預約'); if(!goOut(BOOKING_LIFF_URL)) goOut(DESIGN_FLOW_URL); }
+function toLine(pos){
+  logEvent('點LINE', pos);
   const msg=lineMsg();
   try{ if(navigator.clipboard) navigator.clipboard.writeText(msg); }catch(e){}
   toast('結果已複製，貼上就能傳給菩語');
