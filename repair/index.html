@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>保固・售後報修｜菩語國際設計</title>
+<meta name="description" content="家裡有狀況？在這裡告訴菩語，專人為你處理。完工後的每一天，我們都還在。">
+<meta name="theme-color" content="#F4F2EF">
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2E2B28;--cream:#F4F2EF;--paper:#FFFFFF;--gold:#A88B5C;--gold-light:#D9C6A5;--gold-dark:#8A6F45;--line:#E3DDD1;--muted:#6E6A63}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;min-height:100vh;background:var(--cream)}
+body{font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+.serif{font-family:"Noto Serif TC",serif}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+#wrap{width:100%;max-width:520px;margin:0 auto;padding:calc(26px + env(safe-area-inset-top)) 18px calc(120px + env(safe-area-inset-bottom))}
+@media(min-width:640px){body{background:linear-gradient(180deg,var(--cream),#EDEAE3)}}
+.logo{display:block;width:140px;height:auto;margin:0 auto 16px}
+.kicker{text-align:center;font-size:12px;letter-spacing:.42em;color:var(--gold-dark);font-weight:600;padding-left:.42em}
+h1{text-align:center;margin-top:9px;font-weight:700;font-size:clamp(25px,6.5vw,31px);letter-spacing:.06em}
+.lead{text-align:center;margin:14px auto 2px;max-width:26em;font-size:14.5px;color:var(--muted)}
+.lead b{color:var(--gold-dark);font-weight:600}
+.card{margin-top:22px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px 18px}
+.field{margin-bottom:17px}
+.field:last-child{margin-bottom:0}
+label{display:block;font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:8px}
+label .req{color:#A6474A;margin-left:3px}
+input[type=text],input[type=tel],textarea,select{width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:11px;font-family:inherit;font-size:15px;color:var(--ink);background:#FcFbF9;outline:none;transition:border-color .15s}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+textarea{min-height:92px;resize:vertical;line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 14px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-size:14px;color:var(--ink);transition:all .15s}
+.chip.on{border-color:var(--gold);background:linear-gradient(145deg,#C9A96A,#A88B5C);color:#fff;font-weight:600}
+.note{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.warranty{margin-top:16px;padding:13px 15px;border-radius:12px;background:#F7F3EC;border:1px solid var(--gold-light);font-size:12.5px;color:var(--gold-dark);line-height:1.7}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 18px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(244,242,239,0),var(--cream) 34%)}
+.bar-inner{max-width:520px;margin:0 auto}
+.cta{width:100%;padding:16px;border-radius:14px;font-weight:700;font-size:16px;letter-spacing:.08em;background:linear-gradient(145deg,#2E2B28,#1E1C1A);color:#F4EEDF;border:1px solid #1E1C1A;transition:transform .1s}
+.cta:active{transform:scale(.98)}
+footer{text-align:center;margin-top:22px;font-size:12px;color:var(--muted);letter-spacing:.05em}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,16px);background:var(--ink);color:var(--cream);padding:11px 20px;border-radius:100px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:50;white-space:nowrap;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+<div id="wrap">
+  <img class="logo" src="https://vivian66323-afk.github.io/puyu-quiz/card/puyu-logo.png" alt="菩語國際設計">
+  <div class="kicker">AFTER-CARE</div>
+  <h1 class="serif">保固・售後報修</h1>
+  <p class="lead">家裡有狀況？在這裡告訴我們就好。<br><b>完工後的每一天，菩語都還在。</b></p>
+
+  <div class="card">
+    <div class="field">
+      <label>稱呼<span class="req">*</span></label>
+      <input type="text" id="f-name" placeholder="怎麼稱呼您">
+    </div>
+    <div class="field">
+      <label>案名／社區<span class="req">*</span></label>
+      <input type="text" id="f-case" placeholder="你的案子名稱或社區（例：天韻、○○社區）">
+    </div>
+    <div class="field">
+      <label>狀況類型<span class="req">*</span></label>
+      <div class="chips" id="f-type">
+        <button type="button" class="chip" data-v="漏水／防水">漏水／防水</button>
+        <button type="button" class="chip" data-v="門片／木作">門片／木作</button>
+        <button type="button" class="chip" data-v="水電">水電</button>
+        <button type="button" class="chip" data-v="油漆／牆面">油漆／牆面</button>
+        <button type="button" class="chip" data-v="設備（空調/廚衛）">設備（空調/廚衛）</button>
+        <button type="button" class="chip" data-v="其他">其他</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>狀況描述<span class="req">*</span></label>
+      <textarea id="f-desc" placeholder="簡單描述一下狀況、發生位置、大概什麼時候開始的。"></textarea>
+      <div class="note">📷 送出後，歡迎在聊天室直接補上現場照片／影片，我們能更快掌握狀況。</div>
+    </div>
+    <div class="field">
+      <label>方便聯絡時段</label>
+      <select id="f-time">
+        <option value="">不指定，都可以</option>
+        <option>平日・上午</option>
+        <option>平日・下午</option>
+        <option>平日・晚上</option>
+        <option>假日</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>聯絡電話<span class="req">*</span></label>
+      <input type="tel" id="f-phone" placeholder="09xx-xxx-xxx" inputmode="tel">
+    </div>
+    <div class="warranty">🛡️ 菩語提供<b>完工保固服務</b>，收到您的報修後，將由專人與您聯繫、安排到府檢視。</div>
+  </div>
+
+  <footer>菩語國際設計 PURELY DESIGN　｜　讓空間知道自己是誰</footer>
+</div>
+
+<div class="bar"><div class="bar-inner">
+  <button class="cta" id="cta" type="button">送出報修</button>
+</div></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var LIFF_ID = "REPLACE_WITH_REPAIR_LIFF_ID";
+  var OA_LINE = "https://line.me/R/ti/p/@nkt7460n";
+  var type = {};
+  document.querySelectorAll("#f-type .chip").forEach(function(c){
+    c.addEventListener("click", function(){
+      var v=c.getAttribute("data-v");
+      if(type[v]){delete type[v];c.classList.remove("on");}else{type[v]=1;c.classList.add("on");}
+    });
+  });
+  function val(id){return (document.getElementById(id).value||"").trim();}
+  function showToast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2400);}
+
+  var liffReady=null;
+  try{ if(typeof liff!=="undefined" && LIFF_ID.indexOf("REPLACE_WITH")!==0){ liffReady=liff.init({liffId:LIFF_ID}).catch(function(e){console.warn(e);}); } }catch(e){}
+
+  function summary(){
+    var types=Object.keys(type).join("、")||"（未選）";
+    return "【保固・售後報修】\n稱呼："+val("f-name")+
+      "\n案名/社區："+val("f-case")+
+      "\n狀況類型："+types+
+      "\n狀況描述："+val("f-desc")+
+      "\n方便時段："+(val("f-time")||"不指定")+
+      "\n聯絡電話："+val("f-phone")+
+      "\n\n（我會在聊天室補上現場照片）";
+  }
+
+  document.getElementById("cta").addEventListener("click", async function(){
+    if(!val("f-name")||!val("f-case")||!Object.keys(type).length||!val("f-desc")||!val("f-phone")){
+      showToast("請填稱呼、案名、狀況類型、描述、電話");
+      return;
+    }
+    try{
+      if(liffReady){await liffReady;}
+      if(typeof liff!=="undefined" && liff.isInClient && liff.isInClient() && liff.sendMessages){
+        await liff.sendMessages([{type:"text",text:summary()}]);
+        showToast("報修已送出，菩語會盡快與你聯繫 ✦");
+        setTimeout(function(){ try{liff.closeWindow();}catch(e){} }, 1400);
+        return;
+      }
+    }catch(e){ console.warn("[repair] send",e); }
+    // 非 LINE：帶文字去 OA（提示手動貼上）
+    showToast("請從 LINE 官方帳號開啟此頁送出");
+    setTimeout(function(){ window.open(OA_LINE,"_blank"); }, 1200);
+  });
+})();
+</script>
+</body>
+</html>
