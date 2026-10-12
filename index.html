@@ -232,6 +232,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '650382609038890');
+fbq('init', '366975493979881'); /* 菩語廣告帳號的像素，事件管理工具看得到 */
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
@@ -640,6 +641,15 @@ const DESIGNER_NOTE='重點不是名氣大小，而是他懂不懂你這一型�
 const LOG_URL='';
 /* 記一個事件（完成測驗 / 點LINE / 點預約…），都帶上當前結果脈絡，用來看漏斗斷點 */
 function logEvent(ev, pos){
+  /* Meta 像素事件：不收個資，只記動作＋原型＋來源，到 Meta 事件管理工具看漏斗 */
+  try{
+    var MAP={'完成測驗':'QuizComplete','點LINE':'ClickLine','點預約':'ClickBooking'};
+    var r0=window._result||{};
+    if(window.fbq){
+      fbq('trackCustom', MAP[ev]||'QuizEvent', {ev:ev||'', pos:pos||'', type:r0.zh||'', src:(window.self!==window.top)?'官網嵌入':'直接開啟'});
+      if(ev==='點預約'||ev==='點LINE') fbq('track','Contact');
+    }
+  }catch(e){}
   if(!LOG_URL) return;
   try{
     var r=window._result||{}, b=window._band||{}, cx=window._ctx||{};

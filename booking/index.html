@@ -115,6 +115,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '650382609038890');
+fbq('init', '366975493979881'); /* 菩語廣告帳號的像素，事件管理工具看得到 */
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
@@ -356,6 +357,8 @@ async function onSubmit(){
 
   try{
     await liff.sendMessages([{ type:'text', text: summary }]);
+    /* 預約真的送出才記：Meta 像素 Lead（不帶個資） */
+    try{ if(window.fbq){ fbq('track','Lead'); fbq('trackCustom','BookingSubmitted'); } }catch(e){}
     show('s-done');
   }catch(e){
     console.error(e);
