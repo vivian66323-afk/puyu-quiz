@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>案件進度｜菩語國際設計 PURELY</title>
+<meta name="description" content="登入查看您家的工程進度、現場照片、請款狀態。">
+<meta name="theme-color" content="#F4F2EF">
+<meta name="robots" content="noindex, nofollow">
+<!-- LINE LIFF SDK（v2）-->
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<style>
+:root{
+  --bg:#F4F2EF;
+  --ink:#2E2B28;
+  --gold:#A88B5C;
+  --gold-soft:#D9C8AE;
+  --gold-dark:#8A6F45;
+  --paper:#FFFFFF;
+  --line:#E4DDD1;
+  --muted:#6E6A63;
+  --err:#A6474A;
+  --ok:#5C7A5C;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;min-height:100vh;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Microsoft JhengHei","PingFang TC","Noto Sans TC","Helvetica Neue",Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.7;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{font-family:Georgia,"Noto Serif TC","PingFang TC",serif}
+a{color:inherit}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+#app{
+  width:100%;
+  min-height:100vh;
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    calc(16px + env(safe-area-inset-right))
+    calc(28px + env(safe-area-inset-bottom))
+    calc(16px + env(safe-area-inset-left));
+}
+
+.screen{display:none}
+.screen.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- 共用元件 ---------- */
+.center-box{
+  min-height:calc(100vh - 60px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:24px 4px;
+}
+.eyebrow{font-size:clamp(11px,3vw,12.5px);letter-spacing:.35em;color:var(--gold-dark);font-weight:600;margin-bottom:14px}
+.big-msg{font-size:clamp(18px,5.2vw,22px);font-weight:700;line-height:1.6;margin-bottom:12px}
+.sub-msg{font-size:clamp(13.5px,3.8vw,15px);color:var(--muted);line-height:1.85;max-width:340px}
+.spinner{
+  width:38px;height:38px;border-radius:50%;
+  border:3px solid var(--gold-soft);border-top-color:var(--gold);
+  animation:spin 1s linear infinite;margin-bottom:22px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.btn{
+  width:100%;font-family:inherit;font-size:clamp(15px,4vw,16.5px);font-weight:700;
+  padding:16px;border-radius:100px;border:none;cursor:pointer;letter-spacing:.05em;
+  transition:.2s;
+}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.55;cursor:default;transform:none}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-ghost{background:none;color:var(--ink);border:1.5px solid var(--ink)}
+.btn-danger-ghost{background:none;color:var(--err);border:1.5px solid var(--err)}
+
+.notice{
+  margin-top:14px;font-size:13.5px;line-height:1.85;color:var(--err);
+  background:#FBF2F0;border:1px solid #EBC9C6;border-radius:10px;padding:13px 16px;
+  display:none;text-align:left;
+}
+.notice.on{display:block}
+
+/* ---------- 綁定畫面 ---------- */
+#s-bind .center-box{justify-content:flex-start;padding-top:56px}
+.bind-icon{
+  width:56px;height:56px;border-radius:50%;background:var(--gold-soft);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  font-size:24px;
+}
+.bind-input{
+  width:100%;max-width:320px;font-family:inherit;font-size:clamp(18px,5.6vw,23px);
+  font-weight:700;letter-spacing:.3em;text-align:center;
+  background:var(--paper);border:1.5px solid var(--line);border-radius:12px;
+  padding:16px 10px 16px 18px;outline:none;margin:20px 0 6px;color:var(--ink);
+}
+.bind-input:focus{border-color:var(--gold)}
+.bind-hint{font-size:12.5px;color:var(--muted);margin-bottom:26px;line-height:1.8}
+.bind-actions{width:100%;max-width:280px}
+
+/* ---------- 進度主畫面 ---------- */
+.hello{font-size:clamp(14px,3.8vw,15.5px);color:var(--muted);margin-bottom:4px}
+.case-name{font-size:clamp(19px,5.5vw,23px);font-weight:700;line-height:1.5;margin-bottom:22px}
+
+.stage-card{
+  background:var(--ink);color:#fff;border-radius:16px;
+  padding:24px 22px;margin-bottom:20px;
+}
+.stage-card .k{font-size:11.5px;letter-spacing:.3em;color:var(--gold-soft);margin-bottom:10px;font-weight:600}
+.stage-card .v{font-size:clamp(22px,6.5vw,28px);font-weight:700;line-height:1.4}
+.stage-card .next{font-size:clamp(13.5px,3.8vw,15px);color:#DCD7CC;margin-top:14px;line-height:1.8;border-top:1px solid rgba(255,255,255,.18);padding-top:14px}
+.stage-card .eta{font-size:12.5px;color:var(--gold-soft);margin-top:8px;letter-spacing:.03em}
+
+.section{margin-bottom:26px}
+.section-h{font-size:12px;letter-spacing:.25em;color:var(--gold-dark);font-weight:700;margin-bottom:14px}
+
+/* 時間軸 */
+.timeline{list-style:none}
+.tl-item{position:relative;padding:0 0 22px 30px;border-left:2px solid var(--line)}
+.tl-item:last-child{border-left-color:transparent;padding-bottom:2px}
+.tl-item::before{
+  content:"";position:absolute;left:-9px;top:0;width:16px;height:16px;border-radius:50%;
+  background:var(--paper);border:2.5px solid var(--line);
+}
+.tl-item.done::before{background:var(--gold);border-color:var(--gold)}
+.tl-item.current::before{background:#fff;border-color:var(--gold);box-shadow:0 0 0 4px rgba(168,139,92,.25)}
+.tl-item .name{font-size:clamp(14.5px,4vw,16px);font-weight:700;color:var(--muted)}
+.tl-item.done .name{color:var(--ink)}
+.tl-item.current .name{color:var(--gold-dark)}
+.tl-item .date{font-size:12.5px;color:var(--muted);margin-top:4px}
+.tl-item .tl-note{font-size:12.5px;color:var(--ink);margin-top:6px;line-height:1.7}
+.tl-item .badge{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;
+  padding:3px 10px;border-radius:100px;margin-top:6px;
+}
+.tl-item.current .badge{background:var(--gold-soft);color:var(--gold-dark)}
+
+/* 現場照片 */
+.photo-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.photo-scroll img{
+  width:78vw;max-width:320px;aspect-ratio:4/3;object-fit:cover;border-radius:12px;
+  scroll-snap-align:start;background:var(--line);flex:none;
+}
+.photo-empty,.section-empty{font-size:13.5px;color:var(--muted);background:var(--paper);border:1px dashed var(--line);border-radius:12px;padding:18px;text-align:center}
+
+/* 請款卡片 */
+.bill-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:14px;
+  padding:16px 18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.bill-left .period{font-size:14.5px;font-weight:700}
+.bill-left .issue{font-size:12px;color:var(--muted);margin-top:4px}
+.bill-right{text-align:right;flex:none}
+.bill-right .amt{font-size:clamp(16px,4.5vw,18.5px);font-weight:700}
+.bill-right .status{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.03em;
+  padding:3px 10px;border-radius:100px;margin-top:5px;
+}
+.status-paid{background:#E3EBE3;color:var(--ok)}
+.status-pending{background:var(--gold-soft);color:var(--gold-dark)}
+.status-overdue{background:#F6DEDD;color:var(--err)}
+
+/* 底部 */
+.foot-updated{font-size:12px;color:var(--muted);text-align:center;margin:26px 0 18px;letter-spacing:.02em}
+.foot-actions{display:flex;flex-direction:column;gap:10px}
+.foot-tiny{
+  text-align:center;font-size:11.5px;color:var(--muted);margin-top:22px;
+  text-decoration:underline;letter-spacing:.03em;
+}
+
+.toast{
+  position:fixed;left:50%;bottom:calc(30px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  background:var(--ink);color:#fff;padding:12px 22px;border-radius:100px;
+  font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:50;
+  max-width:86vw;text-align:center;
+}
+.toast.on{opacity:1}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '650382609038890');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<div id="app">
+
+  <!-- ========== 載入中 ========== -->
+  <section class="screen on" id="s-loading">
+    <div class="center-box">
+      <div class="spinner"></div>
+      <div class="sub-msg">正在讀取您的案件進度…</div>
+    </div>
+  </section>
+
+  <!-- ========== 非 LINE 環境 / 初始化失敗 ========== -->
+  <section class="screen" id="s-not-in-line">
+    <div class="center-box">
+      <div class="eyebrow">PURELY · 案件進度</div>
+      <div class="big-msg">請從 LINE 開啟此頁</div>
+      <div class="sub-msg">案件進度需要透過 LINE 登入才能查看，請由菩語官方帳號選單重新點擊進入。</div>
+    </div>
+  </section>
+
+  <!-- ========== 一般錯誤 ========== -->
+  <section class="screen" id="s-error">
+    <div class="center-box">
+      <div class="eyebrow">PURELY · 案件進度</div>
+      <div class="big-msg">暫時讀不到資料</div>
+      <div class="sub-msg" id="error-msg">網路或系統暫時出了點狀況，請稍後再試一次。</div>
+      <div style="height:22px"></div>
+      <div style="width:100%;max-width:280px">
+        <button class="btn btn-gold" onclick="location.reload()">重新整理</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 綁定案子 ========== -->
+  <section class="screen" id="s-bind">
+    <div class="center-box">
+      <div class="bind-icon">🔑</div>
+      <div class="eyebrow">PURELY · 案件進度</div>
+      <div class="big-msg">輸入綁定碼</div>
+      <div class="sub-msg">菩語會提供一組 8 碼綁定碼，輸入後即可查看您家的工程進度。</div>
+      <input class="bind-input" id="bind-code" inputmode="text" autocapitalize="characters" maxlength="8" pattern="[A-Za-z0-9]{8}" placeholder="--------" autocomplete="one-time-code">
+      <div class="bind-hint">沒有綁定碼？請聯絡您的設計師索取。</div>
+      <div class="bind-actions">
+        <button class="btn btn-gold" id="bindBtn" onclick="onBind()">確認綁定</button>
+        <div class="notice" id="bind-notice"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 進度主畫面 ========== -->
+  <section class="screen" id="s-progress">
+
+    <div class="hello" id="p-hello">您好</div>
+    <div class="case-name" id="p-casename">—</div>
+
+    <div class="stage-card">
+      <div class="k">目前階段</div>
+      <div class="v" id="p-stage">—</div>
+      <div class="next" id="p-next">—</div>
+      <div class="eta" id="p-eta"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-h">工程時間軸</div>
+      <ul class="timeline" id="p-timeline"></ul>
+    </div>
+
+    <div class="section">
+      <div class="section-h">最新現場照片</div>
+      <div class="photo-scroll" id="p-photos"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-h">請款狀態</div>
+      <div id="p-billing"></div>
+    </div>
+
+    <div class="foot-updated" id="p-updated"></div>
+
+    <div class="foot-actions">
+      <button class="btn btn-gold" id="contactBtn" onclick="onContact()">聯絡菩語</button>
+      <button class="btn btn-ghost" onclick="onCallPhone()">直接撥打電話</button>
+    </div>
+
+    <button class="foot-tiny" onclick="onRevoke()">解除這支手機的綁定</button>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   設定常數 —— LIFF_ID / API_BASE 之後要換成真值
+   ============================================================ */
+const LIFF_ID = "2011689768-WG6c1wNG";
+const API_BASE = "REPLACE_WITH_API_BASE";
+
+/* 聯絡方式（暫用官網既有 NAP，之後如需改由後端提供可再調整） */
+const CONTACT_PHONE = "0960558533";
+const LINE_OA_URL = "https://line.me/R/ti/p/@nkt7460n";
+
+/* ---------------- 狀態 ---------------- */
+let idToken = null;          // liff.getIDToken() 拿到的 ID Token，只在記憶體中，不落地儲存
+let sessionToken = null;     // 後端核發的短期 session token（對應後端回應鍵 token），只在記憶體中
+let currentCaseId = null;    // 只用來組 API path，實際權限一律由後端用 sessionToken 核對
+let currentCaseName = null;  // 只有 verify/bind 回應的 cases[] 帶 caseName，progress 端點不會回傳，所以要存起來自己渲染
+
+const el = id => document.getElementById(id);
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  const target = el(id);
+  if(target) target.classList.add('on');
+  window.scrollTo(0,0);
+}
+function showToast(msg){
+  const t = el('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(()=>{ t.classList.remove('on'); }, 2600);
+}
+
+/* ---------------- 進入流程 ---------------- */
+async function boot(){
+  try{
+    if(typeof liff === 'undefined'){
+      show('s-not-in-line');
+      return;
+    }
+    await liff.init({ liffId: LIFF_ID });
+
+    if(!(liff.isInClient && liff.isInClient())){
+      // 非 LINE App 內開啟（例如外部瀏覽器），一樣友善提示，不整頁白畫面
+      show('s-not-in-line');
+      return;
+    }
+
+    try{
+      idToken = await liff.getIDToken();
+    }catch(e){
+      idToken = null;
+    }
+
+    if(!idToken){
+      show('s-not-in-line');
+      return;
+    }
+
+    await verifyAndLoad();
+
+  }catch(e){
+    // liff.init 失敗：LIFF_ID 還是預留值、或環境不支援，都走到這裡
+    console.error('liff init failed', e);
+    show('s-not-in-line');
+  }
+}
+
+/* ---------------- 呼叫後端 verify，決定走綁定畫面還是進度畫面 ---------------- */
+async function verifyAndLoad(){
+  show('s-loading');
+  try{
+    const res = await fetch(API_BASE + '/api/liff/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken })
+    });
+    if(!res.ok) throw new Error('verify http ' + res.status);
+    const data = await res.json();
+
+    // 後端 /api/liff/verify 回應鍵名：{ ok, token, cases: [{caseId, caseName}] }
+    // 沒有 bound 這個欄位 —— 是否已綁定案件，用 cases 陣列是否有內容判斷。
+    const cases = (data && Array.isArray(data.cases)) ? data.cases : [];
+    if(data && data.ok && data.token && cases.length){
+      sessionToken = data.token;
+      currentCaseId = cases[0].caseId;
+      currentCaseName = cases[0].caseName;
+      await loadProgress();
+    }else{
+      show('s-bind');
+    }
+  }catch(e){
+    console.error('verify failed', e);
+    el('error-msg').textContent = '登入驗證時發生問題，請稍後再試一次。';
+    show('s-error');
+  }
+}
+
+/* ---------------- 綁定 ---------------- */
+el('bind-code') && el('bind-code').addEventListener('input', function(){
+  this.value = this.value.replace(/[^0-9A-Za-z]/g,'').toUpperCase().slice(0,8);
+});
+
+async function onBind(){
+  const code = el('bind-code').value.trim();
+  const notice = el('bind-notice');
+  notice.classList.remove('on');
+
+  if(code.length !== 8){
+    notice.textContent = '請輸入完整 8 碼綁定碼';
+    notice.classList.add('on');
+    return;
+  }
+  if(!idToken){
+    notice.textContent = '登入狀態已失效，請重新從 LINE 開啟此頁。';
+    notice.classList.add('on');
+    return;
+  }
+
+  const btn = el('bindBtn');
+  const oldText = btn.textContent;
+  btn.disabled = true; btn.textContent = '綁定中…';
+
+  try{
+    const res = await fetch(API_BASE + '/api/liff/bind', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken, bindingCode: code })
+    });
+    const data = await res.json().catch(()=>null);
+
+    if(!res.ok || !data || data.ok === false){
+      // 後端錯誤訊息鍵名是 error（例如 400 綁定碼無效、401 LINE 驗證失敗），不是 message
+      const msg = (data && data.error) ? data.error : '綁定碼不正確或已失效，請確認後再輸入一次。';
+      notice.textContent = msg;
+      notice.classList.add('on');
+      return;
+    }
+
+    // 後端 /api/liff/bind 回應鍵名同 verify：{ ok, token, cases: [{caseId, caseName}] }
+    const cases = Array.isArray(data.cases) ? data.cases : [];
+    if(data.token && cases.length){
+      sessionToken = data.token;
+      currentCaseId = cases[0].caseId;
+      currentCaseName = cases[0].caseName;
+      await loadProgress();
+    }else{
+      await verifyAndLoad();
+    }
+
+  }catch(e){
+    console.error('bind failed', e);
+    notice.textContent = '網路異常，綁定失敗，請稍後再試一次。';
+    notice.classList.add('on');
+  }finally{
+    btn.disabled = false; btn.textContent = oldText;
+  }
+}
+
+/* ---------------- 讀取並渲染進度 ---------------- */
+async function loadProgress(){
+  show('s-loading');
+  try{
+    const res = await fetch(API_BASE + '/api/liff/case/' + encodeURIComponent(currentCaseId) + '/progress', {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + sessionToken }
+    });
+    if(res.status === 401 || res.status === 403 || res.status === 404){
+      // 後端對 token 失效／案子核對不到一律回 404（不區分原因，避免探測），401/403 一併保守處理
+      sessionToken = null; currentCaseId = null; currentCaseName = null;
+      await verifyAndLoad();
+      return;
+    }
+    if(!res.ok) throw new Error('progress http ' + res.status);
+    const data = await res.json();
+    renderProgress(data || {});
+    show('s-progress');
+  }catch(e){
+    console.error('load progress failed', e);
+    el('error-msg').textContent = '案件進度暫時讀取不到，請稍後再試一次。';
+    show('s-error');
+  }
+}
+
+// 後端 GET /api/liff/case/:caseId/progress 實際回應：
+// { progress: [{id, stage_name, status, note_customer, created_at, photos:[{id,url}]}, ...],  // created_at DESC，第一筆＝最新
+//   payments: [{invoice_id, period_no, period_title, amount, status, due_date, paid_date}, ...] }
+// caseName／greeting 這兩個欄位 progress 端點不會回傳，用 verify/bind 存下來的 currentCaseName。
+function renderProgress(data){
+  const progressList = Array.isArray(data.progress) ? data.progress : [];
+  const payments = Array.isArray(data.payments) ? data.payments : [];
+  const latest = progressList[0]; // 依後端排序，第一筆就是最新一筆進度
+
+  el('p-hello').textContent = '您好，這是您家目前的進度';
+  el('p-casename').textContent = currentCaseName || '菩語案件';
+
+  el('p-stage').textContent = latest && latest.stage_name ? latest.stage_name : '—';
+  el('p-next').textContent = latest && latest.note_customer ? latest.note_customer : '目前尚無最新備註，設計師更新後會出現在這裡。';
+  el('p-eta').textContent = ''; // 後端沒有預計完工日欄位，先留空不臆造
+
+  renderTimeline(progressList);
+  renderPhotos(progressList.flatMap(function(p){ return Array.isArray(p.photos) ? p.photos : []; }));
+  renderBilling(payments);
+
+  el('p-updated').textContent = latest && latest.created_at ? ('最後更新：' + latest.created_at) : '';
+}
+
+function renderTimeline(items){
+  const wrap = el('p-timeline');
+  wrap.innerHTML = '';
+  if(!items.length){
+    wrap.innerHTML = '<div class="section-empty">尚無時間軸資料</div>';
+    return;
+  }
+  items.forEach(function(it, idx){
+    // 後端 progress_updates 是「更新紀錄流水」不是固定階段計畫，沒有 done/current/upcoming 欄位。
+    // 依 created_at DESC 排序，第一筆（idx===0）視為目前進行中，其餘視為已完成的歷程。
+    const isCurrent = idx === 0;
+    const li = document.createElement('li');
+    li.className = 'tl-item ' + (isCurrent ? 'current' : 'done');
+    const name = document.createElement('div');
+    name.className = 'name';
+    name.textContent = it.stage_name || '—';
+    li.appendChild(name);
+    if(it.created_at){
+      const date = document.createElement('div');
+      date.className = 'date';
+      date.textContent = it.created_at;
+      li.appendChild(date);
+    }
+    if(it.note_customer){
+      const note = document.createElement('div');
+      note.className = 'tl-note';
+      note.textContent = it.note_customer;
+      li.appendChild(note);
+    }
+    if(isCurrent){
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = it.status || '進行中';
+      li.appendChild(badge);
+    }
+    wrap.appendChild(li);
+  });
+}
+
+function renderPhotos(photos){
+  const wrap = el('p-photos');
+  wrap.innerHTML = '';
+  if(!photos.length){
+    wrap.innerHTML = '<div class="photo-empty" style="width:100%">目前還沒有現場照片，完工照會陸續更新在這裡。</div>';
+    return;
+  }
+  photos.forEach(function(p){
+    if(!p || !p.url) return;
+    const img = document.createElement('img');
+    img.src = p.url;
+    img.loading = 'lazy';
+    img.alt = '現場照片';
+    img.onerror = function(){ this.remove(); };
+    wrap.appendChild(img);
+  });
+}
+
+// 後端 customer_visible_payments 白名單 view 只會吐 status IN ('已請款','已收') 這兩種字串（見
+// db/progress-migrate.js），沒有「待請款」「已逾期」——待請款本來就不該給客戶看，逾期由日期自行判讀，
+// 不臆造第三種狀態。鍵名對齊 invoice_id/period_no/period_title/amount/status/due_date/paid_date。
+function renderBilling(payments){
+  const wrap = el('p-billing');
+  wrap.innerHTML = '';
+  if(!payments.length){
+    wrap.innerHTML = '<div class="section-empty">目前沒有請款資訊</div>';
+    return;
+  }
+  const statusMap = { '已收': 'status-paid', '已請款': 'status-pending' };
+  payments.forEach(function(b){
+    const card = document.createElement('div');
+    card.className = 'bill-card';
+
+    const left = document.createElement('div');
+    left.className = 'bill-left';
+    const period = document.createElement('div');
+    period.className = 'period';
+    period.textContent = b.period_title || ('第' + b.period_no + '期');
+    left.appendChild(period);
+
+    const isPaid = b.status === '已收';
+    const dateValue = isPaid ? b.paid_date : b.due_date;
+    if(dateValue){
+      const issue = document.createElement('div');
+      issue.className = 'issue';
+      issue.textContent = (isPaid ? '實收日：' : '預計日：') + dateValue;
+      left.appendChild(issue);
+    }
+
+    const right = document.createElement('div');
+    right.className = 'bill-right';
+    const amt = document.createElement('div');
+    amt.className = 'amt';
+    amt.textContent = (typeof b.amount === 'number' ? ('NT$ ' + b.amount.toLocaleString('zh-Hant-TW')) : (b.amount || '—'));
+    right.appendChild(amt);
+    const status = document.createElement('div');
+    status.className = 'status ' + (statusMap[b.status] || 'status-pending');
+    status.textContent = b.status || '狀態未提供';
+    right.appendChild(status);
+
+    card.appendChild(left);
+    card.appendChild(right);
+    wrap.appendChild(card);
+  });
+}
+
+/* ---------------- 聯絡 / 解除綁定 ---------------- */
+function onContact(){
+  try{
+    if(typeof liff !== 'undefined' && liff.isInClient && liff.isInClient() && liff.openWindow){
+      liff.openWindow({ url: LINE_OA_URL, external: false });
+      return;
+    }
+  }catch(e){}
+  window.open(LINE_OA_URL, '_blank');
+}
+
+function onCallPhone(){
+  window.location.href = 'tel:' + CONTACT_PHONE;
+}
+
+async function onRevoke(){
+  if(!sessionToken || !currentCaseId){
+    showToast('目前沒有綁定狀態可解除');
+    return;
+  }
+  const ok = window.confirm('確定要解除這支手機與案件的綁定嗎？解除後需要重新輸入綁定碼。');
+  if(!ok) return;
+
+  try{
+    // 後端 POST /api/liff/revoke：授權一律用 sessionToken（Bearer）解出 userId，
+    // caseId 只用來指定要解除哪一筆綁定，要放進 body 一起送，不然後端不知道解哪個案子。
+    const res = await fetch(API_BASE + '/api/liff/revoke', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionToken },
+      body: JSON.stringify({ caseId: currentCaseId })
+    });
+    if(!res.ok) throw new Error('revoke http ' + res.status);
+    sessionToken = null;
+    currentCaseId = null;
+    currentCaseName = null;
+    showToast('已解除綁定');
+    show('s-bind');
+  }catch(e){
+    console.error('revoke failed', e);
+    showToast('解除綁定失敗，請稍後再試一次');
+  }
+}
+
+/* ---------------- 啟動 ---------------- */
+boot();
+</script>
+</body>
+</html>
