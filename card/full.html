@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>邱伊嫻 Vivian｜菩語國際設計 電子名片</title>
+<meta name="description" content="菩語國際設計 設計總監 邱伊嫻 Vivian。讓空間知道自己是誰。桃園・雙北・台中・台南。">
+<meta name="theme-color" content="#1a1613">
+<meta property="og:title" content="邱伊嫻 Vivian｜菩語國際設計">
+<meta property="og:description" content="讓空間知道自己是誰。設計總監 邱伊嫻 Vivian。">
+<meta property="og:image" content="https://vivian66323-afk.github.io/puyu-quiz/card/flex-card-full.png">
+<meta property="og:type" content="profile">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a1613; --bg2:#231d18; --panel:#201a15;
+  --ink:#f3ece0; --ink2:#cdbfaa; --muted:#9b8d79;
+  --gold:#c9a86a; --gold2:#e4ca8e; --gold-deep:#a6854e;
+  --line:#3a3027; --line2:#4a3e30;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;background:var(--bg)}
+body{
+  font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(1200px 600px at 50% -5%, #2c241d 0%, rgba(44,36,29,0) 60%),
+    linear-gradient(180deg,#1a1613 0%,#211a15 48%,#171310 100%);
+  background-attachment:fixed;
+}
+.serif{font-family:"Noto Serif TC",serif}
+.lat{font-family:"Cormorant Garamond","Noto Serif TC",serif}
+a{color:inherit;text-decoration:none}
+#wrap{width:100%;max-width:468px;margin:0 auto;padding:0 0 calc(104px + env(safe-area-inset-bottom)) 0;overflow:hidden}
+
+/* ── HERO ── */
+.hero{position:relative;padding:30px 24px 0}
+.brandrow{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:22px}
+.logo{width:158px;height:auto;opacity:.97}
+.portrait-frame{
+  position:relative;width:100%;aspect-ratio:1/1.14;border-radius:20px;overflow:hidden;
+  border:1px solid var(--line2);
+  box-shadow:0 24px 60px -24px rgba(0,0,0,.8), 0 0 0 1px rgba(201,168,106,.12) inset;
+}
+.portrait-frame img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+.portrait-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,19,16,0) 54%,rgba(23,19,16,.86) 100%)}
+.namecard{position:absolute;left:24px;right:24px;bottom:22px;z-index:2}
+.name{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.name .cn{font-size:34px;font-weight:600;letter-spacing:.14em;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.name .en{font-size:30px;font-style:italic;color:var(--gold2);line-height:1}
+.role{margin-top:7px;font-size:13.5px;letter-spacing:.34em;color:var(--ink);padding-left:.34em}
+.role b{color:var(--gold2);font-weight:500}
+
+/* ── TAGLINE ── */
+.tagline{text-align:center;padding:30px 30px 6px}
+.tagline .q{font-size:23px;font-weight:600;letter-spacing:.08em;color:var(--gold2);line-height:1.55}
+.tagline .sub{margin-top:12px;font-size:13.5px;color:var(--muted);letter-spacing:.04em;line-height:1.9}
+
+.rule{display:flex;align-items:center;justify-content:center;gap:12px;margin:26px auto 4px;color:var(--gold-deep)}
+.rule::before,.rule::after{content:"";height:1px;width:46px;background:linear-gradient(90deg,transparent,var(--line2))}
+.rule::after{background:linear-gradient(90deg,var(--line2),transparent)}
+.rule i{width:5px;height:5px;transform:rotate(45deg);background:var(--gold);display:inline-block}
+
+/* ── SECTION ── */
+section{padding:12px 24px}
+.kicker{font-family:"Cormorant Garamond",serif;font-size:14px;letter-spacing:.4em;color:var(--gold-deep);font-weight:600;text-transform:uppercase}
+.sec-h{font-size:19px;font-weight:700;letter-spacing:.14em;color:var(--ink);margin:3px 0 16px}
+
+/* 設計心法 */
+.creed{display:flex;flex-direction:column;gap:2px}
+.creed .item{padding:15px 2px;border-bottom:1px solid var(--line)}
+.creed .item:last-child{border-bottom:none}
+.creed .t{font-size:16px;font-weight:600;letter-spacing:.06em;color:var(--gold2);display:flex;align-items:center;gap:10px}
+.creed .t .no{font-family:"Cormorant Garamond",serif;font-size:19px;font-style:italic;color:var(--gold-deep);min-width:1.4em}
+.creed .d{margin-top:5px;padding-left:calc(1.4em + 10px);font-size:13.5px;color:var(--ink2);line-height:1.85}
+
+/* WHAT WE DO */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:2px}
+.chip{
+  padding:9px 15px;border:1px solid var(--line2);border-radius:100px;
+  font-size:13.5px;letter-spacing:.06em;color:var(--ink);
+  background:linear-gradient(145deg,rgba(201,168,106,.07),rgba(201,168,106,.02));
+}
+.chip b{color:var(--gold2);font-weight:500}
+
+/* 獎項 */
+.awards{margin:18px 24px 4px;padding:16px 18px;border-radius:14px;
+  border:1px solid var(--line2);background:linear-gradient(145deg,rgba(201,168,106,.09),rgba(201,168,106,.02));
+  display:flex;align-items:center;gap:14px}
+.awards .medal{font-size:26px;line-height:1}
+.awards .txt .l{font-size:11.5px;letter-spacing:.3em;color:var(--gold-deep);font-weight:600}
+.awards .txt .v{font-size:14px;color:var(--ink);font-weight:500;margin-top:2px;letter-spacing:.03em}
+
+/* 聯絡 */
+.contact{margin-top:8px}
+.crow{display:flex;align-items:center;gap:14px;padding:13px 2px;border-bottom:1px solid var(--line)}
+.crow:last-child{border-bottom:none}
+.crow .ic{width:34px;height:34px;flex:0 0 34px;border-radius:50%;border:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:15px}
+.crow .meta{flex:1;min-width:0}
+.crow .meta .k{font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.crow .meta .v{font-size:15px;color:var(--ink);font-weight:500;letter-spacing:.02em;word-break:break-all}
+
+/* 據點 */
+.locs{margin-top:16px;padding:16px 18px;border-radius:14px;border:1px solid var(--line);background:var(--panel)}
+.locs .h{font-size:11.5px;letter-spacing:.3em;color:var(--gold-deep);font-weight:600;margin-bottom:10px}
+.locs .lrow{display:flex;gap:10px;font-size:13px;color:var(--ink2);padding:5px 0;line-height:1.7}
+.locs .lrow .tag{flex:0 0 2.4em;color:var(--gold2);font-weight:600}
+
+/* 社群 */
+.social{display:flex;justify-content:center;gap:16px;margin:26px 0 6px}
+.social a{width:46px;height:46px;border-radius:50%;border:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;background:rgba(201,168,106,.05);transition:transform .12s,border-color .12s}
+.social a:active{transform:scale(.92)}
+.social img{width:21px;height:21px;opacity:.9}
+
+.legal{text-align:center;font-size:10.5px;color:#6b5f4f;letter-spacing:.08em;margin:18px 24px 0;line-height:1.8}
+
+/* ── BOTTOM CTA BAR ── */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;
+  padding:12px 16px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(23,19,16,0),#171310 32%)}
+.bar-inner{max-width:468px;margin:0 auto;display:flex;gap:9px}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:14px 8px;border-radius:13px;font-size:14px;font-weight:700;letter-spacing:.06em;
+  border:1px solid transparent;transition:transform .1s}
+.btn:active{transform:scale(.97)}
+.btn-line{background:linear-gradient(145deg,#06C755,#04a948);color:#fff}
+.btn-ghost{background:rgba(201,168,106,.1);border-color:var(--line2);color:var(--gold2)}
+.btn .i{font-size:16px}
+
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,16px);
+  background:#f3ece0;color:#231d18;padding:11px 20px;border-radius:100px;font-size:13px;font-weight:500;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:60;white-space:nowrap;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:360px){
+  .name .cn{font-size:30px}.name .en{font-size:26px}
+  .tagline .q{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="brandrow">
+      <img class="logo" src="puyu-logo.png" alt="PURELY DESIGN 菩語國際設計">
+    </div>
+    <div class="portrait-frame">
+      <img src="flex-portrait.jpg" alt="邱伊嫻 Vivian 設計總監">
+      <div class="namecard">
+        <div class="name"><span class="cn serif">邱伊嫻</span><span class="en lat">Vivian</span></div>
+        <div class="role">設 計 總 監　<b>PURELY&nbsp;DESIGN</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAGLINE -->
+  <div class="tagline">
+    <div class="q serif">讓空間，<br>知道自己是誰。</div>
+    <div class="sub">好的設計，不是替你決定怎麼生活，<br>而是讓家，長成你本來的樣子。</div>
+  </div>
+
+  <div class="rule"><i></i></div>
+
+  <!-- 設計心法 -->
+  <section>
+    <div class="kicker">Our Belief</div>
+    <div class="sec-h serif">菩語的設計心法</div>
+    <div class="creed">
+      <div class="item">
+        <div class="t"><span class="no lat">01</span>先懂生活，再談風格</div>
+        <div class="d">從你怎麼過日子開始，不從型錄開始。空間是為了住的人而存在。</div>
+      </div>
+      <div class="item">
+        <div class="t"><span class="no lat">02</span>看不見的地方，決定住得久不久</div>
+        <div class="d">水電、防水、收納——這些你十年後才會感謝的細節，我們現在就替你做好。</div>
+      </div>
+      <div class="item">
+        <div class="t"><span class="no lat">03</span>好看，更要好住</div>
+        <div class="d">美學是為生活服務，不是生活去遷就美學。能被好好使用的，才是好設計。</div>
+      </div>
+      <div class="item">
+        <div class="t"><span class="no lat">04</span>完工，不是句點</div>
+        <div class="d">交屋之後的每一天，菩語都還在。保固與售後，是我們對一個家的承諾。</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"><i></i></div>
+
+  <!-- WHAT WE DO -->
+  <section>
+    <div class="kicker">What We Do</div>
+    <div class="sec-h serif">我們做的事</div>
+    <div class="chips">
+      <span class="chip"><b>新成屋</b>　空間規劃</span>
+      <span class="chip"><b>老屋</b>　翻新改造</span>
+      <span class="chip"><b>豪宅</b>　整體設計</span>
+      <span class="chip"><b>商業空間</b></span>
+      <span class="chip"><b>銀齡</b>　適居改造</span>
+      <span class="chip"><b>軟裝</b>　陳設佈置</span>
+    </div>
+  </section>
+
+  <!-- 獎項 -->
+  <div class="awards">
+    <div class="medal">🏆</div>
+    <div class="txt">
+      <div class="l">INTERNATIONAL AWARDS</div>
+      <div class="v">iF Design 2023・MUSE Design 2023 三金</div>
+    </div>
+  </div>
+
+  <!-- 聯絡 -->
+  <section>
+    <div class="kicker">Contact</div>
+    <div class="sec-h serif">聯絡菩語</div>
+    <div class="contact">
+      <a class="crow" href="tel:0960558533">
+        <div class="ic">✆</div>
+        <div class="meta"><div class="k">PHONE</div><div class="v">0960-558-533</div></div>
+      </a>
+      <a class="crow" href="https://line.me/R/ti/p/@nkt7460n" target="_blank" rel="noopener">
+        <div class="ic">◍</div>
+        <div class="meta"><div class="k">LINE 官方帳號</div><div class="v">@nkt7460n</div></div>
+      </a>
+      <a class="crow" href="mailto:purely@purely2006.com">
+        <div class="ic">✉</div>
+        <div class="meta"><div class="k">EMAIL</div><div class="v">purely@purely2006.com</div></div>
+      </a>
+      <a class="crow" href="https://www.purely2006.com" target="_blank" rel="noopener">
+        <div class="ic">◆</div>
+        <div class="meta"><div class="k">WEBSITE 官網</div><div class="v">purely2006.com</div></div>
+      </a>
+    </div>
+
+    <div class="locs">
+      <div class="h">SHOWROOM 三大據點</div>
+      <div class="lrow"><span class="tag">北區</span><span>桃園市桃園區三民路一段 66 號</span></div>
+      <div class="lrow"><span class="tag">中區</span><span>台中市西屯區上石路 51 號</span></div>
+      <div class="lrow"><span class="tag">南區</span><span>台南市東區裕和五街 237 號</span></div>
+    </div>
+  </section>
+
+  <!-- 社群 -->
+  <div class="social">
+    <a href="https://www.instagram.com/pure_interiordesign/" target="_blank" rel="noopener" aria-label="Instagram"><img src="ic-ig.png" alt="IG"></a>
+    <a href="https://www.facebook.com/purely2006" target="_blank" rel="noopener" aria-label="Facebook"><img src="ic-fb.png" alt="FB"></a>
+    <a href="https://www.threads.net/@pure_interiordesign" target="_blank" rel="noopener" aria-label="Threads"><img src="ic-threads.png" alt="Threads"></a>
+  </div>
+
+  <div class="legal">菩語國際設計　PURELY DESIGN<br>內營室業字第 40E2008631 號</div>
+
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bar"><div class="bar-inner">
+  <a class="btn btn-line" href="https://line.me/R/ti/p/@nkt7460n" target="_blank" rel="noopener"><span class="i">◍</span>加菩語 LINE</a>
+  <a class="btn btn-ghost" href="https://www.purely2006.com" target="_blank" rel="noopener"><span class="i">◈</span>看作品</a>
+  <button class="btn btn-ghost" id="shareBtn" type="button"><span class="i">⇪</span>分享名片</button>
+</div></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var toast=document.getElementById("toast");
+  function show(m){toast.textContent=m;toast.classList.add("show");setTimeout(function(){toast.classList.remove("show");},2200);}
+  document.getElementById("shareBtn").addEventListener("click",async function(){
+    var data={title:"邱伊嫻 Vivian｜菩語國際設計",text:"讓空間知道自己是誰。菩語國際設計 設計總監 邱伊嫻 Vivian。",url:location.href};
+    try{
+      if(navigator.share){await navigator.share(data);return;}
+    }catch(e){ if(e&&e.name==="AbortError")return; }
+    try{
+      await navigator.clipboard.writeText(location.href);
+      show("名片連結已複製 ✦");
+    }catch(e){ show("長按網址即可複製分享"); }
+  });
+})();
+</script>
+</body>
+</html>
