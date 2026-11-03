@@ -33,7 +33,9 @@
             { "type": "separator", "color": "#3A352C", "margin": "sm" },
             { "type": "text", "text": "室內設計・豪宅・老屋翻新・商業空間", "size": "xs", "color": "#D9C6A5", "wrap": true, "margin": "sm" },
             { "type": "text", "text": "服務地區　桃園・雙北・台中・台南", "size": "xs", "color": "#B4AA98", "wrap": true },
-            { "type": "text", "text": "電話　0960-558-533", "size": "xs", "color": "#B4AA98" }
+            { "type": "text", "text": "電話　0960-558-533", "size": "xs", "color": "#B4AA98" },
+            { "type": "separator", "color": "#3A352C", "margin": "md" },
+            { "type": "text", "text": "讓空間，知道自己是誰。", "size": "sm", "color": "#C9A96A", "align": "center", "margin": "md" }
           ]
         },
         "footer": {
@@ -81,16 +83,16 @@
             { "type": "text", "text": "OUR BELIEF", "size": "xs", "color": "#A6854E", "weight": "bold" },
             { "type": "text", "text": "菩語的設計心法", "size": "lg", "weight": "bold", "color": "#E7D7B4" },
             { "type": "separator", "color": "#3A352C", "margin": "sm" },
-            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "sm", "contents": [
               { "type": "text", "text": "01", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
               { "type": "text", "text": "先懂生活，再談風格", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "sm", "contents": [
               { "type": "text", "text": "02", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
               { "type": "text", "text": "看不見的地方，決定住得久不久", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "sm", "contents": [
               { "type": "text", "text": "03", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
               { "type": "text", "text": "好看，更要好住", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "sm", "contents": [
               { "type": "text", "text": "04", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
               { "type": "text", "text": "完工，不是句點", "size": "sm", "color": "#F3EFE8", "wrap": true } ] }
           ]
