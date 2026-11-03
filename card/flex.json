@@ -11,62 +11,50 @@
           "type": "image",
           "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=2",
           "size": "full",
-          "aspectRatio": "4:5",
+          "aspectRatio": "1:1",
           "aspectMode": "cover"
         },
         "body": {
           "type": "box",
           "layout": "vertical",
-          "spacing": "md",
+          "spacing": "sm",
           "backgroundColor": "#1A1613",
-          "paddingAll": "18px",
+          "paddingAll": "16px",
           "contents": [
             { "type": "text", "text": "菩語國際設計　PURELY DESIGN", "size": "xs", "color": "#C9A96A" },
             {
               "type": "box", "layout": "baseline", "spacing": "sm",
               "contents": [
-                { "type": "text", "text": "邱伊嫻", "size": "xxl", "weight": "bold", "color": "#F3EFE8", "flex": 0 },
-                { "type": "text", "text": "Vivian", "size": "lg", "color": "#E7D7B4" }
+                { "type": "text", "text": "邱伊嫻", "size": "xl", "weight": "bold", "color": "#F3EFE8", "flex": 0 },
+                { "type": "text", "text": "Vivian", "size": "md", "color": "#E7D7B4" },
+                { "type": "text", "text": "設計總監", "size": "xs", "color": "#C9A96A", "align": "end" }
               ]
             },
-            { "type": "text", "text": "設 計 總 監", "size": "sm", "color": "#C9A96A" },
-            { "type": "separator", "color": "#3A352C", "margin": "md" },
-            { "type": "text", "text": "室內設計・豪宅・老屋翻新・商業空間", "size": "sm", "color": "#D9C6A5", "wrap": true, "margin": "md" },
-            {
-              "type": "box", "layout": "vertical", "margin": "md",
-              "contents": [
-                { "type": "text", "text": "服務地區", "size": "xs", "color": "#8A7A5E" },
-                { "type": "text", "text": "桃園・雙北・台中・台南", "size": "sm", "color": "#F3EFE8", "wrap": true }
-              ]
-            },
-            {
-              "type": "box", "layout": "vertical", "margin": "sm",
-              "contents": [
-                { "type": "text", "text": "電話", "size": "xs", "color": "#8A7A5E" },
-                { "type": "text", "text": "0960-558-533", "size": "sm", "color": "#F3EFE8" }
-              ]
-            }
+            { "type": "separator", "color": "#3A352C", "margin": "sm" },
+            { "type": "text", "text": "室內設計・豪宅・老屋翻新・商業空間", "size": "xs", "color": "#D9C6A5", "wrap": true, "margin": "sm" },
+            { "type": "text", "text": "服務地區　桃園・雙北・台中・台南", "size": "xs", "color": "#B4AA98", "wrap": true },
+            { "type": "text", "text": "電話　0960-558-533", "size": "xs", "color": "#B4AA98" }
           ]
         },
         "footer": {
           "type": "box",
-          "layout": "vertical",
+          "layout": "horizontal",
           "spacing": "sm",
           "backgroundColor": "#1A1613",
-          "paddingAll": "18px",
+          "paddingAll": "16px",
           "paddingTop": "0px",
           "contents": [
             {
-              "type": "box", "layout": "vertical", "backgroundColor": "#C9A96A", "cornerRadius": "10px",
-              "paddingTop": "13px", "paddingBottom": "13px",
+              "type": "box", "layout": "vertical", "flex": 1, "backgroundColor": "#C9A96A", "cornerRadius": "8px",
+              "paddingTop": "11px", "paddingBottom": "11px",
               "action": { "type": "uri", "label": "分享我的名片", "uri": "https://liff.line.me/2011689768-hDorDrUd" },
-              "contents": [ { "type": "text", "text": "分享我的名片", "align": "center", "size": "md", "weight": "bold", "color": "#1E1A12" } ]
+              "contents": [ { "type": "text", "text": "分享我的名片", "align": "center", "size": "sm", "weight": "bold", "color": "#1E1A12" } ]
             },
             {
-              "type": "box", "layout": "vertical", "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "10px",
-              "paddingTop": "13px", "paddingBottom": "13px",
+              "type": "box", "layout": "vertical", "flex": 1, "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "8px",
+              "paddingTop": "11px", "paddingBottom": "11px",
               "action": { "type": "uri", "label": "加菩語 LINE", "uri": "https://line.me/R/ti/p/@nkt7460n" },
-              "contents": [ { "type": "text", "text": "加菩語 LINE", "align": "center", "size": "md", "weight": "bold", "color": "#E7D7B4" } ]
+              "contents": [ { "type": "text", "text": "加菩語 LINE", "align": "center", "size": "sm", "weight": "bold", "color": "#E7D7B4" } ]
             }
           ]
         },
@@ -80,69 +68,45 @@
           "type": "image",
           "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-detail45.png?v=1",
           "size": "full",
-          "aspectRatio": "4:5",
+          "aspectRatio": "1:1",
           "aspectMode": "cover"
         },
         "body": {
           "type": "box",
           "layout": "vertical",
-          "spacing": "md",
+          "spacing": "sm",
           "backgroundColor": "#1A1613",
-          "paddingAll": "20px",
+          "paddingAll": "16px",
           "contents": [
             { "type": "text", "text": "OUR BELIEF", "size": "xs", "color": "#A6854E", "weight": "bold" },
-            { "type": "text", "text": "菩語的設計心法", "size": "xl", "weight": "bold", "color": "#E7D7B4" },
-            { "type": "separator", "color": "#3A352C", "margin": "md" },
-            {
-              "type": "box", "layout": "vertical", "margin": "md", "spacing": "xs",
-              "contents": [
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "01", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
-                  { "type": "text", "text": "先懂生活，再談風格", "size": "md", "color": "#F3EFE8", "weight": "bold", "wrap": true } ] },
-                { "type": "text", "text": "從你怎麼過日子開始，不從型錄開始。", "size": "xs", "color": "#B4AA98", "wrap": true }
-              ]
-            },
-            {
-              "type": "box", "layout": "vertical", "margin": "md", "spacing": "xs",
-              "contents": [
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "02", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
-                  { "type": "text", "text": "看不見的地方，決定住得久不久", "size": "md", "color": "#F3EFE8", "weight": "bold", "wrap": true } ] },
-                { "type": "text", "text": "水電、防水、收納，是你十年後才會感謝的細節。", "size": "xs", "color": "#B4AA98", "wrap": true }
-              ]
-            },
-            {
-              "type": "box", "layout": "vertical", "margin": "md", "spacing": "xs",
-              "contents": [
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "03", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
-                  { "type": "text", "text": "好看，更要好住", "size": "md", "color": "#F3EFE8", "weight": "bold", "wrap": true } ] },
-                { "type": "text", "text": "美學為生活服務，不是生活去遷就美學。", "size": "xs", "color": "#B4AA98", "wrap": true }
-              ]
-            },
-            {
-              "type": "box", "layout": "vertical", "margin": "md", "spacing": "xs",
-              "contents": [
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "04", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
-                  { "type": "text", "text": "完工，不是句點", "size": "md", "color": "#F3EFE8", "weight": "bold", "wrap": true } ] },
-                { "type": "text", "text": "交屋之後的每一天，菩語都還在。", "size": "xs", "color": "#B4AA98", "wrap": true }
-              ]
-            }
+            { "type": "text", "text": "菩語的設計心法", "size": "lg", "weight": "bold", "color": "#E7D7B4" },
+            { "type": "separator", "color": "#3A352C", "margin": "sm" },
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+              { "type": "text", "text": "01", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
+              { "type": "text", "text": "先懂生活，再談風格", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+              { "type": "text", "text": "02", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
+              { "type": "text", "text": "看不見的地方，決定住得久不久", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+              { "type": "text", "text": "03", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
+              { "type": "text", "text": "好看，更要好住", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+              { "type": "text", "text": "04", "size": "sm", "color": "#C9A96A", "weight": "bold", "flex": 0 },
+              { "type": "text", "text": "完工，不是句點", "size": "sm", "color": "#F3EFE8", "wrap": true } ] }
           ]
         },
         "footer": {
           "type": "box",
           "layout": "vertical",
           "backgroundColor": "#1A1613",
-          "paddingAll": "20px",
+          "paddingAll": "16px",
           "paddingTop": "0px",
           "contents": [
             {
-              "type": "box", "layout": "vertical", "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "10px",
-              "paddingTop": "13px", "paddingBottom": "13px",
+              "type": "box", "layout": "vertical", "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "8px",
+              "paddingTop": "11px", "paddingBottom": "11px",
               "action": { "type": "uri", "label": "預約設計諮詢", "uri": "https://liff.line.me/2011689768-LQWydmVc" },
-              "contents": [ { "type": "text", "text": "預約設計諮詢", "align": "center", "size": "md", "weight": "bold", "color": "#E7D7B4" } ]
+              "contents": [ { "type": "text", "text": "預約設計諮詢", "align": "center", "size": "sm", "weight": "bold", "color": "#E7D7B4" } ]
             }
           ]
         },
@@ -156,58 +120,43 @@
           "type": "image",
           "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-work45.png?v=1",
           "size": "full",
-          "aspectRatio": "4:5",
+          "aspectRatio": "1:1",
           "aspectMode": "cover"
         },
         "body": {
           "type": "box",
           "layout": "vertical",
-          "spacing": "md",
+          "spacing": "sm",
           "backgroundColor": "#1A1613",
-          "paddingAll": "20px",
+          "paddingAll": "16px",
           "contents": [
             { "type": "text", "text": "WHAT WE DO", "size": "xs", "color": "#C9A96A", "weight": "bold" },
-            { "type": "text", "text": "我們做的事", "size": "xl", "weight": "bold", "color": "#E7D7B4" },
+            { "type": "text", "text": "我們做的事", "size": "lg", "weight": "bold", "color": "#E7D7B4" },
+            { "type": "separator", "color": "#3A352C", "margin": "sm" },
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+              { "type": "text", "text": "◆", "size": "xs", "color": "#C9A96A", "flex": 0 },
+              { "type": "text", "text": "住宅・豪宅・商業空間", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+              { "type": "text", "text": "◆", "size": "xs", "color": "#C9A96A", "flex": 0 },
+              { "type": "text", "text": "老屋翻新・醫療展店・軟裝陳設", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
             { "type": "separator", "color": "#3A352C", "margin": "md" },
-            {
-              "type": "box", "layout": "vertical", "spacing": "sm", "margin": "md",
-              "contents": [
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "◆", "size": "xs", "color": "#C9A96A", "flex": 0 },
-                  { "type": "text", "text": "住宅空間・整體規劃", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "◆", "size": "xs", "color": "#C9A96A", "flex": 0 },
-                  { "type": "text", "text": "老屋翻新・結構改造", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "◆", "size": "xs", "color": "#C9A96A", "flex": 0 },
-                  { "type": "text", "text": "豪宅設計・商業空間", "size": "sm", "color": "#F3EFE8", "wrap": true } ] },
-                { "type": "box", "layout": "baseline", "spacing": "sm", "contents": [
-                  { "type": "text", "text": "◆", "size": "xs", "color": "#C9A96A", "flex": 0 },
-                  { "type": "text", "text": "醫療展店・軟裝陳設", "size": "sm", "color": "#F3EFE8", "wrap": true } ] }
-              ]
-            },
-            { "type": "separator", "color": "#3A352C", "margin": "md" },
-            {
-              "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md",
-              "contents": [
-                { "type": "text", "text": "🏆", "size": "sm", "flex": 0 },
-                { "type": "text", "text": "iF 2023・MUSE 2023 三金", "size": "sm", "color": "#E7D7B4", "wrap": true }
-              ]
-            }
+            { "type": "box", "layout": "baseline", "spacing": "sm", "margin": "md", "contents": [
+              { "type": "text", "text": "🏆", "size": "sm", "flex": 0 },
+              { "type": "text", "text": "iF 2023・MUSE 2023 三金", "size": "sm", "color": "#E7D7B4", "wrap": true } ] }
           ]
         },
         "footer": {
           "type": "box",
           "layout": "vertical",
           "backgroundColor": "#1A1613",
-          "paddingAll": "20px",
+          "paddingAll": "16px",
           "paddingTop": "0px",
           "contents": [
             {
-              "type": "box", "layout": "vertical", "backgroundColor": "#C9A96A", "cornerRadius": "10px",
-              "paddingTop": "13px", "paddingBottom": "13px",
+              "type": "box", "layout": "vertical", "backgroundColor": "#C9A96A", "cornerRadius": "8px",
+              "paddingTop": "11px", "paddingBottom": "11px",
               "action": { "type": "uri", "label": "看更多作品", "uri": "https://www.purely2006.com/design-works" },
-              "contents": [ { "type": "text", "text": "看更多作品", "align": "center", "size": "md", "weight": "bold", "color": "#1E1A12" } ]
+              "contents": [ { "type": "text", "text": "看更多作品", "align": "center", "size": "sm", "weight": "bold", "color": "#1E1A12" } ]
             }
           ]
         },
