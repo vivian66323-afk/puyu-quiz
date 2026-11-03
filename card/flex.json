@@ -11,7 +11,7 @@
           "type": "image",
           "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-portrait.jpg?v=2",
           "size": "full",
-          "aspectRatio": "3:4",
+          "aspectRatio": "4:5",
           "aspectMode": "cover"
         },
         "body": {
@@ -76,6 +76,13 @@
       {
         "type": "bubble",
         "size": "mega",
+        "hero": {
+          "type": "image",
+          "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-detail45.png?v=1",
+          "size": "full",
+          "aspectRatio": "4:5",
+          "aspectMode": "cover"
+        },
         "body": {
           "type": "box",
           "layout": "vertical",
@@ -121,12 +128,25 @@
                   { "type": "text", "text": "完工，不是句點", "size": "md", "color": "#F3EFE8", "weight": "bold", "wrap": true } ] },
                 { "type": "text", "text": "交屋之後的每一天，菩語都還在。", "size": "xs", "color": "#B4AA98", "wrap": true }
               ]
-            },
-            { "type": "separator", "color": "#3A352C", "margin": "lg" },
-            { "type": "text", "text": "讓空間，知道自己是誰。", "size": "sm", "color": "#C9A96A", "align": "center", "margin": "lg" }
+            }
           ]
         },
-        "styles": { "body": { "backgroundColor": "#1A1613" } }
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "backgroundColor": "#1A1613",
+          "paddingAll": "20px",
+          "paddingTop": "0px",
+          "contents": [
+            {
+              "type": "box", "layout": "vertical", "borderWidth": "1px", "borderColor": "#C9A96A", "cornerRadius": "10px",
+              "paddingTop": "13px", "paddingBottom": "13px",
+              "action": { "type": "uri", "label": "預約設計諮詢", "uri": "https://liff.line.me/2011689768-LQWydmVc" },
+              "contents": [ { "type": "text", "text": "預約設計諮詢", "align": "center", "size": "md", "weight": "bold", "color": "#E7D7B4" } ]
+            }
+          ]
+        },
+        "styles": { "hero": { "backgroundColor": "#1A1613" }, "body": { "backgroundColor": "#1A1613" }, "footer": { "backgroundColor": "#1A1613" } }
       },
 
       {
@@ -134,9 +154,9 @@
         "size": "mega",
         "hero": {
           "type": "image",
-          "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-work-hero.png?v=1",
+          "url": "https://vivian66323-afk.github.io/puyu-quiz/card/flex-work45.png?v=1",
           "size": "full",
-          "aspectRatio": "1040:592",
+          "aspectRatio": "4:5",
           "aspectMode": "cover"
         },
         "body": {
