@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flex 名片預覽</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#8a9bb0;font-family:"Noto Sans TC",sans-serif}
+  #stage{display:flex;gap:12px;padding:20px 16px;overflow-x:auto;align-items:flex-start}
+  .bubble{flex:0 0 300px;width:300px;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.25);background:#1A1613}
+  .bubble img.hero{display:block;width:100%;height:auto}
+  .txt{line-height:1.5}
+  .sep{height:1px;border:none}
+</style>
+</head>
+<body>
+<div id="stage">載入中…</div>
+<script>
+const SZ={xxs:10,xs:11,sm:13,md:14.5,lg:16.5,xl:19.5,xxl:24,"3xl":28};
+const SP={none:0,xs:4,sm:8,md:12,lg:16,xl:20,xxl:24};
+function px(v){return (typeof v==="string"&&v.endsWith("px"))?v:(v||0)+"px";}
+function applyPad(el,c){
+  if(c.paddingAll)el.style.padding=px(c.paddingAll);
+  if(c.paddingTop!=null)el.style.paddingTop=px(c.paddingTop);
+  if(c.paddingBottom!=null)el.style.paddingBottom=px(c.paddingBottom);
+  if(c.paddingStart!=null)el.style.paddingLeft=px(c.paddingStart);
+  if(c.paddingEnd!=null)el.style.paddingRight=px(c.paddingEnd);
+}
+function render(c){
+  if(c.type==="text"){
+    const t=document.createElement("div");t.className="txt";
+    t.textContent=c.text||"";
+    t.style.fontSize=(SZ[c.size]||SZ.md)+"px";
+    t.style.color=c.color||"#111";
+    if(c.weight==="bold")t.style.fontWeight=700;
+    if(c.align)t.style.textAlign=c.align;
+    t.style.whiteSpace=c.wrap?"normal":"nowrap";
+    if(!c.wrap){t.style.overflow="hidden";t.style.textOverflow="ellipsis";}
+    if(c.margin)t.style.marginTop=(SP[c.margin]||0)+"px";
+    if(c.flex===0)t.style.flex="0 0 auto";else t.style.flex="1 1 auto";
+    return t;
+  }
+  if(c.type==="separator"){
+    const s=document.createElement("hr");s.className="sep";
+    s.style.background=c.color||"#ddd";
+    if(c.margin)s.style.margin=(SP[c.margin]||0)+"px 0 0";
+    return s;
+  }
+  if(c.type==="image"){
+    const im=document.createElement("img");im.className="hero";im.src=c.url;
+    if(c.aspectRatio){const[a,b]=c.aspectRatio.split(":").map(Number);im.style.aspectRatio=a+"/"+b;im.style.objectFit=(c.aspectMode==="cover")?"cover":"contain";im.style.width="100%";im.style.height="auto";}
+    return im;
+  }
+  // box
+  const box=document.createElement("div");
+  box.style.display="flex";
+  box.style.flexDirection=(c.layout==="horizontal"||c.layout==="baseline")?"row":"column";
+  if(c.layout==="baseline")box.style.alignItems="baseline";
+  if(c.spacing)box.style.gap=(SP[c.spacing]||0)+"px";
+  if(c.backgroundColor)box.style.background=c.backgroundColor;
+  if(c.cornerRadius)box.style.borderRadius=px(c.cornerRadius);
+  if(c.borderWidth){box.style.border=px(c.borderWidth)+" solid "+(c.borderColor||"#000");}
+  if(c.margin)box.style.marginTop=(SP[c.margin]||0)+"px";
+  if(c.flex===0)box.style.flex="0 0 auto";else if(c.flex)box.style.flex=c.flex+" 1 0";
+  applyPad(box,c);
+  (c.contents||[]).forEach(ch=>box.appendChild(render(ch)));
+  return box;
+}
+function renderBubble(b){
+  const el=document.createElement("div");el.className="bubble";
+  const bg=(b.styles&&b.styles.body&&b.styles.body.backgroundColor)||"#fff";
+  el.style.background=bg;
+  if(b.hero)el.appendChild(render(b.hero));
+  if(b.body)el.appendChild(render(b.body));
+  if(b.footer)el.appendChild(render(b.footer));
+  return el;
+}
+fetch("./flex.json?v="+Date.now()).then(r=>r.json()).then(d=>{
+  const stage=document.getElementById("stage");stage.innerHTML="";
+  const cs=d.contents;
+  const bubbles=cs.type==="carousel"?cs.contents:[cs];
+  bubbles.forEach(b=>stage.appendChild(renderBubble(b)));
+}).catch(e=>{document.getElementById("stage").textContent="讀取失敗："+e;});
+</script>
+</body>
+</html>

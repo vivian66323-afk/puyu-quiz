@@ -666,10 +666,17 @@ src="https://www.facebook.com/tr?id=650382609038890&ev=PageView&noscript=1"
 
     var inClient = (typeof liff !== "undefined" && liff.isInClient && liff.isInClient());
 
-    // 在 LINE 內：送出「整張名片圖 + 一行完整名片連結」（圖片訊息最穩，必顯示）
+    // 在 LINE 內：送出三格名片卡（carousel）。以 flex.json 為單一真相來源，
+    // 讀取失敗時退回內建卡片，確保永遠送得出去。
     if (inClient) {
+      var msg = null;
       try {
-        await liff.shareTargetPicker([ flexCardMessage() ]);
+        var res = await fetch("./flex.json?v=" + Date.now());
+        if (res.ok) { msg = await res.json(); }
+      } catch (e) { console.warn("[card] load flex.json failed:", e); }
+      if (!msg) { msg = flexCardMessage(); }
+      try {
+        await liff.shareTargetPicker([ msg ]);
       } catch (err) {
         console.warn("[card] shareTargetPicker failed:", err);
         showToast("分享未完成，可用下方按鈕聯絡");
