@@ -51,10 +51,19 @@ a{color:var(--gold-txt)}
 .why .wh{font-size:11px;letter-spacing:.18em;color:var(--gold-txt);font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:7px}
 .why .wh::before{content:"✦";color:var(--gold-soft);font-size:12px}
 .why p{font-size:14px;line-height:1.95;color:#4a4640}
-.rec{margin-top:26px}
+/* 快選題 */
+.qblock{margin-top:24px}
+.qq{font-size:14.5px;font-weight:400;color:#2f2c28;margin-bottom:12px;line-height:1.7}
+.qq .qm{font-size:12px;color:var(--muted);font-weight:300}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font-family:inherit;font-size:13.5px;font-weight:300;color:#4a4640;background:#fff;border:1px solid var(--line);border-radius:100px;padding:9px 15px;cursor:pointer;transition:all .15s;line-height:1.4}
+.opt.on{background:var(--gold);border-color:var(--gold);color:#fff;font-weight:400}
+.opt:active{transform:scale(.96)}
+/* 記一筆 */
+.rec{margin-top:28px;border-top:1px dashed var(--line);padding-top:22px}
 .rec .rh{font-size:11px;letter-spacing:.18em;color:var(--gold-txt);font-weight:500;margin-bottom:5px}
 .rec .hint{font-size:12.5px;color:var(--muted);margin-bottom:10px}
-textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:14px 15px;font-family:inherit;font-size:15px;line-height:1.9;color:var(--ink);resize:vertical;font-weight:300}
+textarea{width:100%;min-height:104px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:14px 15px;font-family:inherit;font-size:15px;line-height:1.9;color:var(--ink);resize:vertical;font-weight:300}
 textarea:focus{outline:none;border-color:var(--gold-soft);box-shadow:0 0 0 3px var(--sel)}
 .saved{font-size:11.5px;color:var(--gold-txt);margin-top:7px;height:16px;letter-spacing:.04em;opacity:0;transition:opacity .3s}
 .saved.on{opacity:1}
@@ -73,9 +82,11 @@ textarea:focus{outline:none;border-color:var(--gold-soft);box-shadow:0 0 0 3px v
 .sum .sumhd h2{font-family:"Noto Serif TC";font-size:25px;font-weight:600;letter-spacing:.02em}
 .sum .lead{text-align:center;font-size:13.5px;color:var(--muted);line-height:1.9;margin:14px auto 28px;max-width:420px}
 .block{border-top:1px solid var(--line);padding:16px 0}
-.block .bt{font-family:"Noto Serif TC";font-size:15px;font-weight:600;color:var(--gold-txt);margin-bottom:6px}
-.block .bn{font-size:14px;line-height:1.95;color:#333;white-space:pre-wrap}
-.block .empty{font-size:13px;color:#b7b1a6;font-style:normal}
+.block .bt{font-family:"Noto Serif TC";font-size:15px;font-weight:600;color:var(--gold-txt);margin-bottom:8px}
+.block .bpick{font-size:13.5px;line-height:1.9;color:#333}
+.block .bpick b{font-weight:500;color:var(--gold-txt)}
+.block .bnote{font-size:14px;line-height:1.95;color:#333;white-space:pre-wrap;margin-top:7px;padding-left:14px;border-left:2px solid var(--gold-soft)}
+.block .empty{font-size:13px;color:#b7b1a6}
 .cta{background:var(--ink);border-radius:14px;padding:26px 22px;margin:30px 0 0;text-align:center}
 .cta h3{font-family:"Noto Serif TC";font-size:18px;font-weight:600;color:var(--cream);margin-bottom:8px}
 .cta p{font-size:13px;color:rgba(245,242,236,.72);margin-bottom:18px;line-height:1.8}
@@ -98,9 +109,9 @@ textarea:focus{outline:none;border-color:var(--gold-soft);box-shadow:0 0 0 3px v
       <h1>住進理想的家之前，<br>先聽懂自己的生活</h1>
       <p class="lead">一張需求表，很難一次填得準。<br>因為我們常常是「住過了」，才知道自己真正要什麼。<br>所以，我們換個方式——每天三分鐘，一個小提問，陪你觀察自己的生活。</p>
       <div class="steps">
-        <div class="sh">READ · 記 · 回看　你只要做這幾步</div>
+        <div class="sh">READ · 選 · 記 · 回看　你只要做這幾步</div>
         <div class="step"><div class="n">1</div><div><b>讀一個今天的小提問</b><span>不用懂設計、不用準備。從早到晚，哪個時刻想到了，再看一下就好。</span></div></div>
-        <div class="step"><div class="n">2</div><div><b>把注意到的事，記一筆</b><span>自由寫下你觀察到的事或感受。不寫也沒關係，想到再補。</span></div></div>
+        <div class="step"><div class="n">2</div><div><b>點幾個符合的選項，再記一筆</b><span>懶得打字就用點的；想多說一點就在下面寫。都是選填，想到再補。</span></div></div>
         <div class="step"><div class="n">3</div><div><b>14 天後，放在一起看</b><span>累積下來的觀察，會長成一張「只屬於你的家」的需求輪廓——比任何表格都真實。</span></div></div>
       </div>
       <button class="btn" onclick="go(cur||0)">開始今天的觀察</button>
@@ -128,7 +139,7 @@ textarea:focus{outline:none;border-color:var(--gold-soft);box-shadow:0 0 0 3px v
         <div class="k">PURELY · 你的居家觀察輪廓</div>
         <h2>這 14 天，你的家告訴你的事</h2>
       </div>
-      <p class="lead">下面是你這段時間記下的觀察。它不是答案，是線索——把它交給菩語，我們會從這裡開始，替你把「生活」翻譯成「空間」。</p>
+      <p class="lead">下面是你這段時間的選擇與觀察。它不是答案，是線索——把它交給菩語，我們會從這裡開始，替你把「生活」翻譯成「空間」。</p>
       <div id="sumBody"></div>
       <div class="cta">
         <h3>把你的觀察，交給菩語</h3>
@@ -144,64 +155,81 @@ textarea:focus{outline:none;border-color:var(--gold-soft);box-shadow:0 0 0 3px v
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============ 14 天觀察提問（對應客戶需求表的維度，翻成觀察自己生活的小提問）============ */
+/* ============ 14 天觀察提問（對應客戶需求表維度：觀察生活的提問 + 快選題 + 自由記一筆）============ */
 const DAYS=[
  {tag:'玄關 · 回家動線',title:'回家的那一刻',
   ask:'今天回到家，從開門、放下東西、脫鞋、換好衣服——你的手和腳走了哪一條路線？哪一個動作最卡、最想順手卻沒地方？',
   why:'玄關不是放鞋的地方，是你每天切換「外面」和「家」的開關。它順不順，決定你一進門是鬆一口氣，還是又一陣手忙腳亂。',
-  hint:'可以記：卡住的那個動作、手上最常拿著進門的東西。'},
+  qs:[{q:'你希望玄關能順手做到哪些？',t:'multi',o:['坐著穿鞋','全身鏡','鑰匙零錢放置','外套掛','雨傘收納','包裹暫放','鞋櫃通風除臭','安全帽','推車／嬰兒車']}],
+  hint:'還想補充的（例：卡住的那個動作、手上最常拿著進門的東西）。'},
  {tag:'公共空間 · 預算',title:'你待最久的角落',
   ask:'今天在家，你實際待最久的是哪一個角落？（不是最漂亮的，是你真的賴在那裡的那個）那裡現在夠不夠舒服？',
   why:'錢該花在你真正待著的地方，不是最上相的地方。你待最久的角落，常常才是這個家真正的主角。',
-  hint:'記下那個角落，和它現在缺的一樣東西。'},
+  qs:[{q:'今天待最久的是哪個空間？',t:'single',o:['客廳','餐廳','廚房','主臥','書房','陽台','其他']}],
+  hint:'那個角落現在缺的一樣東西是？'},
  {tag:'成員 · 相聚與獨處',title:'一家人的距離',
   ask:'今晚一家人各自在做什麼？是聚在同一個空間，還是各自散開？你心裡比較嚮往哪一種？',
   why:'有人要「在一起但不吵」，有人要「各自安靜」。這一題，會讓格局長成完全不同的樣子。',
-  hint:'記下今晚大家的位置，和你理想中的那個畫面。'},
+  qs:[{q:'你家最常見的相處狀態？',t:'multi',o:['各自活動，保有安靜','多在公共空間相聚','工作、學習、休息交錯','作息差異大，需互不干擾']}],
+  hint:'你理想中一家人相處的畫面是？'},
  {tag:'餐廚 · 吃飯',title:'吃飯這件事',
   ask:'今天的飯在哪裡吃、誰煮的、油煙大不大？餐桌上除了吃飯，還發生了什麼事？（工作、小孩功課、聊天、堆雜物…）',
   why:'餐桌常是一個家真正的中心。你怎麼煮、餐桌還兼哪些角色，決定廚房要開放，還是關起來。',
-  hint:'記下餐桌今天的「第二個身分」。'},
+  qs:[{q:'在家開伙的頻率',t:'single',o:['幾乎每天','每週 3～5 次','每週 1～2 次','幾乎不開伙']},
+      {q:'餐桌除了吃飯，還兼哪些角色？',t:'multi',o:['日常用餐','親友聚會','工作、閱讀、孩子作業','手作、插花、興趣','正式宴客']}],
+  hint:'目前廚房或餐桌最困擾你的是？'},
  {tag:'客廳 · 放鬆',title:'放鬆的樣子',
   ask:'今天你是怎麼放鬆的？看電視、滑手機、發呆、追劇、還是根本沒空放鬆？理想中，放鬆該是什麼樣子？',
   why:'有些家庭正在「去客廳化」——沙發加電視不一定是答案。先看懂你怎麼休息，再決定客廳長什麼樣。',
-  hint:'記下你今天「真的有放鬆到」的那一刻（如果有的話）。'},
+  qs:[{q:'客廳對你家主要的用途？',t:'multi',o:['看電視','投影／影音','聊天、閱讀為主','小孩活動','接待客人','運動、瑜珈','想試試去客廳化']}],
+  hint:'你今天「真的有放鬆到」的那一刻（如果有的話）。'},
  {tag:'臥室 · 睡眠',title:'睡前到起床',
   ask:'從躺上床到睡著、再到早上睜開眼——有什麼讓你睡不好、或不想起床的？（光、聲音、溫度、床的大小、另一半的作息）',
   why:'臥室的光、隔音、溫濕度，決定你每天的第一口氣和最後一口氣。這裡的舒服，是最划算的投資。',
-  hint:'記下昨晚或今早，最影響睡眠的那一件事。'},
+  qs:[{q:'睡眠最常被什麼影響？',t:'multi',o:['光線太亮','外面噪音','樓上下腳步／排水聲','溫度或濕度','另一半作息','床太小','目前還好']}],
+  hint:'昨晚或今早，最影響睡眠的那一件事。'},
  {tag:'衛浴 · 日常',title:'水的時間',
   ask:'今天在浴室裡，最趕、最不順的是哪個時刻？早上會不會塞車？有沒有哪裡總是濕濕的、滑滑的、或擠擠的？',
   why:'衛浴是意外最高、也最常後悔「當初沒做好」的地方。乾濕分離、動線、收納，都藏在這些小抱怨裡。',
-  hint:'記下今天浴室讓你皺一下眉的那一下。'},
+  qs:[{q:'沐浴習慣',t:'single',o:['淋浴','泡澡','兩者都要']},
+      {q:'衛浴最想要的配備',t:'multi',o:['免治馬桶','雙面盆','浴缸','乾濕分離','暖風機','化妝鏡＋鏡燈','無障礙扶手','收納置物櫃']}],
+  hint:'今天浴室讓你皺一下眉的那一下。'},
  {tag:'溫度 · 空氣',title:'看不見的舒服',
   ask:'今天家裡會太冷或太熱嗎？誰最怕冷、誰最怕熱？有沒有悶、潮、霉、或一開冷氣就很乾的困擾？',
   why:'空調和換氣必須在「水電毛胚」階段就定案——木作進場後才想改，等於把天花板拆掉重做。這題越早想越省錢。',
-  hint:'記下今天最不舒服的那個溫度或空氣的時刻。'},
+  qs:[{q:'溫濕度最讓你受不了的時刻？',t:'multi',o:['夏天悶熱，冷氣要等很久','冬天濕冷，棉被都潮','梅雨季牆面衣櫃發霉','開冷氣太乾，早上喉嚨痛','關窗悶、開窗吵又髒','半夜被室外機聲吵醒','目前沒特別困擾']}],
+  hint:'家裡誰最怕熱、誰最怕冷？'},
  {tag:'收納 · 整理',title:'東西都放哪',
   ask:'今天有沒有哪個東西「永遠找不到位置」？哪個櫃子一打開就想趕快關上？哪一區永遠在亂？',
   why:'收納做對，家才會長久乾淨。你最頭痛的那一項，就是設計真正的起點。',
-  hint:'越具體越好——哪個東西、放在哪一區、大概多少量。'},
+  qs:[{q:'你偏好的收納原則',t:'single',o:['盡量藏起來，看不見最好','展示與收藏並重','好拿好歸位優先','依使用頻率分區']},
+      {q:'家裡有哪些大型／特殊物品？',t:'multi',o:['腳踏車','健身器材','露營裝備','樂器','大量書籍','收藏品要展示','酒藏','茶具','包款鞋款','公仔模型','小孩玩具','囤貨','沒有']}],
+  hint:'最頭痛的收納問題（越具體越好：哪個東西、哪一區、多少量）。'},
  {tag:'個人 · 獨處',title:'只屬於你的角落',
   ask:'今天有沒有一個「只想一個人靜一靜」的時刻？那時候，你有地方可以好好待著嗎？',
   why:'一個人的角落，常是維持情緒和關係的關鍵。哪怕只是一張椅子、一盞燈的位置。',
-  hint:'記下你今天最想「消失一下」的那個時刻。'},
+  qs:[{q:'你需要一個「只屬於自己」的角落嗎？',t:'single',o:['需要，一個閱讀角','需要，一個獨處放空區','需要，一間工作書房','不需要']}],
+  hint:'你今天最想「消失一下」的那個時刻。'},
  {tag:'工作 · 興趣',title:'手上的工作與興趣',
   ask:'今天你在哪裡工作、上網、或做自己的興趣？那個位置順手嗎？有沒有「很想做、卻沒有空間做」的事？',
   why:'在家工作、樂器、手作、健身、收藏……這些都需要被提前看見，否則日後只能將就。',
-  hint:'記下那件「沒空間做」的事。'},
+  qs:[{q:'你需要的工作／閱讀空間是？',t:'single',o:['獨立書房','臥室內書桌','客餐廳共用（餐桌兼工作桌）','不需要']}],
+  hint:'那件「很想做、卻沒空間做」的事。'},
  {tag:'成員 · 未來變化',title:'家人與未來',
   ask:'想一下未來 3～5 年：家裡可能多一個人、少一個人、長輩搬來、或小孩長大需要自己的房間嗎？今天的空間，接得住那個變化嗎？',
   why:'空間是為「會變的人」設計的，這比風格更優先。先想到變化，才不會住兩年就後悔。',
-  hint:'記下一個你預期得到的變化。'},
+  qs:[{q:'未來 3～5 年可能的變化',t:'multi',o:['迎接新生兒','小孩長大需獨立房間','長輩搬來同住','小孩離家','開始在家工作','增加寵物','沒有預期的變化']}],
+  hint:'這個變化會怎麼影響你對空間的想法？'},
  {tag:'風格 · 紅線',title:'你不喜歡什麼',
   ask:'今天不管在哪裡看到的畫面（別人家、飯店、咖啡廳、網路圖）——有沒有哪一個讓你心裡立刻說「這個我絕對不要」？',
   why:'「不喜歡什麼」通常比「喜歡什麼」更能快速、準確地定位你的家。紅線先畫好，風格就不會跑偏。',
-  hint:'記下那個「絕對不要」，還有為什麼。'},
+  qs:[{q:'哪種空間氛圍最打動你？',t:'multi',o:['溫潤自然的木質感','侘寂留白的安靜','精緻俐落的飯店感','有故事的古典、收藏','現代簡約','大膽有個性','柔和療癒']}],
+  hint:'那個「我絕對不要」的畫面，和為什麼。'},
  {tag:'取捨 · 理想',title:'如果只能做好三件事',
   ask:'如果預算只能先做好三件事，你會選哪三件？還有——你最不希望新家再發生一次的「舊問題」是什麼？',
   why:'這一題，就是你這個家的靈魂。設計師會從這裡開始，替你排所有決定的先後。',
-  hint:'寫下那三件事，和那個「絕對不要再來一次」的舊問題。'}
+  qs:[{q:'如果只能先做好三件事，你的最高優先？',t:'multi',max:3,o:['動線與收納','健康與空氣品質','安全與長住','廚房與餐敘','影音與放鬆','智慧與節能','風格與質感','預算控制']}],
+  hint:'那個「絕對不要再來一次」的舊問題。'}
 ];
 const N=DAYS.length;
 
@@ -209,26 +237,51 @@ const N=DAYS.length;
 const KEY='puyu_observe_v1';
 const LINE_ID='@nkt7460n';            // 菩語官方 LINE
 const BOOK_URL='https://www.purely2006.com/design-flow';
-let cur=0, notes={};
-function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d){cur=d.cur||0;notes=d.notes||{};}}catch(e){}}
-function store(){try{localStorage.setItem(KEY,JSON.stringify({cur,notes,t:Date.now()}));}catch(e){}}
+let cur=0, notes={}, picks={};
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d){cur=d.cur||0;notes=d.notes||{};picks=d.picks||{};}}catch(e){}}
+function store(){try{localStorage.setItem(KEY,JSON.stringify({cur,notes,picks,t:Date.now()}));}catch(e){}}
 const el=id=>document.getElementById(id);
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));el(id).classList.add('on');window.scrollTo(0,0);}
 function home(){show('s-intro');}
+function hasContent(d){const n=(notes[d]||'').trim();if(n)return true;const p=picks[d]||{};return Object.keys(p).some(k=>{const v=p[k];return Array.isArray(v)?v.length:v;});}
+
+/* ============ 快選題 ============ */
+function pick(btn,d,qi,oi){
+  const q=DAYS[d].qs[qi], opt=q.o[oi];
+  if(!picks[d])picks[d]={};
+  if(q.t==='single'){
+    const was=picks[d][qi];
+    [...btn.parentElement.children].forEach(c=>c.classList.remove('on'));
+    if(was===opt){picks[d][qi]='';}else{picks[d][qi]=opt;btn.classList.add('on');}
+  }else{
+    let arr=picks[d][qi]||[]; const i=arr.indexOf(opt);
+    if(i>=0){arr.splice(i,1);btn.classList.remove('on');}
+    else{ if(q.max&&arr.length>=q.max){toast('最多挑 '+q.max+' 個');return;} arr.push(opt);btn.classList.add('on'); }
+    picks[d][qi]=arr;
+  }
+  store();
+  const dot=el('dots').children[d]; if(dot)dot.classList.toggle('done',hasContent(d));
+}
 
 /* ============ 每日卡 ============ */
 function go(i){
   cur=Math.max(0,Math.min(N-1,i)); store();
   const d=DAYS[cur];
   el('dcount').textContent='第 '+(cur+1)+' 天 / '+N;
-  // 進度點
-  el('dots').innerHTML=DAYS.map((_,j)=>'<div class="dot'+(notes[j]&&notes[j].trim()?' done':'')+(j===cur?' cur':'')+'" onclick="go('+j+')"></div>').join('');
+  el('dots').innerHTML=DAYS.map((_,j)=>'<div class="dot'+(hasContent(j)?' done':'')+(j===cur?' cur':'')+'" onclick="go('+j+')"></div>').join('');
+  const qsHTML=(d.qs||[]).map((q,qi)=>{
+    const sel=(picks[cur]&&picks[cur][qi])||(q.t==='multi'?[]:'');
+    return '<div class="qblock"><div class="qq">'+q.q+(q.t==='multi'?' <span class="qm">（可複選'+(q.max?' · 最多 '+q.max+' 個':'')+'）</span>':'')+'</div><div class="opts">'+
+      q.o.map((o,oi)=>{const on=q.t==='multi'?(sel.indexOf(o)>=0):(sel===o);return '<button class="opt'+(on?' on':'')+'" onclick="pick(this,'+cur+','+qi+','+oi+')">'+o+'</button>';}).join('')+
+    '</div></div>';
+  }).join('');
   el('dayBody').innerHTML=
     '<div class="dtag">'+d.tag+'</div>'+
     '<div class="dtitle">'+d.title+'</div>'+
     '<div class="ask">'+d.ask+'</div>'+
     '<div class="why"><div class="wh">為什麼問這個</div><p>'+d.why+'</p></div>'+
-    '<div class="rec"><div class="rh">留一筆（選填）</div><div class="hint">'+d.hint+'</div>'+
+    qsHTML+
+    '<div class="rec"><div class="rh">再記一筆（選填）</div><div class="hint">'+d.hint+'</div>'+
       '<textarea id="ta" placeholder="想到什麼就寫什麼，之後都能回來補…">'+(notes[cur]||'').replace(/</g,'&lt;')+'</textarea>'+
       '<div class="saved" id="savedTip">已自動存到你的手機 ✓</div></div>'+
     '<div class="nav">'+
@@ -236,37 +289,51 @@ function go(i){
       (cur<N-1?'<button class="nextb" onclick="go('+(cur+1)+')">下一天 ›</button>':'<button class="nextb" onclick="show(\'s-sum\');renderSum();">看我的觀察輪廓 →</button>')+
     '</div>'+
     '<div class="closerow"><a onclick="show(\'s-sum\');renderSum();">今天先到這，看目前累積的觀察 →</a></div>';
-  const ta=el('ta');
-  let tmr;
+  const ta=el('ta'); let tmr;
   ta.addEventListener('input',()=>{
     notes[cur]=ta.value; store();
     el('savedTip').classList.add('on'); clearTimeout(tmr);
     tmr=setTimeout(()=>el('savedTip').classList.remove('on'),1400);
-    // 即時更新該天的進度點
-    const dot=el('dots').children[cur];
-    if(ta.value.trim())dot.classList.add('done');else dot.classList.remove('done');
+    const dot=el('dots').children[cur]; if(dot)dot.classList.toggle('done',hasContent(cur));
   });
   show('s-day');
 }
 
-/* ============ 觀察輪廓 ============ */
+/* ============ 彙整 ============ */
+function picksOf(d){
+  const out=[];
+  (DAYS[d].qs||[]).forEach((q,qi)=>{
+    const v=picks[d]&&picks[d][qi];
+    if(q.t==='multi'){ if(v&&v.length)out.push(v.join('、')); }
+    else{ if(v)out.push(v); }
+  });
+  return out;
+}
 function renderSum(){
-  const done=DAYS.filter((_,j)=>notes[j]&&notes[j].trim()).length;
   el('sumBody').innerHTML=DAYS.map((d,j)=>{
-    const v=(notes[j]||'').trim();
-    return '<div class="block"><div class="bt">第 '+(j+1)+' 天 · '+d.title+'</div>'+
-      (v?'<div class="bn">'+v.replace(/</g,'&lt;')+'</div>':'<div class="bn empty">（還沒記 · 點上方進度點可以回去補）</div>')+'</div>';
+    const p=picksOf(j), note=(notes[j]||'').trim();
+    let body='';
+    if(p.length)body+='<div class="bpick">'+p.map(x=>'<b>‹</b> '+x).join('<br>')+'</div>';
+    if(note)body+='<div class="bnote">'+note.replace(/</g,'&lt;')+'</div>';
+    if(!body)body='<div class="empty">（還沒記 · 點上方進度點可以回去補）</div>';
+    return '<div class="block"><div class="bt">第 '+(j+1)+' 天 · '+d.title+'</div>'+body+'</div>';
   }).join('');
 }
 function summaryText(){
   let s='【我的居家觀察・菩語 14 天】\n我記下了這些生活觀察，想和設計師聊聊我家的可能：\n';
-  DAYS.forEach((d,j)=>{const v=(notes[j]||'').trim();if(v)s+='\n'+(j+1)+'. '+d.title+'：'+v;});
+  DAYS.forEach((d,j)=>{
+    const p=picksOf(j), note=(notes[j]||'').trim();
+    if(!p.length&&!note)return;
+    s+='\n'+(j+1)+'. '+d.title;
+    if(p.length)s+='｜'+p.join('；');
+    if(note)s+='\n　✎ '+note;
+  });
   return s;
 }
 function copyAll(){
   const t=summaryText();
   try{navigator.clipboard.writeText(t);toast('已複製，貼到記事本或傳給設計師都可以');}
-  catch(e){toast('長按下方文字也可以複製');}
+  catch(e){toast('長按文字也可以複製');}
 }
 function goOut(url){var w=window.open(url,'_blank','noopener');if(w)return true;try{window.top.location.href=url;return true;}catch(e){}try{location.href=url;return true;}catch(e){}return false;}
 function toLine(){
