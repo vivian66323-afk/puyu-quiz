@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>菩語｜住進之前・14 天居家觀察</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1A1A;--cream:#F5F2EC;--gold:#B08D57;--gold-soft:#D9C4A3;--gold-txt:#7A5C2E;--paper:#FBFAF6;--line:#E3DDD1;--muted:#7A756B;--sel:#FBF6EC}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--cream);color:var(--ink);line-height:1.75;font-weight:300}
+#app{max-width:640px;margin:0 auto;padding:0 20px;min-height:100%}
+.screen{display:none}.screen.on{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+a{color:var(--gold-txt)}
+
+/* ---------- 封面 ---------- */
+.intro{min-height:100vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:52px 6px}
+.frame{width:92px;height:92px;margin:0 auto 26px;border-radius:2px;position:relative;overflow:hidden;box-shadow:0 18px 44px rgba(26,26,26,.18);background:linear-gradient(135deg,#2a2723,#141210)}
+.frame::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 34% 32%,var(--gold-soft) 0 12%,transparent 13%),radial-gradient(circle at 68% 64%,var(--gold) 0 9%,transparent 10%)}
+.eyebrow{font-size:11.5px;letter-spacing:.38em;color:var(--gold-txt);font-weight:500;margin-bottom:16px}
+.intro h1{font-family:"Noto Serif TC";font-weight:600;font-size:27px;letter-spacing:.02em;line-height:1.5}
+.intro .lead{color:#4a4640;font-size:14.5px;margin:20px auto 0;max-width:440px;line-height:2}
+.steps{text-align:left;max-width:430px;margin:30px auto 0;border-top:1px solid var(--line);padding-top:26px}
+.steps .sh{font-size:11px;letter-spacing:.2em;color:var(--gold-txt);font-weight:500;margin-bottom:16px;text-align:center}
+.step{display:flex;gap:14px;margin-bottom:16px}
+.step .n{flex-shrink:0;font-family:"Noto Serif TC";font-size:13px;color:var(--gold);font-weight:600;border:1px solid var(--gold-soft);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.step b{font-family:"Noto Serif TC";font-size:15px;font-weight:600;display:block;margin-bottom:2px}
+.step span{font-size:13px;color:var(--muted);line-height:1.7}
+.btn{display:inline-block;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer;padding:15px 46px;border-radius:100px;border:1px solid var(--ink);background:var(--ink);color:var(--cream);letter-spacing:.08em;transition:transform .15s;margin-top:30px}
+.btn:active{transform:scale(.97)}
+.note{font-size:12px;color:var(--muted);margin-top:16px;letter-spacing:.02em;line-height:1.8}
+
+/* ---------- 進度列 ---------- */
+.top{position:sticky;top:0;background:var(--cream);padding:16px 0 12px;z-index:10}
+.toprow{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-bottom:10px}
+.toprow .home{cursor:pointer;color:var(--gold-txt);letter-spacing:.04em}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dot{width:100%;flex:1;height:4px;border-radius:3px;background:var(--line);cursor:pointer;transition:background .2s}
+.dot.done{background:var(--gold-soft)}
+.dot.cur{background:var(--gold)}
+
+/* ---------- 每日卡 ---------- */
+.day{padding:10px 0 40px}
+.dtag{font-size:11px;letter-spacing:.2em;color:var(--gold-txt);font-weight:500;margin-bottom:10px}
+.dtitle{font-family:"Noto Serif TC";font-size:23px;font-weight:600;line-height:1.5;letter-spacing:.02em;margin-bottom:22px}
+.ask{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:4px;padding:20px 20px;font-size:16px;line-height:2;color:#2f2c28;font-weight:400}
+.why{margin-top:20px}
+.why .wh{font-size:11px;letter-spacing:.18em;color:var(--gold-txt);font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.why .wh::before{content:"✦";color:var(--gold-soft);font-size:12px}
+.why p{font-size:14px;line-height:1.95;color:#4a4640}
+.rec{margin-top:26px}
+.rec .rh{font-size:11px;letter-spacing:.18em;color:var(--gold-txt);font-weight:500;margin-bottom:5px}
+.rec .hint{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:14px 15px;font-family:inherit;font-size:15px;line-height:1.9;color:var(--ink);resize:vertical;font-weight:300}
+textarea:focus{outline:none;border-color:var(--gold-soft);box-shadow:0 0 0 3px var(--sel)}
+.saved{font-size:11.5px;color:var(--gold-txt);margin-top:7px;height:16px;letter-spacing:.04em;opacity:0;transition:opacity .3s}
+.saved.on{opacity:1}
+.nav{display:flex;gap:10px;margin-top:30px}
+.nav button{flex:1;font-family:inherit;font-size:15px;font-weight:500;padding:14px;border-radius:100px;cursor:pointer;letter-spacing:.04em;transition:transform .15s}
+.nav button:active{transform:scale(.97)}
+.prevb{background:none;border:1px solid var(--line);color:var(--muted)}
+.nextb{background:var(--ink);border:1px solid var(--ink);color:var(--cream)}
+.closerow{text-align:center;margin-top:18px}
+.closerow a{font-size:13px;color:var(--muted);text-decoration:underline;cursor:pointer;letter-spacing:.03em}
+
+/* ---------- 輪廓 ---------- */
+.sum{padding:30px 0 50px}
+.sum .sumhd{text-align:center;margin-bottom:8px}
+.sum .sumhd .k{font-size:11px;letter-spacing:.3em;color:var(--gold-txt);margin-bottom:12px}
+.sum .sumhd h2{font-family:"Noto Serif TC";font-size:25px;font-weight:600;letter-spacing:.02em}
+.sum .lead{text-align:center;font-size:13.5px;color:var(--muted);line-height:1.9;margin:14px auto 28px;max-width:420px}
+.block{border-top:1px solid var(--line);padding:16px 0}
+.block .bt{font-family:"Noto Serif TC";font-size:15px;font-weight:600;color:var(--gold-txt);margin-bottom:6px}
+.block .bn{font-size:14px;line-height:1.95;color:#333;white-space:pre-wrap}
+.block .empty{font-size:13px;color:#b7b1a6;font-style:normal}
+.cta{background:var(--ink);border-radius:14px;padding:26px 22px;margin:30px 0 0;text-align:center}
+.cta h3{font-family:"Noto Serif TC";font-size:18px;font-weight:600;color:var(--cream);margin-bottom:8px}
+.cta p{font-size:13px;color:rgba(245,242,236,.72);margin-bottom:18px;line-height:1.8}
+.line-btn{display:block;width:100%;background:#06C755;color:#fff;border:none;font-family:inherit;font-size:15.5px;font-weight:600;padding:15px;border-radius:100px;cursor:pointer;letter-spacing:.03em;margin-bottom:10px}
+.ghost-btn{display:block;width:100%;background:none;color:var(--cream);border:1px solid rgba(245,242,236,.4);font-family:inherit;font-size:14px;padding:13px;border-radius:100px;cursor:pointer;letter-spacing:.03em}
+.foot{text-align:center;font-size:11px;letter-spacing:.14em;color:var(--muted);padding:30px 0 10px;border-top:1px solid var(--line);margin-top:34px}
+.foot .g{color:var(--gold-txt)}
+.toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:12px 22px;border-radius:100px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50;max-width:90%}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- 封面 -->
+  <section class="screen on" id="s-intro">
+    <div class="intro">
+      <div class="frame"></div>
+      <div class="eyebrow">PURELY · 居家觀察</div>
+      <h1>住進理想的家之前，<br>先聽懂自己的生活</h1>
+      <p class="lead">一張需求表，很難一次填得準。<br>因為我們常常是「住過了」，才知道自己真正要什麼。<br>所以，我們換個方式——每天三分鐘，一個小提問，陪你觀察自己的生活。</p>
+      <div class="steps">
+        <div class="sh">READ · 記 · 回看　你只要做這幾步</div>
+        <div class="step"><div class="n">1</div><div><b>讀一個今天的小提問</b><span>不用懂設計、不用準備。從早到晚，哪個時刻想到了，再看一下就好。</span></div></div>
+        <div class="step"><div class="n">2</div><div><b>把注意到的事，記一筆</b><span>自由寫下你觀察到的事或感受。不寫也沒關係，想到再補。</span></div></div>
+        <div class="step"><div class="n">3</div><div><b>14 天後，放在一起看</b><span>累積下來的觀察，會長成一張「只屬於你的家」的需求輪廓——比任何表格都真實。</span></div></div>
+      </div>
+      <button class="btn" onclick="go(cur||0)">開始今天的觀察</button>
+      <div class="note">約 14 天 · 一天三分鐘 · 按自己的步調<br>所有紀錄只存在你的手機裡，不會上傳。</div>
+    </div>
+  </section>
+
+  <!-- 每日卡 -->
+  <section class="screen" id="s-day">
+    <div class="top">
+      <div class="toprow">
+        <span class="home" onclick="home()">‹ 回首頁</span>
+        <span id="dcount"></span>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="day" id="dayBody"></div>
+  </section>
+
+  <!-- 觀察輪廓 -->
+  <section class="screen" id="s-sum">
+    <div class="sum">
+      <div class="top"><div class="toprow"><span class="home" onclick="go(0)">‹ 回觀察</span><span></span></div></div>
+      <div class="sumhd">
+        <div class="k">PURELY · 你的居家觀察輪廓</div>
+        <h2>這 14 天，你的家告訴你的事</h2>
+      </div>
+      <p class="lead">下面是你這段時間記下的觀察。它不是答案，是線索——把它交給菩語，我們會從這裡開始，替你把「生活」翻譯成「空間」。</p>
+      <div id="sumBody"></div>
+      <div class="cta">
+        <h3>把你的觀察，交給菩語</h3>
+        <p>你記下的這些生活細節，就是設計真正的起點。<br>加 LINE 聊聊，不用從頭說起。</p>
+        <button class="line-btn" onclick="toLine()">把觀察傳給菩語設計師 →</button>
+        <button class="ghost-btn" onclick="copyAll()">複製全部文字，自己留一份</button>
+      </div>
+      <div class="foot">菩語國際設計 <span class="g">PURELY</span>　聽 · 譯 · 顯 · 留 · 陪</div>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ 14 天觀察提問（對應客戶需求表的維度，翻成觀察自己生活的小提問）============ */
+const DAYS=[
+ {tag:'玄關 · 回家動線',title:'回家的那一刻',
+  ask:'今天回到家，從開門、放下東西、脫鞋、換好衣服——你的手和腳走了哪一條路線？哪一個動作最卡、最想順手卻沒地方？',
+  why:'玄關不是放鞋的地方，是你每天切換「外面」和「家」的開關。它順不順，決定你一進門是鬆一口氣，還是又一陣手忙腳亂。',
+  hint:'可以記：卡住的那個動作、手上最常拿著進門的東西。'},
+ {tag:'公共空間 · 預算',title:'你待最久的角落',
+  ask:'今天在家，你實際待最久的是哪一個角落？（不是最漂亮的，是你真的賴在那裡的那個）那裡現在夠不夠舒服？',
+  why:'錢該花在你真正待著的地方，不是最上相的地方。你待最久的角落，常常才是這個家真正的主角。',
+  hint:'記下那個角落，和它現在缺的一樣東西。'},
+ {tag:'成員 · 相聚與獨處',title:'一家人的距離',
+  ask:'今晚一家人各自在做什麼？是聚在同一個空間，還是各自散開？你心裡比較嚮往哪一種？',
+  why:'有人要「在一起但不吵」，有人要「各自安靜」。這一題，會讓格局長成完全不同的樣子。',
+  hint:'記下今晚大家的位置，和你理想中的那個畫面。'},
+ {tag:'餐廚 · 吃飯',title:'吃飯這件事',
+  ask:'今天的飯在哪裡吃、誰煮的、油煙大不大？餐桌上除了吃飯，還發生了什麼事？（工作、小孩功課、聊天、堆雜物…）',
+  why:'餐桌常是一個家真正的中心。你怎麼煮、餐桌還兼哪些角色，決定廚房要開放，還是關起來。',
+  hint:'記下餐桌今天的「第二個身分」。'},
+ {tag:'客廳 · 放鬆',title:'放鬆的樣子',
+  ask:'今天你是怎麼放鬆的？看電視、滑手機、發呆、追劇、還是根本沒空放鬆？理想中，放鬆該是什麼樣子？',
+  why:'有些家庭正在「去客廳化」——沙發加電視不一定是答案。先看懂你怎麼休息，再決定客廳長什麼樣。',
+  hint:'記下你今天「真的有放鬆到」的那一刻（如果有的話）。'},
+ {tag:'臥室 · 睡眠',title:'睡前到起床',
+  ask:'從躺上床到睡著、再到早上睜開眼——有什麼讓你睡不好、或不想起床的？（光、聲音、溫度、床的大小、另一半的作息）',
+  why:'臥室的光、隔音、溫濕度，決定你每天的第一口氣和最後一口氣。這裡的舒服，是最划算的投資。',
+  hint:'記下昨晚或今早，最影響睡眠的那一件事。'},
+ {tag:'衛浴 · 日常',title:'水的時間',
+  ask:'今天在浴室裡，最趕、最不順的是哪個時刻？早上會不會塞車？有沒有哪裡總是濕濕的、滑滑的、或擠擠的？',
+  why:'衛浴是意外最高、也最常後悔「當初沒做好」的地方。乾濕分離、動線、收納，都藏在這些小抱怨裡。',
+  hint:'記下今天浴室讓你皺一下眉的那一下。'},
+ {tag:'溫度 · 空氣',title:'看不見的舒服',
+  ask:'今天家裡會太冷或太熱嗎？誰最怕冷、誰最怕熱？有沒有悶、潮、霉、或一開冷氣就很乾的困擾？',
+  why:'空調和換氣必須在「水電毛胚」階段就定案——木作進場後才想改，等於把天花板拆掉重做。這題越早想越省錢。',
+  hint:'記下今天最不舒服的那個溫度或空氣的時刻。'},
+ {tag:'收納 · 整理',title:'東西都放哪',
+  ask:'今天有沒有哪個東西「永遠找不到位置」？哪個櫃子一打開就想趕快關上？哪一區永遠在亂？',
+  why:'收納做對，家才會長久乾淨。你最頭痛的那一項，就是設計真正的起點。',
+  hint:'越具體越好——哪個東西、放在哪一區、大概多少量。'},
+ {tag:'個人 · 獨處',title:'只屬於你的角落',
+  ask:'今天有沒有一個「只想一個人靜一靜」的時刻？那時候，你有地方可以好好待著嗎？',
+  why:'一個人的角落，常是維持情緒和關係的關鍵。哪怕只是一張椅子、一盞燈的位置。',
+  hint:'記下你今天最想「消失一下」的那個時刻。'},
+ {tag:'工作 · 興趣',title:'手上的工作與興趣',
+  ask:'今天你在哪裡工作、上網、或做自己的興趣？那個位置順手嗎？有沒有「很想做、卻沒有空間做」的事？',
+  why:'在家工作、樂器、手作、健身、收藏……這些都需要被提前看見，否則日後只能將就。',
+  hint:'記下那件「沒空間做」的事。'},
+ {tag:'成員 · 未來變化',title:'家人與未來',
+  ask:'想一下未來 3～5 年：家裡可能多一個人、少一個人、長輩搬來、或小孩長大需要自己的房間嗎？今天的空間，接得住那個變化嗎？',
+  why:'空間是為「會變的人」設計的，這比風格更優先。先想到變化，才不會住兩年就後悔。',
+  hint:'記下一個你預期得到的變化。'},
+ {tag:'風格 · 紅線',title:'你不喜歡什麼',
+  ask:'今天不管在哪裡看到的畫面（別人家、飯店、咖啡廳、網路圖）——有沒有哪一個讓你心裡立刻說「這個我絕對不要」？',
+  why:'「不喜歡什麼」通常比「喜歡什麼」更能快速、準確地定位你的家。紅線先畫好，風格就不會跑偏。',
+  hint:'記下那個「絕對不要」，還有為什麼。'},
+ {tag:'取捨 · 理想',title:'如果只能做好三件事',
+  ask:'如果預算只能先做好三件事，你會選哪三件？還有——你最不希望新家再發生一次的「舊問題」是什麼？',
+  why:'這一題，就是你這個家的靈魂。設計師會從這裡開始，替你排所有決定的先後。',
+  hint:'寫下那三件事，和那個「絕對不要再來一次」的舊問題。'}
+];
+const N=DAYS.length;
+
+/* ============ 狀態（存在使用者手機 localStorage）============ */
+const KEY='puyu_observe_v1';
+const LINE_ID='@nkt7460n';            // 菩語官方 LINE
+const BOOK_URL='https://www.purely2006.com/design-flow';
+let cur=0, notes={};
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d){cur=d.cur||0;notes=d.notes||{};}}catch(e){}}
+function store(){try{localStorage.setItem(KEY,JSON.stringify({cur,notes,t:Date.now()}));}catch(e){}}
+const el=id=>document.getElementById(id);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));el(id).classList.add('on');window.scrollTo(0,0);}
+function home(){show('s-intro');}
+
+/* ============ 每日卡 ============ */
+function go(i){
+  cur=Math.max(0,Math.min(N-1,i)); store();
+  const d=DAYS[cur];
+  el('dcount').textContent='第 '+(cur+1)+' 天 / '+N;
+  // 進度點
+  el('dots').innerHTML=DAYS.map((_,j)=>'<div class="dot'+(notes[j]&&notes[j].trim()?' done':'')+(j===cur?' cur':'')+'" onclick="go('+j+')"></div>').join('');
+  el('dayBody').innerHTML=
+    '<div class="dtag">'+d.tag+'</div>'+
+    '<div class="dtitle">'+d.title+'</div>'+
+    '<div class="ask">'+d.ask+'</div>'+
+    '<div class="why"><div class="wh">為什麼問這個</div><p>'+d.why+'</p></div>'+
+    '<div class="rec"><div class="rh">留一筆（選填）</div><div class="hint">'+d.hint+'</div>'+
+      '<textarea id="ta" placeholder="想到什麼就寫什麼，之後都能回來補…">'+(notes[cur]||'').replace(/</g,'&lt;')+'</textarea>'+
+      '<div class="saved" id="savedTip">已自動存到你的手機 ✓</div></div>'+
+    '<div class="nav">'+
+      (cur>0?'<button class="prevb" onclick="go('+(cur-1)+')">‹ 前一天</button>':'')+
+      (cur<N-1?'<button class="nextb" onclick="go('+(cur+1)+')">下一天 ›</button>':'<button class="nextb" onclick="show(\'s-sum\');renderSum();">看我的觀察輪廓 →</button>')+
+    '</div>'+
+    '<div class="closerow"><a onclick="show(\'s-sum\');renderSum();">今天先到這，看目前累積的觀察 →</a></div>';
+  const ta=el('ta');
+  let tmr;
+  ta.addEventListener('input',()=>{
+    notes[cur]=ta.value; store();
+    el('savedTip').classList.add('on'); clearTimeout(tmr);
+    tmr=setTimeout(()=>el('savedTip').classList.remove('on'),1400);
+    // 即時更新該天的進度點
+    const dot=el('dots').children[cur];
+    if(ta.value.trim())dot.classList.add('done');else dot.classList.remove('done');
+  });
+  show('s-day');
+}
+
+/* ============ 觀察輪廓 ============ */
+function renderSum(){
+  const done=DAYS.filter((_,j)=>notes[j]&&notes[j].trim()).length;
+  el('sumBody').innerHTML=DAYS.map((d,j)=>{
+    const v=(notes[j]||'').trim();
+    return '<div class="block"><div class="bt">第 '+(j+1)+' 天 · '+d.title+'</div>'+
+      (v?'<div class="bn">'+v.replace(/</g,'&lt;')+'</div>':'<div class="bn empty">（還沒記 · 點上方進度點可以回去補）</div>')+'</div>';
+  }).join('');
+}
+function summaryText(){
+  let s='【我的居家觀察・菩語 14 天】\n我記下了這些生活觀察，想和設計師聊聊我家的可能：\n';
+  DAYS.forEach((d,j)=>{const v=(notes[j]||'').trim();if(v)s+='\n'+(j+1)+'. '+d.title+'：'+v;});
+  return s;
+}
+function copyAll(){
+  const t=summaryText();
+  try{navigator.clipboard.writeText(t);toast('已複製，貼到記事本或傳給設計師都可以');}
+  catch(e){toast('長按下方文字也可以複製');}
+}
+function goOut(url){var w=window.open(url,'_blank','noopener');if(w)return true;try{window.top.location.href=url;return true;}catch(e){}try{location.href=url;return true;}catch(e){}return false;}
+function toLine(){
+  const msg=summaryText();
+  try{if(navigator.clipboard)navigator.clipboard.writeText(msg);}catch(e){}
+  toast('觀察已複製，貼上就能傳給菩語');
+  const url='https://line.me/R/oaMessage/'+encodeURIComponent(LINE_ID)+'/?'+encodeURIComponent(msg);
+  setTimeout(()=>{if(!goOut(url))toast('請開啟 LINE 搜尋 '+LINE_ID+'，觀察已複製');},700);
+}
+let tt;function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2600);}
+
+load();
+</script>
+</body>
+</html>
